@@ -2,30 +2,69 @@ import weakref
 
 class Pessoa:
 
-    instances = weakref.WeakSet()
+    instances = []
 
     def __init__(self,name,age,sex,gravidez,risk):
 
-        self.nome = name.strip()
-        self.idade = int(age.strip())
-        self.sexo = sex.strip()
-        self.risco = int(risk.strip())
+        self.nome = name
+        self.idade = age
+        self.sexo = sex
+        self.risco = risk
         if sex == "m":
             self.gravidez = False
         else:
             self.gravidez = gravidez
             
-        Pessoa.instances.add(self)
+        Pessoa.instances.append((self, id(self)))
 
-    def printself(self):
-        print(self.nome, self.idade, self.sexo, self.gravidez, self.risco)
+    def get_self(self):
+        return((self.nome, self.idade, self.sexo, self.gravidez, self.risco), id(self))
+    
+    def edit_self(self,name,age,sex,gravidez,risk):
+
+        self.nome = name
+        self.idade = age
+        self.sexo = sex
+        self.risco = risk
+        if sex == "m":
+            self.gravidez = False
+        else:
+            self.gravidez = gravidez
+
+        return self.get_self()
+
 
     @classmethod
     def get_all_instances(cls):
-        print (list(cls.instances))
+        return ([obj[0] for obj in list(cls.instances)])
 
-q = Pessoa("João","18","m",True,"1")
-q.printself()
-Pessoa.get_all_instances()
-del q
-Pessoa.get_all_instances()
+    #@classmethod
+    #def get_instance(cls,arg):    #Meio inútil, mantém-se por agora
+        return([tuple[0].get_self() for tuple in cls.instances if tuple == arg])
+
+    @classmethod
+    def delete_instance(cls,obj):
+        if (obj,id(obj)) in cls.instances:
+            #print("Utilizador encontrado") 
+            try:
+                #print("A iniciar remoção do utilizador")
+                cls.instances.remove((obj, id(obj)))
+                #print("Utilizador removido de instances")
+                del obj
+                return "Utilizador apagado com sucesso"
+            except:
+                return f"Erro ao apagar utilizador {obj.nome}"
+        else:
+            return f"Utilizador {obj} não encontrado"
+        
+    @classmethod
+    def show_all(cls):
+        return([obj[0].get_self() for obj in list(cls.instances)])
+    
+    @classmethod
+    def show_by_id(cls, uuid):
+        for item in cls.get_all_instances():
+            if id(item) == uuid:
+                return item
+        return f"Utilizador {uuid} não encontrado!"
+
