@@ -1,8 +1,8 @@
 import weakref
 from campanhas import Campanha
 
-class Fila:
-
+class Fila: #Classe de filas para uma campanha, implementada como uma queue
+    
     instances = weakref.WeakSet()
 
     def __init__(self,name,users,idcampaign):

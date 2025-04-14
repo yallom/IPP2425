@@ -32,7 +32,7 @@ def editPerson(obj, name, age, sex, gravidez, risk):    #Edita a informação de
 
 #TESTES DE FUNCIONALIDADES
 
-
+"""
 x = addPerson("João", "17", "m", True, "1")
 print("OBJ: ", x)
 print("ID: ", id(x))
@@ -74,3 +74,4 @@ print("OBJ: ", x)
 print("ID: ", id(x))
 print(getPerson(id(x)).get_self())
 print(deletePerson(getPerson(id(x))))
+"""
