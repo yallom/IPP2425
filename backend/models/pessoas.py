@@ -1,5 +1,3 @@
-import weakref
-
 class Pessoa:
 
     instances = []
@@ -10,6 +8,7 @@ class Pessoa:
         self.idade = age
         self.sexo = sex
         self.risco = risk
+        #self.doenca = disease
         if sex == "m":
             self.gravidez = False
         else:

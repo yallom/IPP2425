@@ -1,6 +1,6 @@
 import weakref
 
-class Medicamento:
+class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou de risco
 
     instances = weakref.WeakSet()
 

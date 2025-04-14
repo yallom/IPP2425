@@ -1,7 +1,7 @@
 import weakref
 from medicamentos import Medicamento
 
-class Campanha:
+class Campanha: #Classe para campanhas de vacinação, referentes a um medicamento específico
 
     instances = weakref.WeakSet()
 
