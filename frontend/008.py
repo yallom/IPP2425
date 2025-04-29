@@ -224,7 +224,6 @@ class CampanhasFrame(ttk.Frame):
         ttk.Button(filtro_frame, text="+ Nova Campanha", command=self.abrir_janela_cadastro, style="Blue.TButton").pack(side="right", padx=5)
         ttk.Button(filtro_frame, text="Eliminar Campanha", command=self.eliminar_campanha, style="Blue.TButton").pack(side="right", padx=5)
         
-
         # Tabela de campanhas
         colunas = ("Nome", "Início", "Fim", "Grupo-Alvo", "Estado")
         self.tabela = ttk.Treeview(self, columns=colunas, show="headings", height=10, style="Custom.Treeview")
@@ -272,9 +271,10 @@ class CampanhasFrame(ttk.Frame):
         self.atualizar_tabela(campanhas_filtradas)
 
     def abrir_janela_cadastro(self):
+        """Abre uma janela para cadastrar uma nova campanha."""
         janela = tk.Toplevel(self)
         janela.title("Nova Campanha")
-        janela.geometry("750x700")
+        janela.geometry("700x500")
         janela.configure(bg="#f5f5f5")  # Fundo neutro claro
         janela.transient(self)
 
@@ -296,7 +296,7 @@ class CampanhasFrame(ttk.Frame):
         canvas.configure(yscrollcommand=scrollbar.set)
 
         # Frame interno para os widgets
-        frame_interno = ttk.Frame(canvas, style="Custom.TFrame")
+        frame_interno = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
         canvas.create_window((0, 0), window=frame_interno, anchor="nw")
 
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
@@ -313,12 +313,12 @@ class CampanhasFrame(ttk.Frame):
         style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
 
         # Título com estilo maior e destacado
-        ttk.Label(frame_interno, text="Cadastro de Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+        ttk.Label(frame_interno, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
 
         # Separador para os campos principais
         ttk.Label(frame_interno, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
 
-        # Campos do formulário com fonte menor e espaçamento ajustado
+        # Campos do formulário
         campos = [
             ("Nome", "entry"),
             ("Data Início", "date"),
@@ -331,24 +331,29 @@ class CampanhasFrame(ttk.Frame):
             ("Item", "combobox"),
             ("Profissionais Atribuídos", "entry"),
             ("Número de Participantes", "entry"),
-            ("Observações", "text")
+            ("Observações", "text"),
+            ("Estado", "combobox"),
+            
+            # Planejamento e Execução
+            ("Tipo de Campanha", "combobox"),
+            ("Objetivo Principal", "combobox"),
+            ("Metas Quantitativas", "entry"),
+            ("Metas Qualitativas", "combobox"),
+            ("Fase da Campanha", "combobox"),
+            ("Responsável Principal", "entry"),
+            ("Plano de Ação", "combobox"),
+            ("Estratégia de Implementação", "combobox"),
+            
+            # Gestão de Riscos
+            ("Probabilidade de Ocorrência", "combobox"),
+            ("Impacto Potencial", "combobox"),
+            ("Nível de Risco", "combobox"),
+            ("Medidas Preventivas", "combobox"),
+            ("Responsável por Riscos", "entry"),
+            ("Frequência de Monitoramento de Riscos", "combobox")
         ]
 
         self.entries = {}
-
-        def atualizar_gravidas(event):
-            sexo = self.entries["Sexo"].get()
-            gravidas_combobox = self.entries["Grávidas"]
-            
-            if sexo == "Masculino":
-                gravidas_combobox.set("Não")
-                gravidas_combobox["state"] = "disabled"
-            else:
-                gravidas_combobox["state"] = "readonly"
-                if sexo == "Feminino":
-                    gravidas_combobox["values"] = ["Sim", "Não", "Apenas"]
-                else:  # Ambos
-                    gravidas_combobox["values"] = ["Sim", "Não"]
 
         for campo, tipo in campos:
             frame = ttk.Frame(frame_interno, style="Custom.TFrame")
@@ -373,7 +378,6 @@ class CampanhasFrame(ttk.Frame):
                     ], state="readonly", style="Custom.TCombobox")
                 elif campo == "Sexo":
                     entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
-                    entry.bind("<<ComboboxSelected>>", atualizar_gravidas)
                 elif campo == "Grávidas":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Recurso":
@@ -381,6 +385,30 @@ class CampanhasFrame(ttk.Frame):
                     entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
                 elif campo == "Item":
                     entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
+                elif campo == "Estado":
+                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Tipo de Campanha":
+                    entry = ttk.Combobox(frame, values=["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Objetivo Principal":
+                    entry = ttk.Combobox(frame, values=["Prevenção", "Tratamento", "Educação", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Metas Qualitativas":
+                    entry = ttk.Combobox(frame, values=["Alta", "Média", "Baixa"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Fase da Campanha":
+                    entry = ttk.Combobox(frame, values=["Planejamento", "Execução", "Monitoramento", "Avaliação", "Conclusão"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Plano de Ação":
+                    entry = ttk.Combobox(frame, values=["Estratégico", "Tático", "Operacional"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Estratégia de Implementação":
+                    entry = ttk.Combobox(frame, values=["Centralizada", "Descentralizada", "Mista"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Probabilidade de Ocorrência":
+                    entry = ttk.Combobox(frame, values=["Baixa", "Média", "Alta"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Impacto Potencial":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Nível de Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Medidas Preventivas":
+                    entry = ttk.Combobox(frame, values=["Treinamento", "Protocolos", "Equipamentos", "Monitoramento", "Comunicação"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Frequência de Monitoramento de Riscos":
+                    entry = ttk.Combobox(frame, values=["Diário", "Semanal", "Quinzenal", "Mensal", "Trimestral"], state="readonly", style="Custom.TCombobox")
             elif tipo == "text":
                 entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
 
@@ -401,6 +429,16 @@ class CampanhasFrame(ttk.Frame):
         self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
         if itens:
             self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
 
     def guardar_campanha(self):
         """Guarda os dados da nova campanha e atualiza a tabela."""
@@ -1814,5 +1852,3 @@ if __name__ == "__main__":
     root = ThemedTk(theme="arc")
     root.after(10, lambda: DashboardApp(root))
     root.mainloop()
-
-
