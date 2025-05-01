@@ -1,34 +1,24 @@
-class Pessoa:
+class Medico:
 
     instances = []
 
-    def __init__(self,name,age,sex,gravidez,risk):
+    def __init__(self,name,availabilities,specialty):
 
         self.nome = name
-        self.idade = age
-        self.sexo = sex
-        self.risco = risk
-        #self.doenca = disease
-        if sex == "m":
-            self.gravidez = False
-        else:
-            self.gravidez = gravidez
+        self.disponibilidades = availabilities
+        self.especialidade = specialty
+        self.id = f"MD{len(Medico.instances) + 1:04d}"
             
-        Pessoa.instances.append((self, id(self)))
+        Medico.instances.append(self)
 
     def get_self(self):
-        return((self.nome, self.idade, self.sexo, self.gravidez, self.risco), id(self))
+        return((self.nome, self.disponibilidades, self.especialidade), id(self))
     
-    def edit_self(self,name,age,sex,gravidez,risk):
+    def edit_self(self,name,availabilities,specialty):
 
         self.nome = name
-        self.idade = age
-        self.sexo = sex
-        self.risco = risk
-        if sex == "m":
-            self.gravidez = False
-        else:
-            self.gravidez = gravidez
+        self.disponibilidades = availabilities
+        self.especialidade = specialty
 
         return self.get_self()
 
@@ -66,4 +56,3 @@ class Pessoa:
             if id(item) == uuid:
                 return item
         return f"Utilizador {uuid} não encontrado!"
-

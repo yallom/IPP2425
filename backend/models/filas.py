@@ -3,66 +3,68 @@ from campanhas import Campanha
 
 class Fila: #Classe de filas para uma campanha, implementada como uma queue
     
-    instances = weakref.WeakSet()
+    instances = []
 
     def __init__(self,name,users,idcampaign):
         
         self.nome = name.strip()
         self.filaespera = users
         self.idcampanha = idcampaign
-        self.users = weakref.WeakSet()
+        self.users = []
+        self.id = f"Q{len(Fila.instances) + 1:04d}"
 
-        Fila.instances.add(self)
+        Fila.instances.append(self)
 
-    def printself(self):
-        print(self.nome, self.filaespera, self.idcampanha)
-        print(id(self))
+    def get_self(self):
+        return(self.nome, self.filaespera, self.idcampanha, self.id)
 
     @classmethod
     def get_all_instances(cls):
-        print (list(cls.instances))
+        return (list(cls.instances))
     
     @classmethod
     def get_instance(cls, arg):
-        print([obj.nome for obj in cls.instances if obj.idcampanha == arg])
+        return([obj for obj in cls.instances if obj.idcampanha == arg])
     
     @classmethod
-    def delete_instance(cls,obj):
-        if obj in cls.instances:
-            cls.instances.remove(obj)
-            del obj
-            print("Feito")
-        print("done")
+    def delete_instance(cls,id):
+        for obj in cls.instances:
+            if obj.id == id:
+                cls.instances.remove(obj)
+                del obj
+                return("Feito")
+            return("done")
 
     def addUser(self,obj):
         try:
             self.users.add(obj)
-            print("Utilizador adicionado com sucesso!")
+            return("Utilizador adicionado com sucesso!")
         except:
             return f"Erro ao adicionar Utilizador a fila {self.nome}!"
 
-    def checkUser(self,obj):
-        if obj in list(self.users):
+    def checkUser(pacient, ID):
+        if pacient.id == ID:
             return True
         else:
             return False
     
-    def findUser(self, obj):
-        if self.checkUser(obj):
-            return obj
-        else:
-            return False
-        
-    def delUser(self,obj):
-        try:
-            if self.checkUser(obj):
-                self.users.remove(obj)
-                del obj
-                return "Utilizador removido com sucesso!"
+    def findUser(self, ID):
+        for user in self.users:
+            if self.checkUser(user,ID):
+                return user
             else:
-                return "Utilizador não encontrado!"
+                return False
+        
+    def delUser(self,ID):
+        try:
+            x = self.finduser(ID)
+            if x != False:
+                self.users.remove(x)
+                return f"Utilizador {x.id} removido com sucesso!"
+            else:
+                return f"Utilizador {x.id} não encontrado!"
         except:
-            return f"Erro ao apagar Utilizador {obj.nome} de lista {self.nome}"
+            return f"Erro ao apagar Utilizador {ID.nome} de lista {self.nome}"
 
 
     
