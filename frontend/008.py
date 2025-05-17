@@ -307,13 +307,16 @@ class CampanhasFrame(ttk.Frame):
 
         # Frame interno para os widgets
         frame_interno = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
-        canvas.create_window((0, 0), window=frame_interno, anchor="nw")
+        canvas.create_window((0, 0), window=frame_interno, anchor="nw", width=canvas.winfo_width())  # Make frame fill canvas width
 
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
+            # Update frame width when canvas is resized
+            canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_interno.bind("<Configure>", atualizar_scrollregion)
+        canvas.bind("<Configure>", atualizar_scrollregion)
 
         # Define estilos para os widgets
         style = ttk.Style()
@@ -340,13 +343,8 @@ class CampanhasFrame(ttk.Frame):
             ("Recurso", "combobox"),
             ("Item", "combobox"),
             ("Número de Participantes", "entry"),
-            
             ("Estado", "combobox"),
-            
-            # Planejamento e Execução
             ("Tipo de Campanha", "combobox"),
-            
-           
         ]
 
         self.entries = {}
@@ -357,57 +355,38 @@ class CampanhasFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             if tipo == "entry":
-                entry = ttk.Entry(frame, style="Custom.TEntry", width=40)  # Increased width from default to 40
+                entry = ttk.Entry(frame, style="Custom.TEntry")
             elif tipo == "date":
-                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=20, background="#2c3e50",  # Increased width from 12 to 20
+                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
             elif tipo == "combobox":
+                entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
+                # Depois, personalize os valores conforme já faz no seu código
                 if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = ["Baixo", "Médio", "Alto"]
                 elif campo == "Grupo-Alvo":
-                    entry = ttk.Combobox(frame, values=[
+                    entry["values"] = [
                         "Bebês (0-3 anos)",
                         "Crianças (4-12 anos)",
                         "Jovens (12-18 anos)",
                         "Adultos (18-65 anos)",
                         "Idosos (+65 anos)"
-                    ], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    ]
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = ["Masculino", "Feminino", "Ambos"]
                 elif campo == "Grávidas":
-                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = ["Sim", "Não", "Apenas"]
                 elif campo == "Recurso":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = ["Medicamento", "Vacina"]
                 elif campo == "Item":
-                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = []
                 elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
+                    entry["values"] = ["Ativa", "Encerrada"]
                 elif campo == "Tipo de Campanha":
-                    entry = ttk.Combobox(frame, values=["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
-                elif campo == "Objetivo Principal":
-                    entry = ttk.Combobox(frame, values=["Prevenção", "Tratamento", "Educação", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Metas Qualitativas":
-                    entry = ttk.Combobox(frame, values=["Alta", "Média", "Baixa"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Fase da Campanha":
-                    entry = ttk.Combobox(frame, values=["Planejamento", "Execução", "Monitoramento", "Avaliação", "Conclusão"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Plano de Ação":
-                    entry = ttk.Combobox(frame, values=["Estratégico", "Tático", "Operacional"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Estratégia de Implementação":
-                    entry = ttk.Combobox(frame, values=["Centralizada", "Descentralizada", "Mista"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Probabilidade de Ocorrência":
-                    entry = ttk.Combobox(frame, values=["Baixa", "Média", "Alta"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Impacto Potencial":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Nível de Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Medidas Preventivas":
-                    entry = ttk.Combobox(frame, values=["Treinamento", "Protocolos", "Equipamentos", "Monitoramento", "Comunicação"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Frequência de Monitoramento de Riscos":
-                    entry = ttk.Combobox(frame, values=["Diário", "Semanal", "Quinzenal", "Mensal", "Trimestral"], state="readonly", style="Custom.TCombobox")
+                    entry["values"] = ["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"]
             elif tipo == "text":
-                entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
-
-            entry.pack(fill="x")
+                entry = tk.Text(frame, height=7, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
+            entry.pack(fill="x", expand=True)
             self.entries[campo] = entry
 
         # Botões com estilo azul e espaçamento ajustado
@@ -869,7 +848,7 @@ class RecursosFrame(ttk.Frame):
                         "Idosos (+65 anos)"
                     ], state="readonly", style="Custom.TCombobox")
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
@@ -1324,6 +1303,7 @@ class RelatoriosFrame(ttk.Frame):
 
         # Define o estilo personalizado para os widgets
         style = ttk.Style()
+        style.theme_use("default")
         style.configure("Custom.TFrame", background="#f5f5f5")  # Fundo neutro claro
         style.configure("Custom.TButton", background="#f5f5f5", font=("Segoe UI", 11))
         style.configure("Custom.Treeview", background="#f5f5f5", fieldbackground="#f5f5f5", font=("Segoe UI", 10))
