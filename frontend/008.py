@@ -19,6 +19,7 @@ import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
 from backend.Controllers import pessoascontroller as PC
 
+
 def Save_File ():
     DadosPacientes = PC.getAllObjects()
     return
@@ -356,13 +357,13 @@ class CampanhasFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             if tipo == "entry":
-                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry = ttk.Entry(frame, style="Custom.TEntry", width=40)  # Increased width from default to 40
             elif tipo == "date":
-                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
+                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=20, background="#2c3e50",  # Increased width from 12 to 20
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
             elif tipo == "combobox":
                 if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -370,20 +371,19 @@ class CampanhasFrame(ttk.Frame):
                         "Jovens (12-18 anos)",
                         "Adultos (18-65 anos)",
                         "Idosos (+65 anos)"
-                    ], state="readonly", style="Custom.TCombobox")
+                    ], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Grávidas":
-                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Recurso":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                    entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
+                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Item":
-                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Tipo de Campanha":
-                    entry = ttk.Combobox(frame, values=["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox", width=38)  # Added width=38
                 elif campo == "Objetivo Principal":
                     entry = ttk.Combobox(frame, values=["Prevenção", "Tratamento", "Educação", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Metas Qualitativas":
@@ -567,17 +567,21 @@ class CampanhasFrame(ttk.Frame):
             frame.pack(fill="x", padx=20, pady=8)
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
+            valor = campanha.get(campo, "")
+            if campo == "Gravidez Permitida?":
+                valor = campanha.get("Gravidez", "")
+
+            print(f"Campo: {campo}, Valor: {valor}")  # Debug
+
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
-                entry.insert(0, campanha.get(campo, ""))
-            elif tipo == "date":
-                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
-                                foreground="white", borderwidth=2, style="Custom.TCombobox")
-                if campo in campanha:
-                    entry.set_date(campanha[campo])
+                entry.insert(0, valor)
             elif tipo == "combobox":
-                if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+               
+                if campo == "Tipo":
+                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -586,19 +590,33 @@ class CampanhasFrame(ttk.Frame):
                         "Adultos (18-65 anos)",
                         "Idosos (+65 anos)"
                     ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Grávidas":
-                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Recurso":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                    entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
-                elif campo == "Item":
-                    entry = ttk.Combobox(frame, values=self.dataset.get(campanha.get("Recurso", ""), []), state="readonly", style="Custom.TCombobox")
-                entry.set(campanha.get(campo, ""))
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Estado":
+                    entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "checkbox":
+                entry = tk.BooleanVar()
+                entry.set(valor == "Sim")
+                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
+                self.entries[campo] = entry
+                continue
             elif tipo == "text":
-                entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
-                entry.insert("1.0", campanha.get(campo, ""))
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass  # Ignora erros de data inválida
 
             entry.pack(fill="x")
             self.entries[campo] = entry
