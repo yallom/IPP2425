@@ -338,28 +338,14 @@ class CampanhasFrame(ttk.Frame):
             ("Grávidas", "combobox"),
             ("Recurso", "combobox"),
             ("Item", "combobox"),
-            ("Profissionais Atribuídos", "entry"),
             ("Número de Participantes", "entry"),
-            ("Observações", "text"),
+            
             ("Estado", "combobox"),
             
             # Planejamento e Execução
             ("Tipo de Campanha", "combobox"),
-            ("Objetivo Principal", "combobox"),
-            ("Metas Quantitativas", "entry"),
-            ("Metas Qualitativas", "combobox"),
-            ("Fase da Campanha", "combobox"),
-            ("Responsável Principal", "entry"),
-            ("Plano de Ação", "combobox"),
-            ("Estratégia de Implementação", "combobox"),
             
-            # Gestão de Riscos
-            ("Probabilidade de Ocorrência", "combobox"),
-            ("Impacto Potencial", "combobox"),
-            ("Nível de Risco", "combobox"),
-            ("Medidas Preventivas", "combobox"),
-            ("Responsável por Riscos", "entry"),
-            ("Frequência de Monitoramento de Riscos", "combobox")
+           
         ]
 
         self.entries = {}
@@ -461,9 +447,9 @@ class CampanhasFrame(ttk.Frame):
         sexo = self.entries["Sexo"].get().strip()
         recurso = self.entries["Recurso"].get().strip()
         item = self.entries["Item"].get().strip()
-        profissionais = self.entries["Profissionais Atribuídos"].get().strip()  # Novo campo
+       
         participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
-        observacoes = self.entries["Observações"].get("1.0", "end").strip()  # Novo campo
+        
 
         # Validação: verifica se todos os campos obrigatórios estão preenchidos
         if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
@@ -482,9 +468,9 @@ class CampanhasFrame(ttk.Frame):
             "Sexo": sexo,
             "Recurso": recurso,
             "Item": item,
-            "Profissionais Atribuídos": profissionais,  # Novo campo
+            # Novo campo
             "Número de Participantes": participantes,  # Novo campo
-            "Observações": observacoes  # Novo campo
+            # Novo campo
         }
         self.campanhas.append(nova_campanha)
         self.atualizar_tabela(self.campanhas)
@@ -570,9 +556,8 @@ class CampanhasFrame(ttk.Frame):
             ("Grávidas", "combobox"),
             ("Recurso", "combobox"),
             ("Item", "combobox"),
-            ("Profissionais Atribuídos", "entry"),
             ("Número de Participantes", "entry"),
-            ("Observações", "text")
+           
         ]
 
         self.entries = {}
@@ -716,7 +701,7 @@ class RecursosFrame(ttk.Frame):
         tabela_frame.pack(fill="both", expand=True, pady=10)
 
         # Tabela de recursos
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "Quantidade em Stock", "Campanha", "Estado")
+        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "Estado")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview")
         
         # Ajusta o tamanho das colunas
@@ -726,8 +711,7 @@ class RecursosFrame(ttk.Frame):
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        self.tabela.column("Quantidade em Stock", width=150, anchor="center")
-        self.tabela.column("Campanha", width=200, anchor="center")
+        
         self.tabela.column("Estado", width=100, anchor="center")
         
         # Configura os cabeçalhos
@@ -748,9 +732,9 @@ class RecursosFrame(ttk.Frame):
         # Dados iniciais (exemplo)
         self.dados = [
             {"Tipo": "Medicamento", "Nome": "Paracetamol", "Grupo-Alvo": "Adultos", "Grupo Risco": "Baixo",
-             "Gravidez": "Sim", "Data de Validade": "2025-12-31", "Quantidade em Stock": "100", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"},
+             "Gravidez": "Sim", "Data de Validade": "2025-12-31"},
             {"Tipo": "Vacina", "Nome": "Vacina Gripe", "Grupo-Alvo": "Idosos", "Grupo Risco": "Médio",
-             "Gravidez": "Não", "Data de Validade": "2025-10-15", "Quantidade em Stock": "50", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"}
+             "Gravidez": "Não", "Data de Validade": "2025-10-15"}
         ]
 
         # Preenche a tabela com os dados iniciais
@@ -771,8 +755,6 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
                 recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
                 recurso.get("Estado", "Fora de stock")
             ))
 
@@ -823,20 +805,20 @@ class RecursosFrame(ttk.Frame):
 
         # Campos do formulário
         campos = [
-            ("Campanha", "combobox"),
+            
             ("Tipo", "combobox"),
             ("Nome", "entry"),
-            ("Descrição", "text"),
-            ("Composição/Substância ativa", "entry"),
-            ("Dose Recomendada", "entry"),
-            ("Via de Administração", "combobox"),
+           
+            
+           
+            
             ("Grupo-Alvo", "combobox"),
             ("Gravidez Permitida?", "checkbox"),
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
             ("Efeitos Secundários Comuns", "entry"),
             ("Data de Validade", "date"),
-            ("Quantidade em Stock", "entry"),
+           
             ("Estado", "combobox")
         ]
 
@@ -858,12 +840,8 @@ class RecursosFrame(ttk.Frame):
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
             elif tipo == "combobox":
-                if campo == "Campanha":
-                    entry = ttk.Combobox(frame, values=campanhas_disponiveis, state="readonly", style="Custom.TCombobox")
-                elif campo == "Tipo":
+                if campo == "Tipo":
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Via de Administração":
-                    entry = ttk.Combobox(frame, values=["Oral", "Injetável", "Nasal", "Tópico"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -873,15 +851,15 @@ class RecursosFrame(ttk.Frame):
                         "Idosos (+65 anos)"
                     ], state="readonly", style="Custom.TCombobox")
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
+                elif campo == "Gravidez Permitida?":
+                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
             elif tipo == "checkbox":
-                entry = tk.BooleanVar()
-                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
-                self.entries[campo] = entry
+                # Remova este bloco, pois agora é combobox
                 continue
             elif tipo == "text":
                 entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
@@ -929,13 +907,7 @@ class RecursosFrame(ttk.Frame):
             messagebox.showerror("Erro", "Os campos 'Nome' e 'Tipo' são obrigatórios!")
             return
 
-        # Define o estado com base na quantidade em stock
-        try:
-            quantidade = int(dados.get("Quantidade em Stock", "0"))
-            estado = "Disponível" if quantidade > 1 else "Fora de stock"
-        except ValueError:
-            estado = "Fora de stock"
-
+       
         # Adiciona os dados à tabela
         novo_recurso = {
             "Tipo": dados.get("Tipo", ""),
@@ -944,8 +916,7 @@ class RecursosFrame(ttk.Frame):
             "Grupo Risco": dados.get("Grupo Risco", ""),
             "Gravidez": dados.get("Gravidez Permitida?", ""),
             "Data de Validade": dados.get("Data de Validade", ""),
-            "Quantidade em Stock": dados.get("Quantidade em Stock", "0"),
-            "Campanha": dados.get("Campanha", ""),
+            
             "Estado": estado
         }
         self.dados.append(novo_recurso)  # Adiciona aos dados existentes
@@ -1005,7 +976,7 @@ class RecursosFrame(ttk.Frame):
                 "Adultos (18-65 anos)", "Idosos (+65 anos)"
             ]),
             ("Estado", ["Disponível", "Fora de stock", "Expirado"]),
-            ("Campanha", [campanha["Nome"] for campanha in self.master.frames["Campanhas"].campanhas])
+           
         ]
 
         self.filtros_selecionados = {}
@@ -1045,9 +1016,7 @@ class RecursosFrame(ttk.Frame):
                     dados_filtrados = [d for d in dados_filtrados if d["Grupo-Alvo"] == valor]
                 elif campo == "Estado":
                     dados_filtrados = [d for d in dados_filtrados if d["Estado"] == valor]
-                elif campo == "Campanha":
-                    dados_filtrados = [d for d in dados_filtrados if d["Campanha"] == valor]
-
+                
         # Atualiza a tabela com os dados filtrados
         self.atualizar_tabela(dados_filtrados)
 
@@ -1081,8 +1050,7 @@ class RecursosFrame(ttk.Frame):
                     file.write(f"Grupo Risco: {recurso['Grupo Risco']}\n")
                     file.write(f"Gravidez: {recurso['Gravidez']}\n")
                     file.write(f"Data de Validade: {recurso['Data de Validade']}\n")
-                    file.write(f"Quantidade em Stock: {recurso['Quantidade em Stock']}\n")
-                    file.write(f"Campanha: {recurso['Campanha']}\n")
+                   
                     file.write("-" * 50 + "\n")
 
                 # Adiciona outros dados (se houver)
@@ -1138,12 +1106,6 @@ class RecursosFrame(ttk.Frame):
             "Grupo Risco": valores[3],
             "Gravidez": valores[4],
             "Data de Validade": data_validade,
-            "Quantidade em Stock": valores[6],
-            "Campanha": valores[7] if len(valores) > 7 else "Sem campanha",
-            "Descrição": "",
-            "Composição/Substância ativa": "",
-            "Dose Recomendada": "",
-            "Via de Administração": "",
             "Sexo": "",
             "Efeitos Secundários Comuns": "",
             "Estado": "Disponível"
@@ -1205,20 +1167,16 @@ class RecursosFrame(ttk.Frame):
         # Campos do formulário
         campos = [
             ("Tipo", "combobox"),
-            ("Nome", "entry"),
-            ("Descrição", "text"),
-            ("Composição/Substância ativa", "entry"),
-            ("Dose Recomendada", "entry"),
-            ("Via de Administração", "combobox"),
+            ("Nome", "entry"),   
             ("Grupo-Alvo", "combobox"),
             ("Gravidez Permitida?", "checkbox"),
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
             ("Efeitos Secundários Comuns", "entry"),
             ("Data de Validade", "date"),
-            ("Quantidade em Stock", "entry"),
+            
             ("Estado", "combobox"),
-            ("Campanha", "combobox")
+           
         ]
 
         self.entries = {}
@@ -1238,15 +1196,11 @@ class RecursosFrame(ttk.Frame):
                 entry = ttk.Entry(frame, style="Custom.TEntry")
                 entry.insert(0, valor)
             elif tipo == "combobox":
-                if campo == "Campanha":
-                    entry = ttk.Combobox(frame, values=campanhas_disponiveis, state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-                elif campo == "Tipo":
+               
+                if campo == "Tipo":
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
-                elif campo == "Via de Administração":
-                    entry = ttk.Combobox(frame, values=["Oral", "Injetável", "Nasal", "Tópico"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
+                
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -1257,7 +1211,7 @@ class RecursosFrame(ttk.Frame):
                     ], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
                 elif campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
@@ -1312,13 +1266,7 @@ class RecursosFrame(ttk.Frame):
                         pass
                 recurso[campo] = valor
 
-        # Define o estado com base na quantidade em stock
-        try:
-            quantidade = int(recurso.get("Quantidade em Stock", "0"))
-            recurso["Estado"] = "Disponível" if quantidade > 1 else "Fora de stock"
-        except ValueError:
-            recurso["Estado"] = "Fora de stock"
-
+        
         # Atualiza o recurso na lista de dados
         for i, r in enumerate(self.dados):
             if r["Nome"] == recurso["Nome"]:
@@ -1346,8 +1294,8 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
                 recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
+                
+               
                 recurso.get("Estado", "Fora de stock")
             ))
 
@@ -1396,7 +1344,7 @@ class RelatoriosFrame(ttk.Frame):
         )
         self.combo_relatorios.current(0)
         self.combo_relatorios.pack(side="left", padx=5)
-        self.combo_relatorios.bind("<<ComboboxSelected>>", self.alternar_relatorio)
+       
 
         # Botão para gerar relatório
         ttk.Button(filtros_frame, text="Gerar Relatório", command=self.gerar_relatorio, style="Blue.TButton").pack(side="right", padx=5)
@@ -1524,7 +1472,7 @@ class RelatoriosFrame(ttk.Frame):
 
         # Dados fictícios para os gráficos
         meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-        consultas_geral = [120, 150, 180, 160, 200, 190]
+        consultas_geral = [120, 150, 180, 160, 200,  190]
         consultas_especializada = [80, 100, 120, 110, 140, 130]
         consultas_emergencia = [40, 50, 60, 55, 70, 65]
         tipos_consulta = ["Geral", "Especializada", "Emergência"]
