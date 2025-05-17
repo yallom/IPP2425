@@ -344,7 +344,6 @@ class CampanhasFrame(ttk.Frame):
             ("Item", "combobox"),
             ("Número de Participantes", "entry"),
             ("Estado", "combobox"),
-            ("Tipo de Campanha", "combobox"),
         ]
 
         self.entries = {}
@@ -382,8 +381,6 @@ class CampanhasFrame(ttk.Frame):
                     entry["values"] = []
                 elif campo == "Estado":
                     entry["values"] = ["Ativa", "Encerrada"]
-                elif campo == "Tipo de Campanha":
-                    entry["values"] = ["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"]
             elif tipo == "text":
                 entry = tk.Text(frame, height=7, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
             entry.pack(fill="x", expand=True)
@@ -547,20 +544,30 @@ class CampanhasFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             valor = campanha.get(campo, "")
-            if campo == "Gravidez Permitida?":
-                valor = campanha.get("Gravidez", "")
 
-            print(f"Campo: {campo}, Valor: {valor}")  # Debug
-
-            if tipo == "entry":
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
                 entry.insert(0, valor)
             elif tipo == "combobox":
-               
-                if campo == "Tipo":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
-                
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -571,23 +578,8 @@ class CampanhasFrame(ttk.Frame):
                     ], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
-                elif campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-                elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-            elif tipo == "checkbox":
-                entry = tk.BooleanVar()
-                entry.set(valor == "Sim")
-                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
-                self.entries[campo] = entry
-                continue
-            elif tipo == "text":
-                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
-                entry.insert("1.0", valor)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
@@ -595,9 +587,1266 @@ class CampanhasFrame(ttk.Frame):
                     try:
                         entry.set_date(valor)
                     except ValueError:
-                        pass  # Ignora erros de data inválida
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
 
-            entry.pack(fill="x")
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
+            self.entries[campo] = entry
+
+        # Botões com estilo azul e espaçamento ajustado
+        botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
+        botoes_frame.pack(fill="x", pady=20)
+
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_campanha(campanha, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
+
+    def guardar_campanha(self):
+        """Guarda os dados da nova campanha e atualiza a tabela."""
+        # Obtém os valores dos campos
+        nome = self.entries["Nome"].get().strip()
+        data_inicio = self.entries["Data Início"].get().strip()
+        data_fim = self.entries["Data Fim"].get().strip()
+        grupo_risco = self.entries["Grupo Risco"].get().strip()
+        grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
+        gravidas = self.entries["Grávidas"].get().strip()
+        sexo = self.entries["Sexo"].get().strip()
+        recurso = self.entries["Recurso"].get().strip()
+        item = self.entries["Item"].get().strip()
+       
+        participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
+        
+
+        # Validação: verifica se todos os campos obrigatórios estão preenchidos
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+            messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
+            return
+
+        # Adiciona a nova campanha
+        nova_campanha = {
+            "Nome": nome,
+            "Início": data_inicio,
+            "Fim": data_fim,
+            "Grupo-Alvo": grupo_alvo,
+            "Estado": "Ativa",
+            "Grupo Risco": grupo_risco,
+            "Grávidas": gravidas,
+            "Sexo": sexo,
+            "Recurso": recurso,
+            "Item": item,
+            # Novo campo
+            "Número de Participantes": participantes,  # Novo campo
+            # Novo campo
+        }
+        self.campanhas.append(nova_campanha)
+        self.atualizar_tabela(self.campanhas)
+
+        # Fecha a janela e exibe mensagem de sucesso
+        messagebox.showinfo("Sucesso", "Dados guardados com sucesso!")
+        self.entries["Nome"].winfo_toplevel().destroy()
+
+    def abrir_detalhes_campanha(self, event):
+        """Abre uma janela para visualizar e editar os detalhes da campanha selecionada."""
+        # Obtém o item selecionado na tabela
+        item_id = self.tabela.focus()
+        if not item_id:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        valores = self.tabela.item(item_id, "values")
+        if not valores:
+            messagebox.showerror("Erro", "Nenhuma campanha selecionada!")
+            return
+
+        # Encontra a campanha correspondente na lista
+        campanha = next((c for c in self.campanhas if c["Nome"] == valores[0]), None)
+        if not campanha:
+            messagebox.showerror("Erro", "Campanha não encontrada!")
+            return
+
+        # Cria a janela de detalhes
+        janela = tk.Toplevel(self)
+        janela.title("Detalhes da Campanha")
+        janela.geometry("750x700")
+        janela.configure(bg="#f5f5f5")  # Fundo neutro claro
+        janela.transient(self)
+
+        # Cabeçalho da janela
+        header = tk.Frame(janela, bg="#2c3e50", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Detalhes da Campanha", font=("Segoe UI", 16, "bold"), bg="#2c3e50", fg="white")
+        title.pack(pady=10)
+
+        # Canvas para permitir rolagem
+        canvas = tk.Canvas(janela, bg="#f5f5f5", highlightthickness=0)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(janela, orient="vertical", command=canvas.yview)
+        scrollbar.pack(side=tk.RIGHT, fill="y")
+
+        # Configura o canvas para usar a scrollbar
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        # Frame interno para os widgets
+        frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+
+        # Atualiza o scrollregion sempre que o frame interno for redimensionado
+        def atualizar_scrollregion(event):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame_principal.bind("<Configure>", atualizar_scrollregion)
+
+        # Define estilos para os widgets
+        style = ttk.Style()
+        style.configure("Custom.TFrame", background="#f5f5f5")
+        style.configure("Custom.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TEntry", padding=5, font=("Segoe UI", 11))
+        style.configure("Custom.TCombobox", padding=5, font=("Segoe UI", 11))
+
+        # Título com estilo maior e destacado
+        ttk.Label(frame_principal, text="Informações da Campanha", style="Custom.TLabel", font=("Segoe UI", 14, "bold")).pack(pady=20)
+
+        # Separador para os campos principais
+        ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
+
+        # Campos do formulário
+        campos = [
+            ("Nome", "entry"),
+            ("Data Início", "date"),
+            ("Data Fim", "date"),
+            ("Grupo Risco", "combobox"),
+            ("Grupo-Alvo", "combobox"),
+            ("Sexo", "combobox"),
+            ("Grávidas", "combobox"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
+            ("Número de Participantes", "entry"),
+           
+        ]
+
+        self.entries = {}
+
+        for campo, tipo in campos:
+            frame = ttk.Frame(frame_principal, style="Custom.TFrame")
+            frame.pack(fill="x", padx=20, pady=8)
+            ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
+
+            valor = campanha.get(campo, "")
+
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
+                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.insert(0, valor)
+            elif tipo == "combobox":
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Grupo-Alvo":
+                    entry = ttk.Combobox(frame, values=[
+                        "Bebês (0-3 anos)",
+                        "Crianças (4-12 anos)",
+                        "Jovens (12-18 anos)",
+                        "Adultos (18-65 anos)",
+                        "Idosos (+65 anos)"
+                    ], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+                elif campo == "Sexo":
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry.set(valor)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
+
+            entry.pack(fill="x", expand=True)
             self.entries[campo] = entry
 
         # Botões com estilo azul e espaçamento ajustado
@@ -698,7 +1947,7 @@ class RecursosFrame(ttk.Frame):
         tabela_frame.pack(fill="both", expand=True, pady=10)
 
         # Tabela de recursos
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "Estado")
+        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview")
         
         # Ajusta o tamanho das colunas
@@ -708,8 +1957,6 @@ class RecursosFrame(ttk.Frame):
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        
-        self.tabela.column("Estado", width=100, anchor="center")
         
         # Configura os cabeçalhos
         for col in colunas:
@@ -751,8 +1998,7 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo-Alvo"],
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
-                recurso["Data de Validade"],
-                recurso.get("Estado", "Fora de stock")
+                recurso["Data de Validade"]
             ))
 
     def novo_medicamento(self):
@@ -802,21 +2048,13 @@ class RecursosFrame(ttk.Frame):
 
         # Campos do formulário
         campos = [
-            
             ("Tipo", "combobox"),
             ("Nome", "entry"),
-           
-            
-           
-            
             ("Grupo-Alvo", "combobox"),
-            ("Gravidez Permitida?", "checkbox"),
+            ("Gravidez", "combobox"),  # <-- Substitui "Gravidez Permitida?" por "Gravidez"
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
-            ("Efeitos Secundários Comuns", "entry"),
-            ("Data de Validade", "date"),
-           
-            ("Estado", "combobox")
+            ("Data de Validade", "date")
         ]
 
         self.entries = {}
@@ -853,18 +2091,15 @@ class RecursosFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Gravidez Permitida?":
+                elif campo == "Gravidez":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
-            elif tipo == "checkbox":
-                # Remova este bloco, pois agora é combobox
-                continue
             elif tipo == "text":
                 entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
 
-            entry.pack(fill="x")
+            entry.pack(fill="x", expand=True)  # <-- largura total
             self.entries[campo] = entry
 
         # Botões de ação
@@ -911,10 +2146,8 @@ class RecursosFrame(ttk.Frame):
             "Nome": dados.get("Nome", ""),
             "Grupo-Alvo": dados.get("Grupo-Alvo", ""),
             "Grupo Risco": dados.get("Grupo Risco", ""),
-            "Gravidez": dados.get("Gravidez Permitida?", ""),
-            "Data de Validade": dados.get("Data de Validade", ""),
-            
-            "Estado": estado
+            "Gravidez": dados.get("Gravidez", ""),
+            "Data de Validade": dados.get("Data de Validade", "")
         }
         self.dados.append(novo_recurso)  # Adiciona aos dados existentes
         self.atualizar_tabela(self.dados)  # Atualiza a tabela com os novos dados
@@ -983,8 +2216,8 @@ class RecursosFrame(ttk.Frame):
             frame.pack(fill="x", pady=10)
 
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
-            combobox = ttk.Combobox(frame, values=["Todos"] + opcoes, state="readonly", style="Custom.TCombobox")
-            combobox.current(0)  # Define "Todos" como padrão
+            combobox = ttk.Combobox(frame, values=["Todas"] + opcoes, state="readonly", style="Custom.TCombobox")
+            combobox.current(0)  # Define "Todas" como padrão
             combobox.pack(fill="x")
             self.filtros_selecionados[campo] = combobox
 
@@ -1047,7 +2280,6 @@ class RecursosFrame(ttk.Frame):
                     file.write(f"Grupo Risco: {recurso['Grupo Risco']}\n")
                     file.write(f"Gravidez: {recurso['Gravidez']}\n")
                     file.write(f"Data de Validade: {recurso['Data de Validade']}\n")
-                   
                     file.write("-" * 50 + "\n")
 
                 # Adiciona outros dados (se houver)
@@ -1164,16 +2396,12 @@ class RecursosFrame(ttk.Frame):
         # Campos do formulário
         campos = [
             ("Tipo", "combobox"),
-            ("Nome", "entry"),   
+            ("Nome", "entry"),
             ("Grupo-Alvo", "combobox"),
-            ("Gravidez Permitida?", "checkbox"),
+            ("Gravidez", "combobox"),  # <-- Substitui "Gravidez Permitida?" por "Gravidez"
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
-            ("Efeitos Secundários Comuns", "entry"),
-            ("Data de Validade", "date"),
-            
-            ("Estado", "combobox"),
-           
+            ("Data de Validade", "date")
         ]
 
         self.entries = {}
@@ -1184,20 +2412,30 @@ class RecursosFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             valor = recurso.get(campo, "")
-            if campo == "Gravidez Permitida?":
-                valor = recurso.get("Gravidez", "")
 
-            print(f"Campo: {campo}, Valor: {valor}")  # Debug
-
-            if tipo == "entry":
+            # Ajuste para garantir combobox nos campos "Grávidas", "Recurso" e "Item"
+            if campo == "Grávidas":
+                entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Recurso":
+                entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif campo == "Item":
+                # Atualiza os itens conforme o recurso selecionado
+                recurso_valor = self.entries.get("Recurso", None)
+                if recurso_valor:
+                    itens = self.dataset.get(recurso_valor.get(), [])
+                else:
+                    itens = []
+                entry = ttk.Combobox(frame, values=itens, state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
+            elif tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
                 entry.insert(0, valor)
             elif tipo == "combobox":
-               
-                if campo == "Tipo":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
+                if campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
-                
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -1208,23 +2446,8 @@ class RecursosFrame(ttk.Frame):
                     ], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino","Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
                     entry.set(valor)
-                elif campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-                elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-            elif tipo == "checkbox":
-                entry = tk.BooleanVar()
-                entry.set(valor == "Sim")
-                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
-                self.entries[campo] = entry
-                continue
-            elif tipo == "text":
-                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
-                entry.insert("1.0", valor)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
@@ -1232,9 +2455,12 @@ class RecursosFrame(ttk.Frame):
                     try:
                         entry.set_date(valor)
                     except ValueError:
-                        pass  # Ignora erros de data inválida
+                        pass
+            elif tipo == "text":
+                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                entry.insert("1.0", valor)
 
-            entry.pack(fill="x")
+            entry.pack(fill="x", expand=True)  # <-- largura total
             self.entries[campo] = entry
 
         # Botões com estilo azul e espaçamento ajustado
@@ -1243,6 +2469,24 @@ class RecursosFrame(ttk.Frame):
 
         ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_recurso(recurso, janela), style="App.TButton").pack(side="left", padx=10)
         ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
+
+    def atualizar_itens(self, event=None):
+        """Atualiza os itens disponíveis com base no recurso selecionado."""
+        recurso = self.entries["Recurso"].get()
+        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
+        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        if itens:
+            self.entries["Item"].current(0)  # Define o primeiro item como padrão
+
+    def atualizar_gravidas(self, event=None):
+        """Atualiza as opções de grávidas com base no sexo selecionado."""
+        sexo = self.entries["Sexo"].get()
+        if sexo == "Masculino":
+            self.entries["Grávidas"].set("Não")
+            self.entries["Grávidas"]["state"] = "disabled"
+        else:
+            self.entries["Grávidas"]["state"] = "readonly"
+            self.entries["Grávidas"].set("Sim")
 
     def guardar_alteracoes_recurso(self, recurso, janela):
         """Guarda as alterações feitas no recurso."""
@@ -1291,9 +2535,6 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
                 recurso["Data de Validade"],
-                
-               
-                recurso.get("Estado", "Fora de stock")
             ))
 
 class RelatoriosFrame(ttk.Frame):
@@ -1737,104 +2978,3 @@ class RelatoriosFrame(ttk.Frame):
                     file.write("Total de Pacientes: 400\n")
                     
                 elif relatorio == "Consultas":
-                    file.write("Consultas por Mês (Últimos 6 meses):\n")
-                    file.write("- Janeiro: 120 consultas\n")
-                    file.write("- Fevereiro: 150 consultas\n")
-                    file.write("- Março: 180 consultas\n")
-                    file.write("- Abril: 160 consultas\n")
-                    file.write("- Maio: 200 consultas\n")
-                    file.write("- Junho: 190 consultas\n\n")
-                    file.write("Média Mensal: 166.7 consultas\n")
-                    file.write("Total de Consultas: 1000\n")
-                    
-                elif relatorio == "Recursos":
-                    file.write("Distribuição de Recursos por Estado:\n")
-                    file.write("- Disponíveis: 150 (75.0%)\n")
-                    file.write("- Fora de stock: 30 (15.0%)\n")
-                    file.write("- Expirados: 20 (10.0%)\n\n")
-                    file.write("Total de Recursos: 200\n")
-                    
-                elif relatorio == "Campanhas":
-                    file.write("Distribuição de Campanhas por Estado:\n")
-                    file.write("- Ativas: 5 (62.5%)\n")
-                    file.write("- Encerradas: 3 (37.5%)\n\n")
-                    file.write("Total de Campanhas: 8\n")
-                
-                # Rodapé
-                file.write("\n" + "=" * 50 + "\n")
-                file.write("Relatório gerado pelo Sistema de Gestão de Saúde\n")
-                file.write("=" * 50 + "\n")
-                
-            messagebox.showinfo("Sucesso", f"Relatório de {relatorio} exportado com sucesso para:\n{file_path}")
-            
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao exportar o relatório:\n{str(e)}")
-
-class DashboardApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Dashboard - Saúde Comunitária")
-        self.root.geometry("1000x600")
-        self.root.configure(bg="#f5f5f5")  # Fundo neutro claro
-
-        self.selected_tab = None
-        self.create_widgets()
-
-    def create_widgets(self):
-        # Cabeçalho
-        header = tk.Frame(self.root, bg="#2c3e50", height=50)  # Fundo cinza escuro para o cabeçalho
-        header.pack(fill=tk.X, side=tk.TOP)
-        title = tk.Label(header, text="Dashboard - Saúde Comunitária", font=("Orbitron", 18, "bold"), bg="#2c3e50", fg="white")
-        title.pack(pady=10)
-
-        # Notebook com separadores personalizados
-        style = ttk.Style()
-        style.theme_use("default")
-        style.configure("TNotebook", background="#f5f5f5", borderwidth=0)  # Fundo neutro para o Notebook
-        style.configure("TNotebook.Tab", font=("Orbitron", 11), padding=[10, 5], background="#bdc3c7", foreground="#2c3e50", borderwidth=0)
-        style.map("TNotebook.Tab",
-                  background=[("selected", "#2c3e50")],
-                  foreground=[("selected", "white")])
-
-        self.tabs = ttk.Notebook(self.root)
-        self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
-
-        categorias = [
-            ("Médicos", "🩺"),       # Estetoscópio
-            ("Pacientes", "👤"),     # Pessoa
-            ("Consultas", "📅"),     # Calendário
-            ("Campanhas", "📢"),     # Megafone
-            ("Recursos", "💉"),      # Seringa (para medicamentos e vacinas)
-            ("Relatórios", "📊")    # Gráfico
-        ]
-
-        self.frames = {}
-        for cat, emoji in categorias:
-            if cat == "Relatórios":
-                frame = RelatoriosFrame(self.tabs)  # Usa o frame para relatórios
-            elif cat == "Campanhas":
-                frame = CampanhasFrame(self.tabs)  # Usa o frame para campanhas
-            elif cat == "Recursos":
-                frame = RecursosFrame(self.tabs)  # Usa o novo frame para recursos
-            else:
-                frame = ttk.Frame(self.tabs)
-                frame.configure(style="TFrame", padding=10)  # Fundo neutro para os frames
-            self.frames[cat] = frame
-
-            # Adiciona o emoji ao texto da aba
-            self.tabs.add(frame, text=f"{emoji}  {cat}")
-
-        # Atribui o dicionário de frames ao atributo frames do Notebook
-        self.tabs.frames = self.frames  # Corrige o acesso ao dicionário de frames
-
-        # Rodapé
-        footer = tk.Frame(self.root, bg="#2c3e50", height=30)  # Fundo cinza escuro para o rodapé
-        footer.pack(fill=tk.X, side=tk.BOTTOM)
-        user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#2c3e50", fg="white", font=("Orbitron", 9))
-        user_info.pack(pady=5)
-
-
-if __name__ == "__main__":
-    root = ThemedTk(theme="arc")
-    root.after(10, lambda: DashboardApp(root))
-    root.mainloop()
