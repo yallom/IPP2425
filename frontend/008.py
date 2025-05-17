@@ -17,11 +17,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
-from backend.Controllers import pessoascontroller as PC
+#from backend.Controllers import pessoascontroller as PC
 
-def Save_File ():
-    DadosPacientes = PC.getAllObjects()
-    return
+#def Save_File ():
+    #DadosPacientes = PC.getAllObjects()
+    #return
 
 # Fade-in effect
 def fade_in(window):
