@@ -42,7 +42,7 @@ def getAllPacients():
     return Paciente.show_all()
 
 
-#TESTES DE FUNCIONALIDADES
+"""#TESTES DE FUNCIONALIDADES
 
 a = addPacient("João", "23", "m", False, "3", "poliomielite", "A+")
 print(a)
@@ -50,4 +50,4 @@ b = getAllObjects()
 print(b)
 for i in b:
     print(i.get_self())
-print(getAllPacients())
+print(getAllPacients())"""

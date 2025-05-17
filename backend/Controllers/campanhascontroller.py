@@ -25,3 +25,6 @@ def deleteCampaign(obj):    #Apaga uma pessoa da classe "Pessoa" atual
 
 def getCampaign(id):    #Procura uma pessoa específica pelo seu ID
     return Campanha.show_by_id(id)
+
+def getAll():
+    return Campanha.get_all_instances()

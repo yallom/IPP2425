@@ -18,6 +18,9 @@ from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
 from backend.Controllers import pessoascontroller as PC
+from backend.Controllers import medicamentoscontroller as MC
+from backend.Controllers import campanhascontroller as CC
+
 
 def Save_File ():
     DadosPacientes = PC.getAllObjects()
@@ -716,7 +719,7 @@ class RecursosFrame(ttk.Frame):
         tabela_frame.pack(fill="both", expand=True, pady=10)
 
         # Tabela de recursos
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "Quantidade em Stock", "Campanha", "Estado")
+        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "ID")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview")
         
         # Ajusta o tamanho das colunas
@@ -726,9 +729,7 @@ class RecursosFrame(ttk.Frame):
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        self.tabela.column("Quantidade em Stock", width=150, anchor="center")
-        self.tabela.column("Campanha", width=200, anchor="center")
-        self.tabela.column("Estado", width=100, anchor="center")
+        self.tabela.column("ID", width=80, anchor="center")
         
         # Configura os cabeçalhos
         for col in colunas:
@@ -746,12 +747,8 @@ class RecursosFrame(ttk.Frame):
         self.tabela.configure(xscrollcommand=scrollbar_horizontal.set)
 
         # Dados iniciais (exemplo)
-        self.dados = [
-            {"Tipo": "Medicamento", "Nome": "Paracetamol", "Grupo-Alvo": "Adultos", "Grupo Risco": "Baixo",
-             "Gravidez": "Sim", "Data de Validade": "2025-12-31", "Quantidade em Stock": "100", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"},
-            {"Tipo": "Vacina", "Nome": "Vacina Gripe", "Grupo-Alvo": "Idosos", "Grupo Risco": "Médio",
-             "Gravidez": "Não", "Data de Validade": "2025-10-15", "Quantidade em Stock": "50", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"}
-        ]
+        MC.addMedicine("Med1","10","12","m",0,"1","2","2024-11-23")
+        self.dados = MC.getAll()
 
         # Preenche a tabela com os dados iniciais
         self.atualizar_tabela(self.dados)
@@ -765,15 +762,12 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-                recurso["Tipo"],
-                recurso["Nome"],
-                recurso["Grupo-Alvo"],
-                recurso["Grupo Risco"],
-                recurso["Gravidez"],
-                recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
-                recurso.get("Estado", "Fora de stock")
+                recurso.nome,
+                f"{recurso.idade[0]}-{recurso.idade[1]}",
+                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.gravidez,
+                recurso.validade,
+                recurso.id
             ))
 
     def novo_medicamento(self):
@@ -1340,15 +1334,13 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-                recurso["Tipo"],
-                recurso["Nome"],
-                recurso["Grupo-Alvo"],
-                recurso["Grupo Risco"],
-                recurso["Gravidez"],
-                recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
-                recurso.get("Estado", "Fora de stock")
+                "Medicamento",
+                recurso.nome,
+                f"{recurso.idade[0]}-{recurso.idade[1]}",
+                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.gravidez,
+                recurso.validade,
+                recurso.id
             ))
 
 class RelatoriosFrame(ttk.Frame):
@@ -1396,7 +1388,7 @@ class RelatoriosFrame(ttk.Frame):
         )
         self.combo_relatorios.current(0)
         self.combo_relatorios.pack(side="left", padx=5)
-        self.combo_relatorios.bind("<<ComboboxSelected>>", self.alternar_relatorio)
+        #self.combo_relatorios.bind("<<ComboboxSelected>>", self.alternar_relatorio)
 
         # Botão para gerar relatório
         ttk.Button(filtros_frame, text="Gerar Relatório", command=self.gerar_relatorio, style="Blue.TButton").pack(side="right", padx=5)

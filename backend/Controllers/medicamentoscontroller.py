@@ -21,3 +21,6 @@ def deleteMedicine(obj):    #Apaga uma pessoa da classe "Pessoa" atual
 
 def getMedicine(id):    #Procura uma pessoa específica pelo seu ID
     return Medicamento.show_by_id(id)
+
+def getAll():
+    return Medicamento.get_all_instances()

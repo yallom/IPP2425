@@ -47,18 +47,18 @@ class Paciente:
 
     @classmethod
     def delete_instance(cls,obj):
-        if (obj,id(obj)) in cls.instances:
+        if obj in cls.instances:
             #print("Utilizador encontrado") 
             try:
                 #print("A iniciar remoção do utilizador")
-                cls.instances.remove((obj, id(obj)))
+                cls.instances.remove(obj)
                 #print("Utilizador removido de instances")
                 del obj
                 return "Utilizador apagado com sucesso"
             except:
                 return f"Erro ao apagar utilizador {obj.nome}"
         else:
-            return f"Utilizador {obj} não encontrado"
+            return f"Utilizador {obj.nome} não encontrado"
         
     @classmethod
     def show_all(cls):
@@ -66,8 +66,8 @@ class Paciente:
     
     @classmethod
     def show_by_id(cls, uuid):
-        for item in cls.get_all_instances():
-            if item[1] == uuid:
-                return item
+        for obj in cls.instances:
+            if obj.id == uuid:
+                return obj
         return f"Utilizador {uuid} não encontrado!"
 
