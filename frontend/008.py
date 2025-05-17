@@ -1408,26 +1408,8 @@ class RelatoriosFrame(ttk.Frame):
         # Inicializa com o relatório de pacientes
         self._mostrar_relatorio_pacientes()
 
-    def alternar_relatorio(self, event):
-        """Atualiza o conteúdo com base no relatório selecionado."""
-        # Limpa o frame de conteúdo
-        for widget in self.conteudo_frame.winfo_children():
-            widget.destroy()
-
-        # Obtém o relatório selecionado
-        relatorio = self.combo_relatorios.get()
-
-        if relatorio == "Pacientes":
-            self._mostrar_relatorio_pacientes()
-        elif relatorio == "Consultas":
-            self._mostrar_relatorio_consultas()
-        elif relatorio == "Recursos":
-            self._mostrar_relatorio_recursos()
-        elif relatorio == "Campanhas":
-            self._mostrar_relatorio_campanhas()
-
     def _mostrar_relatorio_pacientes(self):
-        """Exibe o layout do relatório de pacientes."""
+        """Exibe o layout do relatório de pacientes com visualizações modernas."""
         # Frame para filtros (esquerda)
         filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
         filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -1453,58 +1435,64 @@ class RelatoriosFrame(ttk.Frame):
             combobox.pack(fill="x")
             self.filtros_selecionados[campo] = combobox
 
-        # Frame para o gráfico (direita)
-        grafico_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        grafico_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
+        # Frame para os gráficos (direita)
+        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
+        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
 
-        ttk.Label(grafico_frame, text="Pacientes por Risco de Saúde", style="Section.TLabel").pack(pady=10)
-
-        # Dados fictícios para o gráfico
+        # Dados fictícios para os gráficos
         categorias = ["Baixo", "Médio", "Alto"]
         valores = [200, 150, 50]
+        generos = ["Masculino", "Feminino"]
+        valores_genero = [180, 220]
+        faixas_etarias = ["0-3", "4-12", "13-18", "19-65", "65+"]
+        valores_idade = [50, 80, 70, 120, 80]
 
-        # Criação do gráfico usando matplotlib com estilo moderno
-        figura, ax = plt.subplots(figsize=(6, 4), dpi=100)
-        
-        # Define cores modernas e consistentes
-        cores = ['#3498db', '#2ecc71', '#e74c3c']
-        
-        # Cria o gráfico de barras com estilo moderno
-        bars = ax.bar(categorias, valores, color=cores, width=0.6, edgecolor='none')
-        
-        # Remove as bordas do gráfico
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['bottom'].set_color('#bdc3c7')
-        
-        # Adiciona grade horizontal sutil
-        ax.grid(axis='y', linestyle='--', alpha=0.3, color='#bdc3c7')
-        
-        # Remove os ticks do eixo y
-        ax.tick_params(axis='y', which='both', left=False)
-        
-        # Adiciona os valores acima das barras com estilo moderno
+        # Criação dos gráficos usando subplots
+        figura = plt.figure(figsize=(12, 8), dpi=100)
+        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
+
+        # Gráfico 1: Distribuição por Risco (Barras horizontais)
+        ax1 = figura.add_subplot(gs[0, 0])
+        cores = ['#2ecc71', '#f1c40f', '#e74c3c']
+        bars = ax1.barh(categorias, valores, color=cores, height=0.6)
+        ax1.set_title('Distribuição por Risco de Saúde', pad=20, fontsize=12, color='#2c3e50')
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        ax1.spines['left'].set_visible(False)
+        ax1.grid(axis='x', linestyle='--', alpha=0.3)
         for bar in bars:
-            height = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width()/2., height + 5,
-                   f'{int(height)}',
-                   ha='center', va='bottom', fontsize=10, color='#2c3e50')
-        
-        # Configura o título e labels
-        ax.set_xlabel('Risco de Saúde', fontsize=12, color='#2c3e50', labelpad=10)
-        ax.set_ylabel('Número de Pacientes', fontsize=12, color='#2c3e50', labelpad=10)
-        
+            width = bar.get_width()
+            ax1.text(width + 5, bar.get_y() + bar.get_height()/2, f'{int(width)}',
+                    ha='left', va='center', fontsize=10, color='#2c3e50')
+
+        # Gráfico 2: Distribuição por Gênero (Pizza)
+        ax2 = figura.add_subplot(gs[0, 1])
+        ax2.pie(valores_genero, labels=generos, autopct='%1.1f%%', colors=['#3498db', '#e84393'],
+                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
+        ax2.set_title('Distribuição por Gênero', pad=20, fontsize=12, color='#2c3e50')
+
+        # Gráfico 3: Distribuição por Faixa Etária (Área)
+        ax3 = figura.add_subplot(gs[1, :])
+        ax3.fill_between(faixas_etarias, valores_idade, alpha=0.3, color='#3498db')
+        ax3.plot(faixas_etarias, valores_idade, marker='o', color='#2980b9', linewidth=2)
+        ax3.set_title('Distribuição por Faixa Etária', pad=20, fontsize=12, color='#2c3e50')
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['right'].set_visible(False)
+        ax3.grid(axis='y', linestyle='--', alpha=0.3)
+        for i, valor in enumerate(valores_idade):
+            ax3.text(i, valor + 5, f'{int(valor)}', ha='center', va='bottom',
+                    fontsize=10, color='#2c3e50')
+
         # Ajusta o layout
         plt.tight_layout()
 
-        # Adiciona o gráfico ao frame
-        canvas = FigureCanvasTkAgg(figura, grafico_frame)
+        # Adiciona os gráficos ao frame
+        canvas = FigureCanvasTkAgg(figura, graficos_frame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
         canvas.draw()
 
     def _mostrar_relatorio_consultas(self):
-        """Exibe o layout do relatório de consultas."""
+        """Exibe o layout do relatório de consultas com visualizações modernas."""
         # Frame para filtros (esquerda)
         filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
         filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -1530,58 +1518,67 @@ class RelatoriosFrame(ttk.Frame):
             combobox.pack(fill="x")
             self.filtros_selecionados[campo] = combobox
 
-        # Frame para o gráfico (direita)
-        grafico_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        grafico_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
+        # Frame para os gráficos (direita)
+        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
+        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
 
-        ttk.Label(grafico_frame, text="Consultas por Mês", style="Section.TLabel").pack(pady=10)
-
-        # Dados fictícios para o gráfico
+        # Dados fictícios para os gráficos
         meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-        consultas = [120, 150, 180, 160, 200, 190]
+        consultas_geral = [120, 150, 180, 160, 200, 190]
+        consultas_especializada = [80, 100, 120, 110, 140, 130]
+        consultas_emergencia = [40, 50, 60, 55, 70, 65]
+        tipos_consulta = ["Geral", "Especializada", "Emergência"]
+        total_consultas = [1000, 700, 340]
 
-        # Criação do gráfico de linha com estilo moderno
-        figura, ax = plt.subplots(figsize=(6, 4), dpi=100)
-        
-        # Define cores e estilo moderno
-        cor_principal = '#3498db'
-        
-        # Cria o gráfico de linha com estilo moderno
-        ax.plot(meses, consultas, marker='o', color=cor_principal, linewidth=2.5,
-                markersize=8, markerfacecolor='white', markeredgecolor=cor_principal,
-                markeredgewidth=2)
-        
-        # Remove as bordas do gráfico
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['bottom'].set_color('#bdc3c7')
-        
-        # Adiciona grade horizontal sutil
-        ax.grid(axis='y', linestyle='--', alpha=0.3, color='#bdc3c7')
-        
-        # Remove os ticks do eixo y
-        ax.tick_params(axis='y', which='both', left=False)
-        
-        # Adiciona os valores acima dos pontos
-        for i, valor in enumerate(consultas):
-            ax.text(i, valor + 5, f'{valor}', ha='center', va='bottom',
-                   fontsize=10, color='#2c3e50')
-        
-        # Configura o título e labels
-        ax.set_xlabel('Mês', fontsize=12, color='#2c3e50', labelpad=10)
-        ax.set_ylabel('Número de Consultas', fontsize=12, color='#2c3e50', labelpad=10)
-        
+        # Criação dos gráficos usando subplots
+        figura = plt.figure(figsize=(12, 8), dpi=100)
+        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
+
+        # Gráfico 1: Evolução Mensal (Linha com área)
+        ax1 = figura.add_subplot(gs[0, :])
+        ax1.fill_between(meses, consultas_geral, alpha=0.2, color='#3498db', label='Geral')
+        ax1.fill_between(meses, consultas_especializada, alpha=0.2, color='#2ecc71', label='Especializada')
+        ax1.fill_between(meses, consultas_emergencia, alpha=0.2, color='#e74c3c', label='Emergência')
+        ax1.plot(meses, consultas_geral, marker='o', color='#2980b9', linewidth=2)
+        ax1.plot(meses, consultas_especializada, marker='o', color='#27ae60', linewidth=2)
+        ax1.plot(meses, consultas_emergencia, marker='o', color='#c0392b', linewidth=2)
+        ax1.set_title('Evolução Mensal de Consultas', pad=20, fontsize=12, color='#2c3e50')
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        ax1.grid(axis='y', linestyle='--', alpha=0.3)
+        ax1.legend()
+
+        # Gráfico 2: Distribuição por Tipo (Barras empilhadas)
+        ax2 = figura.add_subplot(gs[1, 0])
+        cores = ['#3498db', '#2ecc71', '#e74c3c']
+        bars = ax2.bar(tipos_consulta, total_consultas, color=cores)
+        ax2.set_title('Total de Consultas por Tipo', pad=20, fontsize=12, color='#2c3e50')
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['right'].set_visible(False)
+        ax2.grid(axis='y', linestyle='--', alpha=0.3)
+        for bar in bars:
+            height = bar.get_height()
+            ax2.text(bar.get_x() + bar.get_width()/2., height + 10,
+                    f'{int(height)}', ha='center', va='bottom', fontsize=10, color='#2c3e50')
+
+        # Gráfico 3: Distribuição Percentual (Pizza)
+        ax3 = figura.add_subplot(gs[1, 1])
+        total = sum(total_consultas)
+        porcentagens = [x/total*100 for x in total_consultas]
+        ax3.pie(porcentagens, labels=tipos_consulta, autopct='%1.1f%%', colors=cores,
+                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
+        ax3.set_title('Distribuição Percentual', pad=20, fontsize=12, color='#2c3e50')
+
         # Ajusta o layout
         plt.tight_layout()
 
-        # Adiciona o gráfico ao frame
-        canvas = FigureCanvasTkAgg(figura, grafico_frame)
+        # Adiciona os gráficos ao frame
+        canvas = FigureCanvasTkAgg(figura, graficos_frame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
         canvas.draw()
 
     def _mostrar_relatorio_recursos(self):
-        """Exibe o layout do relatório de recursos."""
+        """Exibe o layout do relatório de recursos com visualizações modernas."""
         # Frame para filtros (esquerda)
         filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
         filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -1607,44 +1604,65 @@ class RelatoriosFrame(ttk.Frame):
             combobox.pack(fill="x")
             self.filtros_selecionados[campo] = combobox
 
-        # Frame para o gráfico (direita)
-        grafico_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        grafico_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
+        # Frame para os gráficos (direita)
+        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
+        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
 
-        ttk.Label(grafico_frame, text="Recursos por Estado", style="Section.TLabel").pack(pady=10)
-
-        # Dados fictícios para o gráfico
+        # Dados fictícios para os gráficos
         estados = ["Disponível", "Fora de stock", "Expirado"]
         quantidades = [150, 30, 20]
+        tipos = ["Medicamento", "Vacina"]
+        quantidades_tipo = [120, 80]
+        meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
+        consumo_medicamentos = [100, 120, 90, 110, 130, 115]
+        consumo_vacinas = [60, 70, 80, 75, 85, 90]
 
-        # Criação do gráfico de pizza com estilo moderno
-        figura, ax = plt.subplots(figsize=(6, 4), dpi=100)
-        
-        # Define cores modernas
-        cores = ['#2ecc71', '#e74c3c', '#f1c40f']
-        
-        # Cria o gráfico de pizza com estilo moderno
-        wedges, texts, autotexts = ax.pie(quantidades, labels=estados, colors=cores,
-                                         autopct='%1.1f%%', startangle=90,
-                                         wedgeprops={'edgecolor': 'white', 'linewidth': 1.5},
-                                         textprops={'color': '#2c3e50', 'fontsize': 10})
-        
-        # Remove a borda do gráfico
-        ax.axis('equal')
-        
-        # Adiciona título
-        ax.set_title('Distribuição de Recursos', fontsize=14, color='#2c3e50', pad=20)
-        
+        # Criação dos gráficos usando subplots
+        figura = plt.figure(figsize=(12, 8), dpi=100)
+        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
+
+        # Gráfico 1: Distribuição por Estado (Barras horizontais)
+        ax1 = figura.add_subplot(gs[0, 0])
+        cores = ['#2ecc71', '#f1c40f', '#e74c3c']
+        bars = ax1.barh(estados, quantidades, color=cores, height=0.6)
+        ax1.set_title('Distribuição por Estado', pad=20, fontsize=12, color='#2c3e50')
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        ax1.spines['left'].set_visible(False)
+        ax1.grid(axis='x', linestyle='--', alpha=0.3)
+        for bar in bars:
+            width = bar.get_width()
+            ax1.text(width + 5, bar.get_y() + bar.get_height()/2, f'{int(width)}',
+                    ha='left', va='center', fontsize=10, color='#2c3e50')
+
+        # Gráfico 2: Distribuição por Tipo (Pizza)
+        ax2 = figura.add_subplot(gs[0, 1])
+        ax2.pie(quantidades_tipo, labels=tipos, autopct='%1.1f%%', colors=['#3498db', '#e84393'],
+                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
+        ax2.set_title('Distribuição por Tipo', pad=20, fontsize=12, color='#2c3e50')
+
+        # Gráfico 3: Consumo Mensal (Área)
+        ax3 = figura.add_subplot(gs[1, :])
+        ax3.fill_between(meses, consumo_medicamentos, alpha=0.2, color='#3498db', label='Medicamentos')
+        ax3.fill_between(meses, consumo_vacinas, alpha=0.2, color='#e84393', label='Vacinas')
+        ax3.plot(meses, consumo_medicamentos, marker='o', color='#2980b9', linewidth=2)
+        ax3.plot(meses, consumo_vacinas, marker='o', color='#c0392b', linewidth=2)
+        ax3.set_title('Consumo Mensal', pad=20, fontsize=12, color='#2c3e50')
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['right'].set_visible(False)
+        ax3.grid(axis='y', linestyle='--', alpha=0.3)
+        ax3.legend()
+
         # Ajusta o layout
         plt.tight_layout()
 
-        # Adiciona o gráfico ao frame
-        canvas = FigureCanvasTkAgg(figura, grafico_frame)
+        # Adiciona os gráficos ao frame
+        canvas = FigureCanvasTkAgg(figura, graficos_frame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
         canvas.draw()
 
     def _mostrar_relatorio_campanhas(self):
-        """Exibe o layout do relatório de campanhas."""
+        """Exibe o layout do relatório de campanhas com visualizações modernas."""
         # Frame para filtros (esquerda)
         filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
         filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -1670,53 +1688,66 @@ class RelatoriosFrame(ttk.Frame):
             combobox.pack(fill="x")
             self.filtros_selecionados[campo] = combobox
 
-        # Frame para o gráfico (direita)
-        grafico_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        grafico_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
+        # Frame para os gráficos (direita)
+        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
+        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
 
-        ttk.Label(grafico_frame, text="Campanhas por Estado", style="Section.TLabel").pack(pady=10)
-
-        # Dados fictícios para o gráfico
+        # Dados fictícios para os gráficos
         estados = ["Ativa", "Encerrada"]
         quantidades = [5, 3]
+        grupos_alvo = ["Bebês", "Crianças", "Jovens", "Adultos", "Idosos"]
+        participantes = [100, 150, 120, 200, 180]
+        meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
+        campanhas_ativas = [2, 3, 4, 4, 5, 5]
+        campanhas_encerradas = [1, 1, 2, 2, 2, 3]
 
-        # Criação do gráfico de barras com estilo moderno
-        figura, ax = plt.subplots(figsize=(6, 4), dpi=100)
-        
-        # Define cores modernas
+        # Criação dos gráficos usando subplots
+        figura = plt.figure(figsize=(12, 8), dpi=100)
+        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
+
+        # Gráfico 1: Estado das Campanhas (Barras horizontais)
+        ax1 = figura.add_subplot(gs[0, 0])
         cores = ['#2ecc71', '#e74c3c']
-        
-        # Cria o gráfico de barras com estilo moderno
-        bars = ax.bar(estados, quantidades, color=cores, width=0.6, edgecolor='none')
-        
-        # Remove as bordas do gráfico
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.spines['left'].set_visible(False)
-        ax.spines['bottom'].set_color('#bdc3c7')
-        
-        # Adiciona grade horizontal sutil
-        ax.grid(axis='y', linestyle='--', alpha=0.3, color='#bdc3c7')
-        
-        # Remove os ticks do eixo y
-        ax.tick_params(axis='y', which='both', left=False)
-        
-        # Adiciona os valores acima das barras com estilo moderno
+        bars = ax1.barh(estados, quantidades, color=cores, height=0.6)
+        ax1.set_title('Estado das Campanhas', pad=20, fontsize=12, color='#2c3e50')
+        ax1.spines['top'].set_visible(False)
+        ax1.spines['right'].set_visible(False)
+        ax1.spines['left'].set_visible(False)
+        ax1.grid(axis='x', linestyle='--', alpha=0.3)
+        for bar in bars:
+            width = bar.get_width()
+            ax1.text(width + 0.1, bar.get_y() + bar.get_height()/2, f'{int(width)}',
+                    ha='left', va='center', fontsize=10, color='#2c3e50')
+
+        # Gráfico 2: Participantes por Grupo-Alvo (Barras)
+        ax2 = figura.add_subplot(gs[0, 1])
+        bars = ax2.bar(grupos_alvo, participantes, color='#3498db')
+        ax2.set_title('Participantes por Grupo-Alvo', pad=20, fontsize=12, color='#2c3e50')
+        ax2.spines['top'].set_visible(False)
+        ax2.spines['right'].set_visible(False)
+        ax2.grid(axis='y', linestyle='--', alpha=0.3)
         for bar in bars:
             height = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width()/2., height + 0.1,
-                   f'{int(height)}',
-                   ha='center', va='bottom', fontsize=10, color='#2c3e50')
-        
-        # Configura o título e labels
-        ax.set_xlabel('Estado', fontsize=12, color='#2c3e50', labelpad=10)
-        ax.set_ylabel('Número de Campanhas', fontsize=12, color='#2c3e50', labelpad=10)
-        
+            ax2.text(bar.get_x() + bar.get_width()/2., height + 5,
+                    f'{int(height)}', ha='center', va='bottom', fontsize=10, color='#2c3e50')
+
+        # Gráfico 3: Evolução Mensal (Área)
+        ax3 = figura.add_subplot(gs[1, :])
+        ax3.fill_between(meses, campanhas_ativas, alpha=0.2, color='#2ecc71', label='Ativas')
+        ax3.fill_between(meses, campanhas_encerradas, alpha=0.2, color='#e74c3c', label='Encerradas')
+        ax3.plot(meses, campanhas_ativas, marker='o', color='#27ae60', linewidth=2)
+        ax3.plot(meses, campanhas_encerradas, marker='o', color='#c0392b', linewidth=2)
+        ax3.set_title('Evolução Mensal das Campanhas', pad=20, fontsize=12, color='#2c3e50')
+        ax3.spines['top'].set_visible(False)
+        ax3.spines['right'].set_visible(False)
+        ax3.grid(axis='y', linestyle='--', alpha=0.3)
+        ax3.legend()
+
         # Ajusta o layout
         plt.tight_layout()
 
-        # Adiciona o gráfico ao frame
-        canvas = FigureCanvasTkAgg(figura, grafico_frame)
+        # Adiciona os gráficos ao frame
+        canvas = FigureCanvasTkAgg(figura, graficos_frame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
         canvas.draw()
 
