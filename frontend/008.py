@@ -2938,43 +2938,4 @@ class RelatoriosFrame(ttk.Frame):
         canvas.get_tk_widget().pack(fill="both", expand=True)
         canvas.draw()
 
-    def gerar_relatorio(self):
-        """Gera e exporta um relatório detalhado no formato TXT."""
-        relatorio = self.combo_relatorios.get()
-        
-        # Abre uma janela para selecionar o local de salvamento
-        file_path = filedialog.asksaveasfilename(
-            defaultextension=".txt",
-            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            title="Salvar Relatório"
-        )
-        
-        if not file_path:  # Se o usuário cancelar
-            return
-            
-        try:
-            with open(file_path, "w", encoding="utf-8") as file:
-                # Cabeçalho do relatório
-                file.write("=" * 50 + "\n")
-                file.write(f"RELATÓRIO DE {relatorio.upper()}\n")
-                file.write("=" * 50 + "\n\n")
-                
-                # Data e hora da geração
-                from datetime import datetime
-                file.write(f"Data de Geração: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n\n")
-                
-                # Filtros aplicados
-                file.write("Filtros Aplicados:\n")
-                for campo, combobox in self.filtros_selecionados.items():
-                    file.write(f"- {campo}: {combobox.get()}\n")
-                file.write("\n")
-                
-                # Conteúdo específico do relatório
-                if relatorio == "Pacientes":
-                    file.write("Distribuição de Pacientes por Risco de Saúde:\n")
-                    file.write("- Baixo: 200 pacientes\n")
-                    file.write("- Médio: 150 pacientes\n")
-                    file.write("- Alto: 50 pacientes\n\n")
-                    file.write("Total de Pacientes: 400\n")
-                    
-                elif relatorio == "Consultas":
+   
