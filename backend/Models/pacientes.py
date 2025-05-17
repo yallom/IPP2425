@@ -16,7 +16,7 @@ class Paciente:
             self.gravidez = gravidez
 
         self.id = f"P{len(Paciente.instances) + 1 :04d}"
-        Paciente.instances.append((self, id(self)))
+        Paciente.instances.append(self)
 
     def get_self(self):
         return (self.nome, self.idade, self.sexo, self.gravidez, self.risco, self.doenca, self.sangue, self.id)
