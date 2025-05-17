@@ -1,4 +1,3 @@
-import weakref
 
 class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou de risco
 
@@ -43,9 +42,3 @@ class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou 
             if item.id == uuid:
                 return item
         return f"Medicamento {uuid} não encontrado!"
-
-q = Medicamento("Minoxidil","18", "20","1", "3","1", "10-11-12")
-q.get_self()
-Medicamento.get_all_instances()
-del q
-Medicamento.get_all_instances()

@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 #ESTE FICHEIRO NÃO DÁ PARA CORRER NORMALMENTE POR SER PARTE DE UM PACKAGE, SE FOR PRECISO TESTAR TEM DE CORRER "python -m backend.Controllers.cappmanhascontroller" NO TERMINAL, COM A PASTA IPP2425 ABERTA
 
 from ..Models.campanhas import Campanha    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package

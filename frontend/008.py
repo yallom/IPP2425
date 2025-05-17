@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from ttkthemes import ThemedTk
@@ -5,7 +9,7 @@ from PIL import Image, ImageTk
 import threading
 import time
 from datetime import datetime
-from tkcalendar import DateEntry  
+from tkcalendar import DateEntry
 import csv
 from tkinter import filedialog
 from matplotlib.figure import Figure
@@ -13,6 +17,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
+from backend.Controllers import pessoascontroller as PC
+
+def Save_File ():
+    DadosPacientes = PC.getAllObjects()
+    return
 
 # Fade-in effect
 def fade_in(window):

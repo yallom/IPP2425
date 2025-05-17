@@ -1,6 +1,8 @@
-#ESTE FICHEIRO NÃO DÁ PARA CORRER NORMALMENTE POR SER PARTE DE UM PACKAGE, SE FOR PRECISO TESTAR TEM DE CORRER "python -m backend.Controllers.pessoascontroller" NO TERMINAL, COM A PASTA IPP2425 ABERTA
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))#ESTE FICHEIRO NÃO DÁ PARA CORRER NORMALMENTE POR SER PARTE DE UM PACKAGE, SE FOR PRECISO TESTAR TEM DE CORRER "python -m backend.Controllers.pessoascontroller" NO TERMINAL, COM A PASTA IPP2425 ABERTA
 
-from ..Models.pacientes import Paciente    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package
+from Models.pacientes import Paciente    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package
 
 def addPacient(name: str, age: str, sex: str, gravidez: bool, risk: str, doenca: str, tipo_sanguineo: str):     #Cria uma nova Pessoa no sistema
     ageint = int(age.strip())
@@ -33,58 +35,19 @@ def editPacient(obj, name, age, sex, gravidez, risk, doenca, tipo_sanguineo):   
 
     return obj.edit_self(newname, ageint, newsex, gravidez, newrisk, newdoenca, newtipo)
 
-def getAllPacients():
+def getAllObjects():
     return Paciente.get_all_instances()
+
+def getAllPacients():
+    return Paciente.show_all()
 
 
 #TESTES DE FUNCIONALIDADES
 
-"""
-x = addPerson("João", "17", "m", True, "1")
-print("OBJ: ", x)
-print("ID: ", id(x))
-
-addPerson("Maria", "21", "f", True, "2")
-addPerson("António", "45", "m", True, "0")
-
-y = Paciente.get_all_instances()
-z = Paciente.show_all()
-
-print(y)
-print(z)
-
-
-lista = [id(i) for i in y]
-lista.append(0)
-
-print(lista)
-
-for elem in lista:
-    try:
-        print("AQUI: ", getPerson(elem).get_self()[0])
-    except:
-        print(f"ERRO: Elemento {elem} não pode ser acessado")
-
-print("Elemento editado:", editPerson(x, "João", "18", "m", True, "1")[0])
-
-print(deletePerson(x))
-
-z = Paciente.get_all_instances()
-lista1 = [id(i) for i in z]
-lista1.append(0)
-
-print(lista1)
-
-for elem in lista1:
-    try:
-        print("AQUI: ", getPerson(elem).get_self()[0])
-    except:
-        print(f"ERRO: Elemento {elem} não pode ser acessado")
-
-
-x = addPerson("João", "17", "m", True, "1")
-print("OBJ: ", x)
-print("ID: ", id(x))
-print(getPerson(id(x)).get_self())
-print(deletePerson(getPerson(id(x))))
-"""
+a = addPacient("João", "23", "m", False, "3", "poliomielite", "A+")
+print(a)
+b = getAllObjects()
+print(b)
+for i in b:
+    print(i.get_self())
+print(getAllPacients())
