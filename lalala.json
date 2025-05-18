@@ -1,0 +1,22 @@
+{
+    "Pacientes": [],
+    "Medicamentos": [
+        {
+            "id": "M0001",
+            "nome": "Paracetamol",
+            "tipo": "Medicamento",
+            "idade": [
+                1,
+                20
+            ],
+            "eficacia": [
+                1,
+                2
+            ],
+            "gravidez": 0,
+            "validade": "10-05-2026"
+        }
+    ],
+    "Vacinas": [],
+    "Médicos": []
+}

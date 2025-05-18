@@ -8,8 +8,10 @@ def addPacient(name: str, age: str, sex: str, gravidez: bool, doenca: str, tipo_
     X = Paciente(name,age,sex,tipo_sanguineo,morada,doenca,gravidez)
     return X
 
-def delete(obj):    #Apaga uma pessoa da classe "Pessoa" atual
-    return Paciente.delete_instance(obj)
+def delete(id):    #Apaga uma pessoa da classe "Pessoa" atual
+    obj = search(id)
+    print(f"Apagar {obj.nome} com ID {obj.id}")
+    return Paciente.delete_instance(id)
 
 #def searchPerson(obj):    #Meio inútil, mantém-se por agora
     return Paciente.get_instance(obj)
@@ -18,15 +20,16 @@ def search(id):    #Procura uma pessoa específica pelo seu ID
     return Paciente.show_by_id(id)
 
 
-def edit(obj, name, age, sex, gravidez, risk, doenca, tipo_sanguineo):    #Edita a informação de uma pessoa na classe "Pessoa" atual
-    ageint = int(age.strip())
+def edit(id, name, age, sex, tipo_sanguineo, location, doenca, gravidez):    #Edita a informação de uma pessoa na classe "Pessoa" atual
+    ageint = int(age.strip()) if age is str else int(age)
     newname = name.strip()
     newsex = sex.strip()
-    newrisk = int(risk.strip())
-    newdoenca = doenca.strip()
+    newlocation = location.strip()
+    newdoenca = doenca.strip() if doenca is str else doenca
     newtipo = tipo_sanguineo.strip()
+    obj = search(id)
 
-    return obj.edit_self(newname, ageint, newsex, gravidez, newrisk, newdoenca, newtipo)
+    return Paciente.edit_self(obj, newname, ageint, newsex, newtipo, newlocation, newdoenca, gravidez)
 
 def getAll():
     return Paciente.instances
