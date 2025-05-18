@@ -1413,7 +1413,9 @@ class RelatoriosFrame(ttk.Frame):
         self.date_fim.pack(side="left", padx=5)
 
         # Botão Gerar Relatório (direita)
-        ttk.Button(controles_frame, text="Gerar Relatório", style="App.TButton").pack(side="right")
+        ttk.Button(controles_frame, text="Gerar Relatório", 
+                  command=self.atualizar_relatorio_selecionado,
+                  style="App.TButton").pack(side="right")
 
         # Frame para o conteúdo do relatório (tabela e gráficos)
         self.conteudo_frame = ttk.Frame(self, style="Custom.TFrame")
@@ -1423,33 +1425,82 @@ class RelatoriosFrame(ttk.Frame):
         export_botoes_frame = ttk.Frame(self, style="Custom.TFrame")
         export_botoes_frame.pack(fill="x", pady=10)
 
-        
-
-    def mostrar_relatorio_selecionado(self, event=None):
-        """Exibe o relatório selecionado no combobox."""
+    def atualizar_relatorio_selecionado(self):
+        """Atualiza o relatório com base no tipo selecionado e nas datas."""
         relatorio = self.combo_relatorios.get()
-        # Limpa o frame de conteúdo
-        for widget in self.conteudo_frame.winfo_children():
-            widget.destroy()
+        
+        # Obtém as datas selecionadas
+        data_inicio = self.date_inicio.get_date()
+        data_fim = self.date_fim.get_date()
 
         if relatorio == "Campanhas":
-            self.mostrar_relatorio_campanhas()
+            self.atualizar_relatorio_campanhas()
         elif relatorio == "Consultas":
-            self.mostrar_relatorio_consultas()
+            # Obtém os dados das consultas
+            try:
+                consultas_frame = self.master.frames["Consultas"]
+                todas_consultas = consultas_frame.consultas
+            except (AttributeError, KeyError):
+                messagebox.showerror("Erro", "Não foi possível acessar os dados das consultas.")
+                return
 
-    def mostrar_relatorio_campanhas(self):
+            # Filtra as consultas pelo período selecionado
+            consultas_filtradas = []
+            for consulta in todas_consultas:
+                try:
+                    data_consulta = datetime.strptime(consulta["Data"], "%Y-%m-%d").date()
+                    if data_inicio <= data_consulta <= data_fim:
+                        consultas_filtradas.append(consulta)
+                except ValueError:
+                    continue
+
+            # Atualiza a visualização com as consultas filtradas
+            self.mostrar_relatorio_consultas(consultas_filtradas)
+
+    def atualizar_relatorio_campanhas(self):
+        """Atualiza o relatório de campanhas com base nas datas selecionadas."""
+        # Obtém as datas selecionadas
+        data_inicio = self.date_inicio.get_date()
+        data_fim = self.date_fim.get_date()
+
+        # Obtém os dados das campanhas
+        try:
+            campanhas_frame = self.master.frames["Campanhas"]
+            todas_campanhas = campanhas_frame.campanhas
+        except (AttributeError, KeyError):
+            messagebox.showerror("Erro", "Não foi possível acessar os dados das campanhas.")
+            return
+
+        # Filtra as campanhas pelo período selecionado
+        campanhas_filtradas = []
+        for campanha in todas_campanhas:
+            try:
+                data_inicio_camp = datetime.strptime(campanha["Início"], "%Y-%m-%d").date()
+                data_fim_camp = datetime.strptime(campanha["Fim"], "%Y-%m-%d").date()
+                
+                # Verifica se a campanha está dentro do período selecionado
+                if data_inicio <= data_fim_camp and data_fim >= data_inicio_camp:
+                    campanhas_filtradas.append(campanha)
+            except ValueError:
+                continue
+
+        # Atualiza a visualização com as campanhas filtradas
+        self.mostrar_relatorio_campanhas(campanhas_filtradas)
+
+    def mostrar_relatorio_campanhas(self, campanhas=None):
         """Exibe o relatório de campanhas com tabela e visualizações (gráficos)."""
         # Limpa o frame de conteúdo
         for widget in self.conteudo_frame.winfo_children():
             widget.destroy()
 
-        # Obtém os dados das campanhas
-        try:
-            campanhas_frame = self.master.frames["Campanhas"]
-            campanhas = campanhas_frame.campanhas
-        except (AttributeError, KeyError):
-            messagebox.showerror("Erro", "Não foi possível acessar os dados das campanhas.")
-            return
+        # Se não foram fornecidas campanhas, obtém todas
+        if campanhas is None:
+            try:
+                campanhas_frame = self.master.frames["Campanhas"]
+                campanhas = campanhas_frame.campanhas
+            except (AttributeError, KeyError):
+                messagebox.showerror("Erro", "Não foi possível acessar os dados das campanhas.")
+                return
 
         # Frame principal para a tabela e visualizações lado a lado
         main_viz_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame")
@@ -1504,62 +1555,296 @@ class RelatoriosFrame(ttk.Frame):
         estado_sizes = [campanhas_ativas, campanhas_encerradas]
         estado_colors = ['#27ae60', '#c0392b'] # Verde e Vermelho do tema
 
-        fig1 = Figure(figsize=(3.5, 2.5), dpi=100) # Reduced height
+        fig1 = Figure(figsize=(6, 4), dpi=100)
         ax1 = fig1.add_subplot(111)
         ax1.pie(estado_sizes, labels=estado_labels, autopct='%1.1f%%', colors=estado_colors,
                 wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
-        ax1.set_title('Estado das Campanhas', fontsize=10, color='#2c3e50')
+        ax1.set_title('Estado das Campanhas', fontsize=12, color='#2c3e50')
         
         canvas1 = FigureCanvasTkAgg(fig1, viz_frame)
         canvas1.draw()
         canvas1.get_tk_widget().pack(fill="x", pady=(0, 10))
 
-        # --- Novo Gráfico: Número de Participantes por Campanha (Barras) ---
-        campanhas_nomes = [c["Nome"] for c in campanhas]
-        # Ensure "Número de Participantes" is treated as a number, default to 0 if not available or invalid
-        participantes_valores = []
-        for c in campanhas:
-            try:
-                # Get the value, default to 0 if not available
-                part = c.get("Número de Participantes", 0)
-                # Convert to float. This works for both int and float types.
-                participantes_valores.append(float(part))
-            except (ValueError, TypeError):
-                # If conversion fails (e.g., value is not a number), default to 0.0
-                participantes_valores.append(0.0) 
+        # --- Gráfico 2: Número de Participantes por Campanha (Barras) ---
+        try:
+            # Ordena as campanhas por número de participantes
+            campanhas_ordenadas = sorted(campanhas, key=lambda x: float(x.get("Número de Participantes", 0)), reverse=True)
+            nomes_ordenados = [c["Nome"] for c in campanhas_ordenadas]
+            valores_ordenados = [float(c.get("Número de Participantes", 0)) for c in campanhas_ordenadas]
+            
+            fig2 = Figure(figsize=(6, 4), dpi=100)
+            ax2 = fig2.add_subplot(111)
+            
+            # Cria as barras com cores diferentes baseadas no valor
+            bars = ax2.bar(nomes_ordenados, valores_ordenados, 
+                          color=['#2ecc71' if v > 100 else '#f1c40f' if v > 50 else '#e74c3c' for v in valores_ordenados])
+            
+            ax2.set_title('Número de Participantes por Campanha', fontsize=12, color='#2c3e50')
+            ax2.set_ylabel('Número de Participantes', fontsize=10, color='#2c3e50')
+            ax2.tick_params(axis='x', rotation=45, labelsize=9)
+            ax2.tick_params(axis='y', labelsize=9)
+            
+            # Adiciona os valores no topo das barras
+            for bar in bars:
+                yval = bar.get_height()
+                ax2.text(bar.get_x() + bar.get_width()/2.0, yval,
+                        int(yval) if yval.is_integer() else round(yval, 2),
+                        va='bottom', ha='center', fontsize=9)
+            
+            # Adiciona uma grade para melhor visualização
+            ax2.grid(True, linestyle='--', alpha=0.7)
+            
+            fig2.tight_layout()
+            
+            canvas2 = FigureCanvasTkAgg(fig2, viz_frame)
+            canvas2.draw()
+            canvas2.get_tk_widget().pack(fill="x", pady=(10, 0))
+            
+        except Exception as e:
+            print(f"Erro ao criar gráfico de barras: {e}")
+            messagebox.showerror("Erro", f"Erro ao criar gráfico de barras: {e}")
 
-        fig2 = Figure(figsize=(8, 6), dpi=100)  # Increased size from (4, 3.5) to (8, 6)
-        ax2 = fig2.add_subplot(111)
-        
-        # Create bars
-        bars = ax2.bar(campanhas_nomes, participantes_valores, color='#3498db') # Azul do tema
-        
-        ax2.set_title('Número de Participantes por Campanha', fontsize=12, color='#2c3e50')  # Increased font size
-        ax2.set_ylabel('Nº de Participantes', fontsize=10, color='#2c3e50')  # Increased font size
-        ax2.tick_params(axis='x', rotation=90, labelsize=9)  # Increased label size
-        ax2.tick_params(axis='y', labelsize=9)  # Increased label size
-        
-        # Add values on top of bars
-        for bar in bars:
-            yval = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width()/2.0, yval, int(yval) if yval.is_integer() else round(yval, 2), va='bottom', ha='center', fontsize=9)  # Increased font size
-
-        fig2.tight_layout() # Adjust layout to prevent overlap
-
-        canvas2 = FigureCanvasTkAgg(fig2, viz_frame)
-        canvas2.draw()
-        canvas2.get_tk_widget().pack(fill="x", pady=(10, 0))
-
-    def mostrar_relatorio_consultas(self):
-        """Exibe o relatório de consultas (a ser implementado)."""
+    def mostrar_relatorio_selecionado(self, event=None):
+        """Exibe o relatório selecionado no combobox."""
+        relatorio = self.combo_relatorios.get()
         # Limpa o frame de conteúdo
         for widget in self.conteudo_frame.winfo_children():
             widget.destroy()
+
+        if relatorio == "Campanhas":
+            self.mostrar_relatorio_campanhas()
+        elif relatorio == "Consultas":
+            self.mostrar_relatorio_consultas()
+
+    def mostrar_relatorio_consultas(self):
+        """Exibe o relatório de consultas com visualizações e estatísticas."""
+        # Limpa o frame de conteúdo
+        for widget in self.conteudo_frame.winfo_children():
+            widget.destroy()
+
+        # Dados de exemplo para demonstração
+        consultas = [
+            {"Data": "2025-01-15", "Médico": "Dr. Silva", "Paciente": "Maria Santos", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
+            {"Data": "2025-01-16", "Médico": "Dra. Oliveira", "Paciente": "João Pereira", "Tipo": "Urgência", "Duração": 45, "Estado": "Concluída"},
+            {"Data": "2025-01-17", "Médico": "Dr. Santos", "Paciente": "Ana Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
+            {"Data": "2025-01-18", "Médico": "Dra. Oliveira", "Paciente": "Pedro Lima", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Concluída"},
+            {"Data": "2025-01-19", "Médico": "Dr. Silva", "Paciente": "Carla Mendes", "Tipo": "Urgência", "Duração": 60, "Estado": "Concluída"},
+            {"Data": "2025-01-20", "Médico": "Dr. Santos", "Paciente": "Ricardo Alves", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"},
+            {"Data": "2025-01-21", "Médico": "Dra. Oliveira", "Paciente": "Sofia Martins", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Agendada"},
+            {"Data": "2025-01-22", "Médico": "Dr. Silva", "Paciente": "Miguel Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"}
+        ]
+
+        # Frame principal para estatísticas e gráficos
+        main_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame")
+        main_frame.pack(fill="both", expand=True, padx=20, pady=10)
+
+        # Frame para estatísticas rápidas
+        stats_frame = ttk.Frame(main_frame, style="Custom.TFrame")
+        stats_frame.pack(fill="x", pady=(0, 20))
+
+        # Estatísticas rápidas
+        total_consultas = len(consultas)
+        consultas_concluidas = sum(1 for c in consultas if c["Estado"] == "Concluída")
+        consultas_agendadas = sum(1 for c in consultas if c["Estado"] == "Agendada")
+        media_duracao = sum(c["Duração"] for c in consultas) / len(consultas)
+
+        # Cards de estatísticas
+        stats = [
+            ("Total de Consultas", total_consultas, "#2c3e50"),  # Azul escuro do tema
+            ("Consultas Concluídas", consultas_concluidas, "#34495e"),  # Azul mais claro
+            ("Consultas Agendadas", consultas_agendadas, "#3498db"),  # Azul médio
+            ("Duração Média", f"{media_duracao:.1f} min", "#2980b9")  # Azul mais escuro
+        ]
+
+        for i, (label, value, color) in enumerate(stats):
+            card = ttk.Frame(stats_frame, style="Custom.TFrame")
+            card.pack(side="left", expand=True, fill="x", padx=5)
             
-        # Mensagem temporária
-        ttk.Label(self.conteudo_frame, 
-                 text="Relatório de Consultas em desenvolvimento...",
-                 style="Custom.TLabel").pack(pady=20)
+            # Estilo moderno para os cards
+            card.configure(style="Card.TFrame")
+            style = ttk.Style()
+            style.configure("Card.TFrame", background=color, relief="solid", borderwidth=1)
+            
+            # Ajusta a largura dos cards
+            card.configure(width=150)  # Largura fixa para os cards
+            
+            ttk.Label(card, text=label, 
+                     font=("Segoe UI", 10),
+                     foreground="white",
+                     background=color,
+                     wraplength=140).pack(pady=(10, 5))
+            
+            ttk.Label(card, text=str(value),
+                     font=("Segoe UI", 16, "bold"),
+                     foreground="white",
+                     background=color).pack(pady=(0, 10))
+
+        # Frame para gráficos
+        graphs_frame = ttk.Frame(main_frame, style="Custom.TFrame")
+        graphs_frame.pack(fill="both", expand=True)
+
+        # Gráfico 1: Consultas por Médico (Barras) - Agora à esquerda e maior
+        consultas_medico = {}
+        for consulta in consultas:
+            medico = consulta["Médico"]
+            consultas_medico[medico] = consultas_medico.get(medico, 0) + 1
+
+        fig1 = Figure(figsize=(8, 4), dpi=100)  # Aumentado o tamanho
+        ax1 = fig1.add_subplot(111)
+        
+        # Ajusta a largura das barras
+        bar_width = 0.35  # Barras mais finas
+        x = range(len(consultas_medico))
+        bars = ax1.bar(x, consultas_medico.values(), 
+                      width=bar_width,
+                      color=['#2c3e50', '#34495e', '#3498db'])  # Cores do tema
+        
+        # Configura os labels do eixo x
+        ax1.set_xticks(x)
+        ax1.set_xticklabels(consultas_medico.keys(), rotation=45)
+        
+        ax1.set_title('Consultas por Médico', fontsize=12, color='#2c3e50')
+        ax1.set_ylabel('Número de Consultas', fontsize=10, color='#2c3e50')
+        ax1.tick_params(axis='x', rotation=45, labelsize=9)
+        ax1.tick_params(axis='y', labelsize=9)
+        
+        # Adiciona os valores no topo das barras
+        for bar in bars:
+            height = bar.get_height()
+            ax1.text(bar.get_x() + bar.get_width()/2., height,
+                    f'{int(height)}',
+                    ha='center', va='bottom', fontsize=9)
+        
+        ax1.grid(True, linestyle='--', alpha=0.7)
+        fig1.tight_layout()
+        
+        canvas1 = FigureCanvasTkAgg(fig1, graphs_frame)
+        canvas1.draw()
+        canvas1.get_tk_widget().pack(side="left", fill="both", expand=True, padx=5)
+
+        # Gráfico 2: Distribuição por Tipo de Consulta (Pizza) - Agora à direita e maior
+        tipos_consulta = {}
+        for consulta in consultas:
+            tipo = consulta["Tipo"]
+            tipos_consulta[tipo] = tipos_consulta.get(tipo, 0) + 1
+
+        fig2 = Figure(figsize=(5, 5), dpi=100)  # Aumentado o tamanho do gráfico de pizza
+        ax2 = fig2.add_subplot(111)
+        ax2.pie(tipos_consulta.values(), labels=tipos_consulta.keys(), autopct='%1.1f%%',
+                colors=['#2c3e50', '#34495e', '#3498db'],  # Cores do tema
+                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
+        ax2.set_title('Distribuição por Tipo de Consulta', fontsize=12, color='#2c3e50')
+        
+        canvas2 = FigureCanvasTkAgg(fig2, graphs_frame)
+        canvas2.draw()
+        canvas2.get_tk_widget().pack(side="right", fill="both", expand=True, padx=5)
+
+        # Frame para a tabela de consultas
+        table_frame = ttk.Frame(main_frame, style="Custom.TFrame")
+        table_frame.pack(fill="both", expand=True, pady=20)
+
+        # Título da tabela
+        ttk.Label(table_frame, text="Detalhes das Consultas",
+                 font=("Segoe UI", 12, "bold"),
+                 foreground="#2c3e50",
+                 background="#f5f5f5").pack(pady=(0, 10))
+
+        # Tabela de consultas
+        colunas = ("Data", "Médico", "Paciente", "Tipo", "Duração", "Estado")
+        
+        # Frame para a tabela e scrollbar
+        table_scroll_frame = ttk.Frame(table_frame)
+        table_scroll_frame.pack(fill="both", expand=True)
+        
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(table_scroll_frame, orient="vertical")
+        scrollbar.pack(side="right", fill="y")
+        
+        self.tabela_consultas = ttk.Treeview(table_scroll_frame, columns=colunas, show="headings",
+                                           height=8, style="Custom.Treeview",
+                                           yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.tabela_consultas.yview)
+        
+        # Configura as colunas
+        for col in colunas:
+            self.tabela_consultas.heading(col, text=col, anchor="center")
+            self.tabela_consultas.column(col, width=100, anchor="center")
+
+        self.tabela_consultas.pack(side="left", fill="both", expand=True)
+
+        # Preenche a tabela com os dados
+        for consulta in consultas:
+            self.tabela_consultas.insert('', 'end', values=(
+                consulta["Data"],
+                consulta["Médico"],
+                consulta["Paciente"],
+                consulta["Tipo"],
+                f"{consulta['Duração']} min",
+                consulta["Estado"]
+            ))
+
+        # Botões de ação
+        action_frame = ttk.Frame(main_frame, style="Custom.TFrame")
+        action_frame.pack(fill="x", pady=10)
+
+        # Configura o estilo dos botões
+        style = ttk.Style()
+        style.configure("App.TButton",
+                       background="#2c3e50",
+                       foreground="white",
+                       font=("Segoe UI", 11),
+                       padding=6,
+                       width=15)  # Largura fixa para os botões
+        style.map("App.TButton",
+                 background=[("active", "#1a252f")],
+                 foreground=[("active", "white")])
+
+        ttk.Button(action_frame, text="Exportar Relatório",
+                  command=self.exportar_relatorio_consultas,
+                  style="App.TButton").pack(side="right", padx=5)
+
+    def exportar_relatorio_consultas(self):
+        """Exporta o relatório de consultas para um arquivo."""
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+            title="Salvar relatório como"
+        )
+
+        if not file_path:
+            return
+
+        try:
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write("Relatório de Consultas\n")
+                file.write("=" * 50 + "\n\n")
+
+                # Estatísticas gerais
+                file.write("Estatísticas Gerais:\n")
+                file.write("-" * 30 + "\n")
+                total_consultas = len(self.tabela_consultas.get_children())
+                consultas_concluidas = sum(1 for item in self.tabela_consultas.get_children()
+                                         if self.tabela_consultas.item(item)["values"][5] == "Concluída")
+                file.write(f"Total de Consultas: {total_consultas}\n")
+                file.write(f"Consultas Concluídas: {consultas_concluidas}\n")
+                file.write(f"Consultas Agendadas: {total_consultas - consultas_concluidas}\n\n")
+
+                # Detalhes das consultas
+                file.write("Detalhes das Consultas:\n")
+                file.write("-" * 30 + "\n")
+                for item in self.tabela_consultas.get_children():
+                    values = self.tabela_consultas.item(item)["values"]
+                    file.write(f"Data: {values[0]}\n")
+                    file.write(f"Médico: {values[1]}\n")
+                    file.write(f"Paciente: {values[2]}\n")
+                    file.write(f"Tipo: {values[3]}\n")
+                    file.write(f"Duração: {values[4]}\n")
+                    file.write(f"Estado: {values[5]}\n")
+                    file.write("-" * 30 + "\n")
+
+            messagebox.showinfo("Sucesso", "Relatório exportado com sucesso!")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao exportar relatório: {e}")
 
 class DashboardApp:
     def __init__(self, root):
