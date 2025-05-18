@@ -61,19 +61,16 @@ class Paciente:
         return([tuple[0].get_self() for tuple in cls.instances if tuple == arg])
 
     @classmethod
-    def delete_instance(cls,obj):
-        if obj in cls.instances:
-            #print("Utilizador encontrado") 
-            try:
-                #print("A iniciar remoção do utilizador")
-                cls.instances.remove(obj)
-                #print("Utilizador removido de instances")
-                del obj
-                return "Utilizador apagado com sucesso"
-            except:
-                return f"Erro ao apagar utilizador {obj.nome}"
-        else:
-            return f"Utilizador {obj.nome} não encontrado"
+    def delete_instance(cls,uuid):
+        obj = cls.show_by_id(uuid)
+        try:
+            print("A iniciar remoção do utilizador")
+            cls.instances.remove(obj)
+            print("Utilizador removido de instances")
+            del obj
+            return "Utilizador apagado com sucesso"
+        except:
+            return f"Erro ao apagar utilizador P{uuid}"
         
     @classmethod
     def show_all(cls):
