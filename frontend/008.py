@@ -189,8 +189,26 @@ class CampanhasFrame(ttk.Frame):
 
         # Lista para armazenar os dados das campanhas
         self.campanhas = [
-            {"Nome": "Campanha de Vacinação Gripe", "Início": "2025-04-01", "Fim": "2025-04-15", "Grupo-Alvo": "Idosos", "Estado": "Ativa"},
-            {"Nome": "Rastreio Diabetes", "Início": "2025-01-10", "Fim": "2025-02-10", "Grupo-Alvo": "Adultos", "Estado": "Encerrada"}
+            {"Nome": "Campanha de Vacinação Gripe 2025", "Início": "2025-04-01", "Fim": "2025-04-15", "Grupo-Alvo": "Idosos", "Estado": "Ativa", "Número de Participantes": 150},
+            {"Nome": "Rastreio Diabetes", "Início": "2025-01-10", "Fim": "2025-02-10", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 85},
+            {"Nome": "Vacinação Infantil", "Início": "2025-03-01", "Fim": "2025-03-30", "Grupo-Alvo": "Bebês (0-3 anos)", "Estado": "Ativa", "Número de Participantes": 220},
+            {"Nome": "Saúde Mental Jovens", "Início": "2025-02-15", "Fim": "2025-03-15", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 120},
+            {"Nome": "Prevenção Cardíaca", "Início": "2024-11-01", "Fim": "2024-12-31", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 300},
+            {"Nome": "Campanha de Higiene Oral", "Início": "2025-05-01", "Fim": "2025-05-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Ativa", "Número de Participantes": 180},
+            {"Nome": "Rastreio Visual", "Início": "2024-10-01", "Fim": "2024-10-31", "Grupo-Alvo": "Idosos", "Estado": "Encerrada", "Número de Participantes": 95},
+            {"Nome": "Vacinação COVID-19", "Início": "2025-01-01", "Fim": "2025-01-31", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 450},
+            {"Nome": "Saúde da Mulher", "Início": "2025-06-01", "Fim": "2025-06-30", "Grupo-Alvo": "Adultos", "Estado": "Ativa", "Número de Participantes": 280},
+            {"Nome": "Nutrição Infantil", "Início": "2025-02-01", "Fim": "2025-02-28", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Encerrada", "Número de Participantes": 110},
+            {"Nome": "Prevenção de Acidentes", "Início": "2025-07-01", "Fim": "2025-07-31", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 70},
+            {"Nome": "Saúde Bucal", "Início": "2024-12-01", "Fim": "2024-12-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Encerrada", "Número de Participantes": 160},
+            {"Nome": "Rastreio de Pressão", "Início": "2025-03-15", "Fim": "2025-04-15", "Grupo-Alvo": "Idosos", "Estado": "Ativa", "Número de Participantes": 135},
+            {"Nome": "Saúde Mental Adultos", "Início": "2025-05-15", "Fim": "2025-06-15", "Grupo-Alvo": "Adultos", "Estado": "Ativa", "Número de Participantes": 200},
+            {"Nome": "Vacinação Hepatite B", "Início": "2024-09-01", "Fim": "2024-09-30", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 350},
+            {"Nome": "Desenvolvimento Infantil", "Início": "2025-04-15", "Fim": "2025-05-15", "Grupo-Alvo": "Bebês (0-3 anos)", "Estado": "Ativa", "Número de Participantes": 190},
+            {"Nome": "Saúde do Adolescente", "Início": "2025-06-15", "Fim": "2025-07-15", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 105},
+            {"Nome": "Prevenção de Quedas", "Início": "2024-11-15", "Fim": "2024-12-15", "Grupo-Alvo": "Idosos", "Estado": "Encerrada", "Número de Participantes": 75},
+            {"Nome": "Saúde Ocupacional", "Início": "2025-01-15", "Fim": "2025-02-15", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 260},
+            {"Nome": "Alimentação Saudável", "Início": "2025-08-01", "Fim": "2025-08-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Ativa", "Número de Participantes": 140}
         ]
 
         # Título com estilo personalizado
@@ -226,12 +244,23 @@ class CampanhasFrame(ttk.Frame):
         
         # Tabela de campanhas
         colunas = ("Nome", "Início", "Fim", "Grupo-Alvo", "Estado")
-        self.tabela = ttk.Treeview(self, columns=colunas, show="headings", height=10, style="Custom.Treeview")
+        
+        # Frame para a tabela e scrollbar
+        tabela_frame = ttk.Frame(self)
+        tabela_frame.pack(fill="both", expand=True, pady=10)
+        
+        # Scrollbar vertical
+        scrollbar = ttk.Scrollbar(tabela_frame)
+        scrollbar.pack(side="right", fill="y")
+        
+        self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=10, style="Custom.Treeview", yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.tabela.yview)
+        
         for col in colunas:
             self.tabela.heading(col, text=col, anchor="center")
             self.tabela.column(col, width=100, anchor="center")
 
-        self.tabela.pack(fill="both", expand=True, pady=10)
+        self.tabela.pack(fill="both", expand=True)
 
         self.tabela.bind("<Double-1>", self.abrir_detalhes_campanha)
 
@@ -297,13 +326,16 @@ class CampanhasFrame(ttk.Frame):
 
         # Frame interno para os widgets
         frame_interno = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
-        canvas.create_window((0, 0), window=frame_interno, anchor="nw")
+        canvas.create_window((0, 0), window=frame_interno, anchor="nw", width=canvas.winfo_width())
 
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
+            # Atualiza a largura do frame interno quando a janela é redimensionada
+            canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_interno.bind("<Configure>", atualizar_scrollregion)
+        canvas.bind("<Configure>", atualizar_scrollregion)
 
         # Define estilos para os widgets
         style = ttk.Style()
@@ -329,28 +361,7 @@ class CampanhasFrame(ttk.Frame):
             ("Grávidas", "combobox"),
             ("Recurso", "combobox"),
             ("Item", "combobox"),
-            ("Profissionais Atribuídos", "entry"),
-            ("Número de Participantes", "entry"),
-            ("Observações", "text"),
-            ("Estado", "combobox"),
-            
-            # Planejamento e Execução
-            ("Tipo de Campanha", "combobox"),
-            ("Objetivo Principal", "combobox"),
-            ("Metas Quantitativas", "entry"),
-            ("Metas Qualitativas", "combobox"),
-            ("Fase da Campanha", "combobox"),
-            ("Responsável Principal", "entry"),
-            ("Plano de Ação", "combobox"),
-            ("Estratégia de Implementação", "combobox"),
-            
-            # Gestão de Riscos
-            ("Probabilidade de Ocorrência", "combobox"),
-            ("Impacto Potencial", "combobox"),
-            ("Nível de Risco", "combobox"),
-            ("Medidas Preventivas", "combobox"),
-            ("Responsável por Riscos", "entry"),
-            ("Frequência de Monitoramento de Riscos", "combobox")
+            ("Número de Participantes", "entry")
         ]
 
         self.entries = {}
@@ -362,9 +373,11 @@ class CampanhasFrame(ttk.Frame):
 
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
+                entry.pack(fill="x", expand=True)
             elif tipo == "combobox":
                 if campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
@@ -387,28 +400,7 @@ class CampanhasFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Tipo de Campanha":
-                    entry = ttk.Combobox(frame, values=["Preventiva", "Curativa", "Educativa", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Objetivo Principal":
-                    entry = ttk.Combobox(frame, values=["Prevenção", "Tratamento", "Educação", "Rastreio", "Vacinação"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Metas Qualitativas":
-                    entry = ttk.Combobox(frame, values=["Alta", "Média", "Baixa"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Fase da Campanha":
-                    entry = ttk.Combobox(frame, values=["Planejamento", "Execução", "Monitoramento", "Avaliação", "Conclusão"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Plano de Ação":
-                    entry = ttk.Combobox(frame, values=["Estratégico", "Tático", "Operacional"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Estratégia de Implementação":
-                    entry = ttk.Combobox(frame, values=["Centralizada", "Descentralizada", "Mista"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Probabilidade de Ocorrência":
-                    entry = ttk.Combobox(frame, values=["Baixa", "Média", "Alta"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Impacto Potencial":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Nível de Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Medidas Preventivas":
-                    entry = ttk.Combobox(frame, values=["Treinamento", "Protocolos", "Equipamentos", "Monitoramento", "Comunicação"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Frequência de Monitoramento de Riscos":
-                    entry = ttk.Combobox(frame, values=["Diário", "Semanal", "Quinzenal", "Mensal", "Trimestral"], state="readonly", style="Custom.TCombobox")
+                entry.pack(fill="x", expand=True)
             elif tipo == "text":
                 entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
 
@@ -452,9 +444,8 @@ class CampanhasFrame(ttk.Frame):
         sexo = self.entries["Sexo"].get().strip()
         recurso = self.entries["Recurso"].get().strip()
         item = self.entries["Item"].get().strip()
-        profissionais = self.entries["Profissionais Atribuídos"].get().strip()  # Novo campo
         participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
-        observacoes = self.entries["Observações"].get("1.0", "end").strip()  # Novo campo
+        
 
         # Validação: verifica se todos os campos obrigatórios estão preenchidos
         if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
@@ -473,9 +464,9 @@ class CampanhasFrame(ttk.Frame):
             "Sexo": sexo,
             "Recurso": recurso,
             "Item": item,
-            "Profissionais Atribuídos": profissionais,  # Novo campo
+           
             "Número de Participantes": participantes,  # Novo campo
-            "Observações": observacoes  # Novo campo
+           
         }
         self.campanhas.append(nova_campanha)
         self.atualizar_tabela(self.campanhas)
@@ -529,13 +520,16 @@ class CampanhasFrame(ttk.Frame):
 
         # Frame interno para os widgets
         frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
-        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw", width=canvas.winfo_width())
 
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
+            # Atualiza a largura do frame principal quando a janela é redimensionada
+            canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_principal.bind("<Configure>", atualizar_scrollregion)
+        canvas.bind("<Configure>", atualizar_scrollregion)
 
         # Define estilos para os widgets
         style = ttk.Style()
@@ -561,9 +555,7 @@ class CampanhasFrame(ttk.Frame):
             ("Grávidas", "combobox"),
             ("Recurso", "combobox"),
             ("Item", "combobox"),
-            ("Profissionais Atribuídos", "entry"),
-            ("Número de Participantes", "entry"),
-            ("Observações", "text")
+            ("Número de Participantes", "entry")
         ]
 
         self.entries = {}
@@ -575,12 +567,11 @@ class CampanhasFrame(ttk.Frame):
 
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
-                entry.insert(0, campanha.get(campo, ""))
+                entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
-                if campo in campanha:
-                    entry.set_date(campanha[campo])
+                entry.pack(fill="x", expand=True)
             elif tipo == "combobox":
                 if campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
@@ -600,11 +591,12 @@ class CampanhasFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
                     entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
                 elif campo == "Item":
-                    entry = ttk.Combobox(frame, values=self.dataset.get(campanha.get("Recurso", ""), []), state="readonly", style="Custom.TCombobox")
-                entry.set(campanha.get(campo, ""))
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
+                elif campo == "Estado":
+                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
+                entry.pack(fill="x", expand=True)
             elif tipo == "text":
                 entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
-                entry.insert("1.0", campanha.get(campo, ""))
 
             entry.pack(fill="x")
             self.entries[campo] = entry
@@ -706,9 +698,16 @@ class RecursosFrame(ttk.Frame):
         tabela_frame = ttk.Frame(self)
         tabela_frame.pack(fill="both", expand=True, pady=10)
 
+        # Scrollbar vertical
+        scrollbar_vertical = ttk.Scrollbar(tabela_frame, orient="vertical")
+        scrollbar_vertical.pack(side="right", fill="y")
+
         # Tabela de recursos
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade", "Quantidade em Stock", "Campanha", "Estado")
-        self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview")
+        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
+        self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview", yscrollcommand=scrollbar_vertical.set)
+        
+        # Configura a scrollbar para controlar a tabela
+        scrollbar_vertical.configure(command=self.tabela.yview)
         
         # Ajusta o tamanho das colunas
         self.tabela.column("Tipo", width=100, anchor="center")
@@ -717,15 +716,12 @@ class RecursosFrame(ttk.Frame):
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        self.tabela.column("Quantidade em Stock", width=150, anchor="center")
-        self.tabela.column("Campanha", width=200, anchor="center")
-        self.tabela.column("Estado", width=100, anchor="center")
         
         # Configura os cabeçalhos
         for col in colunas:
             self.tabela.heading(col, text=col, anchor="center")
             
-        # Empacota a tabela antes da barra de rolagem horizontal
+        # Empacota a tabela
         self.tabela.pack(fill="both", expand=True)
 
         # Adiciona o evento de clique na tabela
@@ -761,10 +757,7 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo-Alvo"],
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
-                recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
-                recurso.get("Estado", "Fora de stock")
+                recurso["Data de Validade"]
             ))
 
     def novo_medicamento(self):
@@ -814,21 +807,13 @@ class RecursosFrame(ttk.Frame):
 
         # Campos do formulário
         campos = [
-            ("Campanha", "combobox"),
             ("Tipo", "combobox"),
             ("Nome", "entry"),
-            ("Descrição", "text"),
-            ("Composição/Substância ativa", "entry"),
-            ("Dose Recomendada", "entry"),
-            ("Via de Administração", "combobox"),
             ("Grupo-Alvo", "combobox"),
-            ("Gravidez Permitida?", "checkbox"),
+            ("Gravidez", "combobox"),
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
-            ("Efeitos Secundários Comuns", "entry"),
-            ("Data de Validade", "date"),
-            ("Quantidade em Stock", "entry"),
-            ("Estado", "combobox")
+            ("Data de Validade", "date")
         ]
 
         self.entries = {}
@@ -847,14 +832,11 @@ class RecursosFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             if tipo == "entry":
-                entry = ttk.Entry(frame, style="Custom.TEntry")
+                entry = ttk.Entry(frame, style="Custom.TEntry", width=50)
+                entry.pack(fill="x", expand=True)
             elif tipo == "combobox":
-                if campo == "Campanha":
-                    entry = ttk.Combobox(frame, values=campanhas_disponiveis, state="readonly", style="Custom.TCombobox")
-                elif campo == "Tipo":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Via de Administração":
-                    entry = ttk.Combobox(frame, values=["Oral", "Injetável", "Nasal", "Tópico"], state="readonly", style="Custom.TCombobox")
+                if campo == "Tipo":
+                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -862,20 +844,14 @@ class RecursosFrame(ttk.Frame):
                         "Jovens (12-18 anos)",
                         "Adultos (18-65 anos)",
                         "Idosos (+65 anos)"
-                    ], state="readonly", style="Custom.TCombobox")
+                    ], state="readonly", style="Custom.TCombobox", width=50)
+                elif campo == "Gravidez":
+                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
-            elif tipo == "checkbox":
-                entry = tk.BooleanVar()
-                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
-                self.entries[campo] = entry
-                continue
-            elif tipo == "text":
-                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox", width=50)
+                entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
@@ -933,7 +909,7 @@ class RecursosFrame(ttk.Frame):
             "Nome": dados.get("Nome", ""),
             "Grupo-Alvo": dados.get("Grupo-Alvo", ""),
             "Grupo Risco": dados.get("Grupo Risco", ""),
-            "Gravidez": dados.get("Gravidez Permitida?", ""),
+            "Gravidez": dados.get("Gravidez", ""),
             "Data de Validade": dados.get("Data de Validade", ""),
             "Quantidade em Stock": dados.get("Quantidade em Stock", "0"),
             "Campanha": dados.get("Campanha", ""),
@@ -995,8 +971,8 @@ class RecursosFrame(ttk.Frame):
                 "Bebês (0-3 anos)", "Crianças (4-12 anos)", "Jovens (12-18 anos)",
                 "Adultos (18-65 anos)", "Idosos (+65 anos)"
             ]),
-            ("Estado", ["Disponível", "Fora de stock", "Expirado"]),
-            ("Campanha", [campanha["Nome"] for campanha in self.master.frames["Campanhas"].campanhas])
+            
+            
         ]
 
         self.filtros_selecionados = {}
@@ -1129,15 +1105,10 @@ class RecursosFrame(ttk.Frame):
             "Grupo Risco": valores[3],
             "Gravidez": valores[4],
             "Data de Validade": data_validade,
-            "Quantidade em Stock": valores[6],
-            "Campanha": valores[7] if len(valores) > 7 else "Sem campanha",
-            "Descrição": "",
-            "Composição/Substância ativa": "",
-            "Dose Recomendada": "",
-            "Via de Administração": "",
-            "Sexo": "",
-            "Efeitos Secundários Comuns": "",
-            "Estado": "Disponível"
+            
+         
+            "Sexo": ""
+        
         }
 
         print("Recurso criado:", recurso)  # Debug
@@ -1168,13 +1139,16 @@ class RecursosFrame(ttk.Frame):
 
         # Frame interno para os widgets
         frame_principal = ttk.Frame(canvas, style="Custom.TFrame", padding=20)
-        canvas.create_window((0, 0), window=frame_principal, anchor="nw")
+        canvas.create_window((0, 0), window=frame_principal, anchor="nw", width=canvas.winfo_width())
 
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
+            # Atualiza a largura do frame principal quando a janela é redimensionada
+            canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_principal.bind("<Configure>", atualizar_scrollregion)
+        canvas.bind("<Configure>", atualizar_scrollregion)
 
         # Define estilos para os widgets
         style = ttk.Style()
@@ -1197,19 +1171,11 @@ class RecursosFrame(ttk.Frame):
         campos = [
             ("Tipo", "combobox"),
             ("Nome", "entry"),
-            ("Descrição", "text"),
-            ("Composição/Substância ativa", "entry"),
-            ("Dose Recomendada", "entry"),
-            ("Via de Administração", "combobox"),
             ("Grupo-Alvo", "combobox"),
-            ("Gravidez Permitida?", "checkbox"),
+            ("Gravidez", "combobox"),
             ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
-            ("Efeitos Secundários Comuns", "entry"),
-            ("Data de Validade", "date"),
-            ("Quantidade em Stock", "entry"),
-            ("Estado", "combobox"),
-            ("Campanha", "combobox")
+            ("Data de Validade", "date")
         ]
 
         self.entries = {}
@@ -1220,24 +1186,13 @@ class RecursosFrame(ttk.Frame):
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
             valor = recurso.get(campo, "")
-            if campo == "Gravidez Permitida?":
-                valor = recurso.get("Gravidez", "")
-
-            print(f"Campo: {campo}, Valor: {valor}")  # Debug
 
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
                 entry.insert(0, valor)
             elif tipo == "combobox":
-                if campo == "Campanha":
-                    entry = ttk.Combobox(frame, values=campanhas_disponiveis, state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-                elif campo == "Tipo":
+                if campo == "Tipo":
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-                elif campo == "Via de Administração":
-                    entry = ttk.Combobox(frame, values=["Oral", "Injetável", "Nasal", "Tópico"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
                         "Bebês (0-3 anos)",
@@ -1246,25 +1201,16 @@ class RecursosFrame(ttk.Frame):
                         "Adultos (18-65 anos)",
                         "Idosos (+65 anos)"
                     ], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
+                elif campo == "Gravidez":
+                    entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Sexo":
                     entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
                 elif campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
-                    entry.set(valor)
-            elif tipo == "checkbox":
-                entry = tk.BooleanVar()
-                entry.set(valor == "Sim")
-                ttk.Checkbutton(frame, variable=entry, text="Sim", style="Custom.TCheckbutton").pack(anchor="w")
-                self.entries[campo] = entry
-                continue
-            elif tipo == "text":
-                entry = tk.Text(frame, height=4, wrap="word", font=("Segoe UI", 11), bg="white", relief="solid", borderwidth=1)
-                entry.insert("1.0", valor)
+                entry.set(valor)
+                entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
                                 foreground="white", borderwidth=2, style="Custom.TCombobox")
@@ -1336,484 +1282,222 @@ class RecursosFrame(ttk.Frame):
                 recurso["Grupo-Alvo"],
                 recurso["Grupo Risco"],
                 recurso["Gravidez"],
-                recurso["Data de Validade"],
-                recurso["Quantidade em Stock"],
-                recurso.get("Campanha", "Sem campanha"),
-                recurso.get("Estado", "Fora de stock")
+                recurso["Data de Validade"]
             ))
 
 class RelatoriosFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.configure(padding=20, style="Custom.TFrame")  # Fundo neutro claro
+        self.configure(padding=20, style="Custom.TFrame")
 
         # Define o estilo personalizado para os widgets
         style = ttk.Style()
-        style.configure("Custom.TFrame", background="#f5f5f5")  # Fundo neutro claro
-        style.configure("Custom.TButton", background="#f5f5f5", font=("Segoe UI", 11))
-        style.configure("Custom.Treeview", background="#f5f5f5", fieldbackground="#f5f5f5", font=("Segoe UI", 10))
-        style.configure("Custom.Treeview.Heading", background="#2c3e50", foreground="white", font=("Segoe UI", 11, "bold"))
+        style.configure("Custom.TFrame", background="#f5f5f5")
         style.configure("Custom.TLabel", font=("Segoe UI", 16, "bold"), background="#f5f5f5", foreground="#2c3e50")
-        style.configure("Blue.TButton", background="#2c3e50", foreground="white", font=("Segoe UI", 11), padding=6)
-        style.map("Blue.TButton",
-                  background=[("active", "#1a252f")],  # Azul mais escuro ao passar o mouse
+        style.configure("Custom.TButton", font=("Segoe UI", 11), padding=6)
+        style.configure("App.TButton", background="#2c3e50", foreground="white", font=("Segoe UI", 11), padding=6)
+        style.map("App.TButton",
+                 background=[("active", "#1a252f")],
                   foreground=[("active", "white")])
-        style.configure("Large.TLabel", font=("Segoe UI", 18, "bold"), background="#f5f5f5", foreground="#2c3e50")
-        style.configure("Small.TLabel", font=("Segoe UI", 11), background="#f5f5f5", foreground="#2c3e50")
-        style.configure("Section.TLabel", font=("Segoe UI", 14, "bold"), background="#f5f5f5", foreground="#2c3e50")
+        style.configure("Custom.TCombobox", font=("Segoe UI", 11), padding=5)
+        style.configure("DateEntry", font=("Segoe UI", 11), padding=5) # Style for DateEntry
 
         # Título com estilo personalizado
         ttk.Label(self, text="Relatórios", style="Custom.TLabel").pack(pady=(0, 10))
 
-        # Frame para filtros e seleção de relatório
-        filtros_frame = ttk.Frame(self, style="Custom.TFrame")
-        filtros_frame.pack(fill="x", pady=10)
+        # Frame para a seleção do relatório e filtros de data
+        controles_frame = ttk.Frame(self, style="Custom.TFrame")
+        controles_frame.pack(fill="x", pady=10)
 
-        # Label "Selecione o Relatório" com cor azul
-        ttk.Label(
-            filtros_frame,
-            text="Selecione o Relatório:",
-            font=("Segoe UI", 11),
-            foreground="#2c3e50",  # Azul escuro
-            background="#f5f5f5"   # Fundo neutro claro
-        ).pack(side="left")
+        # Frame para a seleção do tipo de relatório (esquerda)
+        tipo_relatorio_frame = ttk.Frame(controles_frame, style="Custom.TFrame")
+        tipo_relatorio_frame.pack(side="left")
 
-        # Combobox com o estilo atualizado
-        self.combo_relatorios = ttk.Combobox(
-            filtros_frame,
-            values=["Pacientes", "Consultas", "Recursos", "Campanhas"],
-            state="readonly",
-            style="Custom.TCombobox"
-        )
-        self.combo_relatorios.current(0)
-        self.combo_relatorios.pack(side="left", padx=5)
-        self.combo_relatorios.bind("<<ComboboxSelected>>", self.alternar_relatorio)
+        ttk.Label(tipo_relatorio_frame, text="Tipo de Relatório:", 
+                 font=("Segoe UI", 11),
+                 foreground="#2c3e50",
+                 background="#f5f5f5").pack(side="left", padx=(0, 5))
 
-        # Botão para gerar relatório
-        ttk.Button(filtros_frame, text="Gerar Relatório", command=self.gerar_relatorio, style="Blue.TButton").pack(side="right", padx=5)
+        self.combo_relatorios = ttk.Combobox(tipo_relatorio_frame, 
+                                           values=["Campanhas", "Consultas"],
+                                           state="readonly",
+                                           style="Custom.TCombobox",
+                                           width=15)
+        self.combo_relatorios.pack(side="left")
+        self.combo_relatorios.bind("<<ComboboxSelected>>", self.mostrar_relatorio_selecionado)
 
-        # Frame para o conteúdo do relatório
+        # Frame para os filtros de data (centro)
+        data_filtro_frame = ttk.Frame(controles_frame, style="Custom.TFrame")
+        data_filtro_frame.pack(side="left", padx=30)
+
+        ttk.Label(data_filtro_frame, text="Período:", 
+                 font=("Segoe UI", 11),
+                 foreground="#2c3e50",
+                 background="#f5f5f5").pack(side="left", padx=(0, 5))
+
+        self.date_inicio = DateEntry(data_filtro_frame, date_pattern="dd/mm/yyyy", 
+                                     width=10, background="#2c3e50", foreground="white", 
+                                     borderwidth=2, style="DateEntry")
+        self.date_inicio.pack(side="left", padx=5)
+
+        ttk.Label(data_filtro_frame, text="a", 
+                 font=("Segoe UI", 11),
+                 foreground="#2c3e50",
+                 background="#f5f5f5").pack(side="left")
+
+        self.date_fim = DateEntry(data_filtro_frame, date_pattern="dd/mm/yyyy", 
+                                  width=10, background="#2c3e50", foreground="white", 
+                                  borderwidth=2, style="DateEntry")
+        self.date_fim.pack(side="left", padx=5)
+
+        # Botão Gerar Relatório (direita)
+        ttk.Button(controles_frame, text="Gerar Relatório", style="App.TButton").pack(side="right")
+
+        # Frame para o conteúdo do relatório (tabela e gráficos)
         self.conteudo_frame = ttk.Frame(self, style="Custom.TFrame")
         self.conteudo_frame.pack(fill="both", expand=True, pady=10)
 
-        # Inicializa com o relatório de pacientes
-        self._mostrar_relatorio_pacientes()
+        # Frame para os botões de exportação (inferior)
+        export_botoes_frame = ttk.Frame(self, style="Custom.TFrame")
+        export_botoes_frame.pack(fill="x", pady=10)
 
-    def _mostrar_relatorio_pacientes(self):
-        """Exibe o layout do relatório de pacientes com visualizações modernas."""
-        # Frame para filtros (esquerda)
-        filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
+        
 
-        ttk.Label(filtros_frame, text="Filtros", style="Section.TLabel").pack(pady=10)
-
-        # Filtros disponíveis
-        filtros = [
-            ("Grupo de Idade", ["Todas as Faixas", "Bebês (0-3 anos)", "Crianças (4-12 anos)", "Jovens (12-18 anos)", "Adultos (18-65 anos)", "Idosos (+65 anos)"]),
-            ("Gênero", ["Ambos", "Masculino", "Feminino"]),
-            ("Risco de Saúde", ["Todos", "Baixo", "Médio", "Alto"])
-        ]
-
-        self.filtros_selecionados = {}
-
-        for campo, opcoes in filtros:
-            frame = ttk.Frame(filtros_frame, style="Custom.TFrame")
-            frame.pack(fill="x", pady=5)
-
-            ttk.Label(frame, text=campo, style="Small.TLabel").pack(anchor="w")
-            combobox = ttk.Combobox(frame, values=opcoes, state="readonly", style="Custom.TCombobox")
-            combobox.current(0)
-            combobox.pack(fill="x")
-            self.filtros_selecionados[campo] = combobox
-
-        # Frame para os gráficos (direita)
-        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
-
-        # Dados fictícios para os gráficos
-        categorias = ["Baixo", "Médio", "Alto"]
-        valores = [200, 150, 50]
-        generos = ["Masculino", "Feminino"]
-        valores_genero = [180, 220]
-        faixas_etarias = ["0-3", "4-12", "13-18", "19-65", "65+"]
-        valores_idade = [50, 80, 70, 120, 80]
-
-        # Criação dos gráficos usando subplots
-        figura = plt.figure(figsize=(12, 8), dpi=100)
-        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
-
-        # Gráfico 1: Distribuição por Risco (Barras horizontais)
-        ax1 = figura.add_subplot(gs[0, 0])
-        cores = ['#2ecc71', '#f1c40f', '#e74c3c']
-        bars = ax1.barh(categorias, valores, color=cores, height=0.6)
-        ax1.set_title('Distribuição por Risco de Saúde', pad=20, fontsize=12, color='#2c3e50')
-        ax1.spines['top'].set_visible(False)
-        ax1.spines['right'].set_visible(False)
-        ax1.spines['left'].set_visible(False)
-        ax1.grid(axis='x', linestyle='--', alpha=0.3)
-        for bar in bars:
-            width = bar.get_width()
-            ax1.text(width + 5, bar.get_y() + bar.get_height()/2, f'{int(width)}',
-                    ha='left', va='center', fontsize=10, color='#2c3e50')
-
-        # Gráfico 2: Distribuição por Gênero (Pizza)
-        ax2 = figura.add_subplot(gs[0, 1])
-        ax2.pie(valores_genero, labels=generos, autopct='%1.1f%%', colors=['#3498db', '#e84393'],
-                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
-        ax2.set_title('Distribuição por Gênero', pad=20, fontsize=12, color='#2c3e50')
-
-        # Gráfico 3: Distribuição por Faixa Etária (Área)
-        ax3 = figura.add_subplot(gs[1, :])
-        ax3.fill_between(faixas_etarias, valores_idade, alpha=0.3, color='#3498db')
-        ax3.plot(faixas_etarias, valores_idade, marker='o', color='#2980b9', linewidth=2)
-        ax3.set_title('Distribuição por Faixa Etária', pad=20, fontsize=12, color='#2c3e50')
-        ax3.spines['top'].set_visible(False)
-        ax3.spines['right'].set_visible(False)
-        ax3.grid(axis='y', linestyle='--', alpha=0.3)
-        for i, valor in enumerate(valores_idade):
-            ax3.text(i, valor + 5, f'{int(valor)}', ha='center', va='bottom',
-                    fontsize=10, color='#2c3e50')
-
-        # Ajusta o layout
-        plt.tight_layout()
-
-        # Adiciona os gráficos ao frame
-        canvas = FigureCanvasTkAgg(figura, graficos_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
-        canvas.draw()
-
-    def _mostrar_relatorio_consultas(self):
-        """Exibe o layout do relatório de consultas com visualizações modernas."""
-        # Frame para filtros (esquerda)
-        filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
-
-        ttk.Label(filtros_frame, text="Filtros", style="Section.TLabel").pack(pady=10)
-
-        # Filtros disponíveis
-        filtros = [
-            ("Período", ["Último mês", "Últimos 3 meses", "Último ano", "Personalizado"]),
-            ("Tipo de Consulta", ["Todas", "Geral", "Especializada", "Emergência"]),
-            ("Status", ["Todas", "Agendada", "Realizada", "Cancelada"])
-        ]
-
-        self.filtros_selecionados = {}
-
-        for campo, opcoes in filtros:
-            frame = ttk.Frame(filtros_frame, style="Custom.TFrame")
-            frame.pack(fill="x", pady=5)
-
-            ttk.Label(frame, text=campo, style="Small.TLabel").pack(anchor="w")
-            combobox = ttk.Combobox(frame, values=opcoes, state="readonly", style="Custom.TCombobox")
-            combobox.current(0)
-            combobox.pack(fill="x")
-            self.filtros_selecionados[campo] = combobox
-
-        # Frame para os gráficos (direita)
-        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
-
-        # Dados fictícios para os gráficos
-        meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-        consultas_geral = [120, 150, 180, 160, 200, 190]
-        consultas_especializada = [80, 100, 120, 110, 140, 130]
-        consultas_emergencia = [40, 50, 60, 55, 70, 65]
-        tipos_consulta = ["Geral", "Especializada", "Emergência"]
-        total_consultas = [1000, 700, 340]
-
-        # Criação dos gráficos usando subplots
-        figura = plt.figure(figsize=(12, 8), dpi=100)
-        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
-
-        # Gráfico 1: Evolução Mensal (Linha com área)
-        ax1 = figura.add_subplot(gs[0, :])
-        ax1.fill_between(meses, consultas_geral, alpha=0.2, color='#3498db', label='Geral')
-        ax1.fill_between(meses, consultas_especializada, alpha=0.2, color='#2ecc71', label='Especializada')
-        ax1.fill_between(meses, consultas_emergencia, alpha=0.2, color='#e74c3c', label='Emergência')
-        ax1.plot(meses, consultas_geral, marker='o', color='#2980b9', linewidth=2)
-        ax1.plot(meses, consultas_especializada, marker='o', color='#27ae60', linewidth=2)
-        ax1.plot(meses, consultas_emergencia, marker='o', color='#c0392b', linewidth=2)
-        ax1.set_title('Evolução Mensal de Consultas', pad=20, fontsize=12, color='#2c3e50')
-        ax1.spines['top'].set_visible(False)
-        ax1.spines['right'].set_visible(False)
-        ax1.grid(axis='y', linestyle='--', alpha=0.3)
-        ax1.legend()
-
-        # Gráfico 2: Distribuição por Tipo (Barras empilhadas)
-        ax2 = figura.add_subplot(gs[1, 0])
-        cores = ['#3498db', '#2ecc71', '#e74c3c']
-        bars = ax2.bar(tipos_consulta, total_consultas, color=cores)
-        ax2.set_title('Total de Consultas por Tipo', pad=20, fontsize=12, color='#2c3e50')
-        ax2.spines['top'].set_visible(False)
-        ax2.spines['right'].set_visible(False)
-        ax2.grid(axis='y', linestyle='--', alpha=0.3)
-        for bar in bars:
-            height = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width()/2., height + 10,
-                    f'{int(height)}', ha='center', va='bottom', fontsize=10, color='#2c3e50')
-
-        # Gráfico 3: Distribuição Percentual (Pizza)
-        ax3 = figura.add_subplot(gs[1, 1])
-        total = sum(total_consultas)
-        porcentagens = [x/total*100 for x in total_consultas]
-        ax3.pie(porcentagens, labels=tipos_consulta, autopct='%1.1f%%', colors=cores,
-                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
-        ax3.set_title('Distribuição Percentual', pad=20, fontsize=12, color='#2c3e50')
-
-        # Ajusta o layout
-        plt.tight_layout()
-
-        # Adiciona os gráficos ao frame
-        canvas = FigureCanvasTkAgg(figura, graficos_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
-        canvas.draw()
-
-    def _mostrar_relatorio_recursos(self):
-        """Exibe o layout do relatório de recursos com visualizações modernas."""
-        # Frame para filtros (esquerda)
-        filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
-
-        ttk.Label(filtros_frame, text="Filtros", style="Section.TLabel").pack(pady=10)
-
-        # Filtros disponíveis
-        filtros = [
-            ("Tipo", ["Todos", "Medicamento", "Vacina"]),
-            ("Estado", ["Todos", "Disponível", "Fora de stock", "Expirado"]),
-            ("Campanha", ["Todas", "Sem campanha", "Campanha de Vacinação Gripe"])
-        ]
-
-        self.filtros_selecionados = {}
-
-        for campo, opcoes in filtros:
-            frame = ttk.Frame(filtros_frame, style="Custom.TFrame")
-            frame.pack(fill="x", pady=5)
-
-            ttk.Label(frame, text=campo, style="Small.TLabel").pack(anchor="w")
-            combobox = ttk.Combobox(frame, values=opcoes, state="readonly", style="Custom.TCombobox")
-            combobox.current(0)
-            combobox.pack(fill="x")
-            self.filtros_selecionados[campo] = combobox
-
-        # Frame para os gráficos (direita)
-        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
-
-        # Dados fictícios para os gráficos
-        estados = ["Disponível", "Fora de stock", "Expirado"]
-        quantidades = [150, 30, 20]
-        tipos = ["Medicamento", "Vacina"]
-        quantidades_tipo = [120, 80]
-        meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-        consumo_medicamentos = [100, 120, 90, 110, 130, 115]
-        consumo_vacinas = [60, 70, 80, 75, 85, 90]
-
-        # Criação dos gráficos usando subplots
-        figura = plt.figure(figsize=(12, 8), dpi=100)
-        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
-
-        # Gráfico 1: Distribuição por Estado (Barras horizontais)
-        ax1 = figura.add_subplot(gs[0, 0])
-        cores = ['#2ecc71', '#f1c40f', '#e74c3c']
-        bars = ax1.barh(estados, quantidades, color=cores, height=0.6)
-        ax1.set_title('Distribuição por Estado', pad=20, fontsize=12, color='#2c3e50')
-        ax1.spines['top'].set_visible(False)
-        ax1.spines['right'].set_visible(False)
-        ax1.spines['left'].set_visible(False)
-        ax1.grid(axis='x', linestyle='--', alpha=0.3)
-        for bar in bars:
-            width = bar.get_width()
-            ax1.text(width + 5, bar.get_y() + bar.get_height()/2, f'{int(width)}',
-                    ha='left', va='center', fontsize=10, color='#2c3e50')
-
-        # Gráfico 2: Distribuição por Tipo (Pizza)
-        ax2 = figura.add_subplot(gs[0, 1])
-        ax2.pie(quantidades_tipo, labels=tipos, autopct='%1.1f%%', colors=['#3498db', '#e84393'],
-                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
-        ax2.set_title('Distribuição por Tipo', pad=20, fontsize=12, color='#2c3e50')
-
-        # Gráfico 3: Consumo Mensal (Área)
-        ax3 = figura.add_subplot(gs[1, :])
-        ax3.fill_between(meses, consumo_medicamentos, alpha=0.2, color='#3498db', label='Medicamentos')
-        ax3.fill_between(meses, consumo_vacinas, alpha=0.2, color='#e84393', label='Vacinas')
-        ax3.plot(meses, consumo_medicamentos, marker='o', color='#2980b9', linewidth=2)
-        ax3.plot(meses, consumo_vacinas, marker='o', color='#c0392b', linewidth=2)
-        ax3.set_title('Consumo Mensal', pad=20, fontsize=12, color='#2c3e50')
-        ax3.spines['top'].set_visible(False)
-        ax3.spines['right'].set_visible(False)
-        ax3.grid(axis='y', linestyle='--', alpha=0.3)
-        ax3.legend()
-
-        # Ajusta o layout
-        plt.tight_layout()
-
-        # Adiciona os gráficos ao frame
-        canvas = FigureCanvasTkAgg(figura, graficos_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
-        canvas.draw()
-
-    def _mostrar_relatorio_campanhas(self):
-        """Exibe o layout do relatório de campanhas com visualizações modernas."""
-        # Frame para filtros (esquerda)
-        filtros_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        filtros_frame.pack(side="left", fill="y", padx=10, pady=10)
-
-        ttk.Label(filtros_frame, text="Filtros", style="Section.TLabel").pack(pady=10)
-
-        # Filtros disponíveis
-        filtros = [
-            ("Estado", ["Todas", "Ativa", "Encerrada"]),
-            ("Grupo-Alvo", ["Todos", "Bebês", "Crianças", "Jovens", "Adultos", "Idosos"]),
-            ("Período", ["Todas", "Último mês", "Últimos 3 meses", "Último ano"])
-        ]
-
-        self.filtros_selecionados = {}
-
-        for campo, opcoes in filtros:
-            frame = ttk.Frame(filtros_frame, style="Custom.TFrame")
-            frame.pack(fill="x", pady=5)
-
-            ttk.Label(frame, text=campo, style="Small.TLabel").pack(anchor="w")
-            combobox = ttk.Combobox(frame, values=opcoes, state="readonly", style="Custom.TCombobox")
-            combobox.current(0)
-            combobox.pack(fill="x")
-            self.filtros_selecionados[campo] = combobox
-
-        # Frame para os gráficos (direita)
-        graficos_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame", padding=10)
-        graficos_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
-
-        # Dados fictícios para os gráficos
-        estados = ["Ativa", "Encerrada"]
-        quantidades = [5, 3]
-        grupos_alvo = ["Bebês", "Crianças", "Jovens", "Adultos", "Idosos"]
-        participantes = [100, 150, 120, 200, 180]
-        meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-        campanhas_ativas = [2, 3, 4, 4, 5, 5]
-        campanhas_encerradas = [1, 1, 2, 2, 2, 3]
-
-        # Criação dos gráficos usando subplots
-        figura = plt.figure(figsize=(12, 8), dpi=100)
-        gs = figura.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
-
-        # Gráfico 1: Estado das Campanhas (Barras horizontais)
-        ax1 = figura.add_subplot(gs[0, 0])
-        cores = ['#2ecc71', '#e74c3c']
-        bars = ax1.barh(estados, quantidades, color=cores, height=0.6)
-        ax1.set_title('Estado das Campanhas', pad=20, fontsize=12, color='#2c3e50')
-        ax1.spines['top'].set_visible(False)
-        ax1.spines['right'].set_visible(False)
-        ax1.spines['left'].set_visible(False)
-        ax1.grid(axis='x', linestyle='--', alpha=0.3)
-        for bar in bars:
-            width = bar.get_width()
-            ax1.text(width + 0.1, bar.get_y() + bar.get_height()/2, f'{int(width)}',
-                    ha='left', va='center', fontsize=10, color='#2c3e50')
-
-        # Gráfico 2: Participantes por Grupo-Alvo (Barras)
-        ax2 = figura.add_subplot(gs[0, 1])
-        bars = ax2.bar(grupos_alvo, participantes, color='#3498db')
-        ax2.set_title('Participantes por Grupo-Alvo', pad=20, fontsize=12, color='#2c3e50')
-        ax2.spines['top'].set_visible(False)
-        ax2.spines['right'].set_visible(False)
-        ax2.grid(axis='y', linestyle='--', alpha=0.3)
-        for bar in bars:
-            height = bar.get_height()
-            ax2.text(bar.get_x() + bar.get_width()/2., height + 5,
-                    f'{int(height)}', ha='center', va='bottom', fontsize=10, color='#2c3e50')
-
-        # Gráfico 3: Evolução Mensal (Área)
-        ax3 = figura.add_subplot(gs[1, :])
-        ax3.fill_between(meses, campanhas_ativas, alpha=0.2, color='#2ecc71', label='Ativas')
-        ax3.fill_between(meses, campanhas_encerradas, alpha=0.2, color='#e74c3c', label='Encerradas')
-        ax3.plot(meses, campanhas_ativas, marker='o', color='#27ae60', linewidth=2)
-        ax3.plot(meses, campanhas_encerradas, marker='o', color='#c0392b', linewidth=2)
-        ax3.set_title('Evolução Mensal das Campanhas', pad=20, fontsize=12, color='#2c3e50')
-        ax3.spines['top'].set_visible(False)
-        ax3.spines['right'].set_visible(False)
-        ax3.grid(axis='y', linestyle='--', alpha=0.3)
-        ax3.legend()
-
-        # Ajusta o layout
-        plt.tight_layout()
-
-        # Adiciona os gráficos ao frame
-        canvas = FigureCanvasTkAgg(figura, graficos_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
-        canvas.draw()
-
-    def gerar_relatorio(self):
-        """Gera e exporta um relatório detalhado no formato TXT."""
+    def mostrar_relatorio_selecionado(self, event=None):
+        """Exibe o relatório selecionado no combobox."""
         relatorio = self.combo_relatorios.get()
-        
-        # Abre uma janela para selecionar o local de salvamento
-        file_path = filedialog.asksaveasfilename(
-            defaultextension=".txt",
-            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            title="Salvar Relatório"
-        )
-        
-        if not file_path:  # Se o usuário cancelar
-            return
-            
+        # Limpa o frame de conteúdo
+        for widget in self.conteudo_frame.winfo_children():
+            widget.destroy()
+
+        if relatorio == "Campanhas":
+            self.mostrar_relatorio_campanhas()
+        elif relatorio == "Consultas":
+            self.mostrar_relatorio_consultas()
+
+    def mostrar_relatorio_campanhas(self):
+        """Exibe o relatório de campanhas com tabela e visualizações (gráficos)."""
+        # Limpa o frame de conteúdo
+        for widget in self.conteudo_frame.winfo_children():
+            widget.destroy()
+
+        # Obtém os dados das campanhas
         try:
-            with open(file_path, "w", encoding="utf-8") as file:
-                # Cabeçalho do relatório
-                file.write("=" * 50 + "\n")
-                file.write(f"RELATÓRIO DE {relatorio.upper()}\n")
-                file.write("=" * 50 + "\n\n")
-                
-                # Data e hora da geração
-                from datetime import datetime
-                file.write(f"Data de Geração: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n\n")
-                
-                # Filtros aplicados
-                file.write("Filtros Aplicados:\n")
-                for campo, combobox in self.filtros_selecionados.items():
-                    file.write(f"- {campo}: {combobox.get()}\n")
-                file.write("\n")
-                
-                # Conteúdo específico do relatório
-                if relatorio == "Pacientes":
-                    file.write("Distribuição de Pacientes por Risco de Saúde:\n")
-                    file.write("- Baixo: 200 pacientes\n")
-                    file.write("- Médio: 150 pacientes\n")
-                    file.write("- Alto: 50 pacientes\n\n")
-                    file.write("Total de Pacientes: 400\n")
-                    
-                elif relatorio == "Consultas":
-                    file.write("Consultas por Mês (Últimos 6 meses):\n")
-                    file.write("- Janeiro: 120 consultas\n")
-                    file.write("- Fevereiro: 150 consultas\n")
-                    file.write("- Março: 180 consultas\n")
-                    file.write("- Abril: 160 consultas\n")
-                    file.write("- Maio: 200 consultas\n")
-                    file.write("- Junho: 190 consultas\n\n")
-                    file.write("Média Mensal: 166.7 consultas\n")
-                    file.write("Total de Consultas: 1000\n")
-                    
-                elif relatorio == "Recursos":
-                    file.write("Distribuição de Recursos por Estado:\n")
-                    file.write("- Disponíveis: 150 (75.0%)\n")
-                    file.write("- Fora de stock: 30 (15.0%)\n")
-                    file.write("- Expirados: 20 (10.0%)\n\n")
-                    file.write("Total de Recursos: 200\n")
-                    
-                elif relatorio == "Campanhas":
-                    file.write("Distribuição de Campanhas por Estado:\n")
-                    file.write("- Ativas: 5 (62.5%)\n")
-                    file.write("- Encerradas: 3 (37.5%)\n\n")
-                    file.write("Total de Campanhas: 8\n")
-                
-                # Rodapé
-                file.write("\n" + "=" * 50 + "\n")
-                file.write("Relatório gerado pelo Sistema de Gestão de Saúde\n")
-                file.write("=" * 50 + "\n")
-                
-            messagebox.showinfo("Sucesso", f"Relatório de {relatorio} exportado com sucesso para:\n{file_path}")
+            campanhas_frame = self.master.frames["Campanhas"]
+            campanhas = campanhas_frame.campanhas
+        except (AttributeError, KeyError):
+            messagebox.showerror("Erro", "Não foi possível acessar os dados das campanhas.")
+            return
+
+        # Frame principal para a tabela e visualizações lado a lado
+        main_viz_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame")
+        main_viz_frame.pack(fill="both", expand=True)
+
+        # Frame para a tabela (esquerda)
+        tabela_frame = ttk.Frame(main_viz_frame, style="Custom.TFrame")
+        tabela_frame.pack(side="left", fill="both", expand=True, padx=(0, 10))
+
+        # Título da Tabela
+        ttk.Label(tabela_frame, text="Lista de Campanhas", 
+                 font=("Segoe UI", 12, "bold"),
+                 foreground="#2c3e50",
+                 background="#f5f5f5").pack(pady=(0, 5))
+
+        # Tabela de campanhas
+        colunas = ("Nome", "Início", "Fim", "Grupo-Alvo", "Estado")
+        
+        # Frame para a tabela e scrollbar
+        tabela_scroll_frame = ttk.Frame(tabela_frame) 
+        tabela_scroll_frame.pack(fill="both", expand=True)
+        
+        # Scrollbar vertical
+        scrollbar_vertical = ttk.Scrollbar(tabela_scroll_frame, orient="vertical")
+        scrollbar_vertical.pack(side="right", fill="y")
+        
+        self.tabela_relatorios = ttk.Treeview(tabela_scroll_frame, columns=colunas, show="headings", height=10, style="Custom.Treeview", yscrollcommand=scrollbar_vertical.set)
+        scrollbar_vertical.configure(command=self.tabela_relatorios.yview)
+        
+        for col in colunas:
+            self.tabela_relatorios.heading(col, text=col, anchor="center")
+            self.tabela_relatorios.column(col, width=100, anchor="center")
+
+        self.tabela_relatorios.pack(side="left", fill="both", expand=True) 
+
+        # Preenche a tabela com os dados
+        for campanha in campanhas:
+            self.tabela_relatorios.insert('', 'end', values=(
+                campanha["Nome"], campanha["Início"], campanha["Fim"], campanha["Grupo-Alvo"], campanha["Estado"]
+            ))
+
+        # Frame para as visualizações (direita)
+        viz_frame = ttk.Frame(main_viz_frame, style="Custom.TFrame")
+        viz_frame.pack(side="left", fill="both", expand=True, padx=(10, 0))
+
+        # --- Implementação dos Gráficos ---
+
+        # Gráfico 1: Estado das Campanhas (Pizza)
+        campanhas_ativas = sum(1 for c in campanhas if c["Estado"] == "Ativa")
+        campanhas_encerradas = sum(1 for c in campanhas if c["Estado"] == "Encerrada")
+        estado_labels = ['Ativas', 'Encerradas']
+        estado_sizes = [campanhas_ativas, campanhas_encerradas]
+        estado_colors = ['#27ae60', '#c0392b'] # Verde e Vermelho do tema
+
+        fig1 = Figure(figsize=(3.5, 2.5), dpi=100) # Reduced height
+        ax1 = fig1.add_subplot(111)
+        ax1.pie(estado_sizes, labels=estado_labels, autopct='%1.1f%%', colors=estado_colors,
+                wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
+        ax1.set_title('Estado das Campanhas', fontsize=10, color='#2c3e50')
+        
+        canvas1 = FigureCanvasTkAgg(fig1, viz_frame)
+        canvas1.draw()
+        canvas1.get_tk_widget().pack(fill="x", pady=(0, 10))
+
+        # --- Novo Gráfico: Número de Participantes por Campanha (Barras) ---
+        campanhas_nomes = [c["Nome"] for c in campanhas]
+        # Ensure "Número de Participantes" is treated as a number, default to 0 if not available or invalid
+        participantes_valores = []
+        for c in campanhas:
+            try:
+                # Get the value, default to 0 if not available
+                part = c.get("Número de Participantes", 0)
+                # Convert to float. This works for both int and float types.
+                participantes_valores.append(float(part))
+            except (ValueError, TypeError):
+                # If conversion fails (e.g., value is not a number), default to 0.0
+                participantes_valores.append(0.0) 
+
+        fig2 = Figure(figsize=(4, 3.5), dpi=100) # Adjust size as needed
+        ax2 = fig2.add_subplot(111)
+        
+        # Create bars
+        bars = ax2.bar(campanhas_nomes, participantes_valores, color='#3498db') # Azul do tema
+        
+        ax2.set_title('Número de Participantes por Campanha', fontsize=10, color='#2c3e50')
+        ax2.set_ylabel('Nº de Participantes', fontsize=8, color='#2c3e50')
+        ax2.tick_params(axis='x', rotation=90, labelsize=7) # Rotate labels for better visibility
+        ax2.tick_params(axis='y', labelsize=8)
+        
+        # Add values on top of bars
+        for bar in bars:
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2.0, yval, int(yval) if yval.is_integer() else round(yval, 2), va='bottom', ha='center', fontsize=7) # Add text slightly above the bar
+
+        fig2.tight_layout() # Adjust layout to prevent overlap
+
+        canvas2 = FigureCanvasTkAgg(fig2, viz_frame)
+        canvas2.draw()
+        canvas2.get_tk_widget().pack(fill="x", pady=(10, 0))
+
+    def mostrar_relatorio_consultas(self):
+        """Exibe o relatório de consultas (a ser implementado)."""
+        # Limpa o frame de conteúdo
+        for widget in self.conteudo_frame.winfo_children():
+            widget.destroy()
             
-        except Exception as e:
-            messagebox.showerror("Erro", f"Erro ao exportar o relatório:\n{str(e)}")
+        # Mensagem temporária
+        ttk.Label(self.conteudo_frame, 
+                 text="Relatório de Consultas em desenvolvimento...",
+                 style="Custom.TLabel").pack(pady=20)
 
 class DashboardApp:
     def __init__(self, root):
