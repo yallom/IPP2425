@@ -14,6 +14,68 @@ from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
 
+
+
+
+
+
+class DashboardApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Dashboard - Saúde Comunitária")
+        self.root.geometry("1000x600")
+        self.root.configure(bg="#eaf0f1")
+        self.create_widgets()
+
+    def create_widgets(self):
+        header = tk.Frame(self.root, bg="#eaf0f1", height=50)
+        header.pack(fill=tk.X, side=tk.TOP)
+        title = tk.Label(header, text="Bem-vindo, admin", font=("Segoe UI", 16, "bold"), bg="#eaf0f1", fg="#2f4f4f")
+        title.pack(pady=10)
+
+        style = ttk.Style()
+        style.theme_use("default")
+        style.configure("TNotebook", background="#eaf0f1", borderwidth=0)
+        style.configure("TNotebook.Tab", font=("Segoe UI", 11), padding=[10, 5], background="#dfe6e9")
+        style.map("TNotebook.Tab",
+                  background=[("selected", "#b2bec3")],
+                  foreground=[("selected", "#2d3436")])
+
+        self.tabs = ttk.Notebook(self.root)
+        self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
+
+        categorias = [
+            ("Médicos", "🩺"),
+            ("Pacientes", "👤"),
+            ("Consultas", "📅"),
+            ("Campanhas", "📢"),
+            ("Recursos", "💉"),
+            ("Relatórios", "📊")
+        ]
+        ##Atenção criar classes paciente e medicos e consulta 
+        for cat, emoji in categorias:
+            if cat == "Pacientes":
+                self.gerente_pacientes = Interface_Paciente(self.tabs)
+                self.tabs.add(self.gerente_pacientes.get_frame(), text=f"{emoji}  {cat}")
+            elif cat == "Médicos": 
+                self.gerente_medicos = Interface_Medicos(self.tabs)
+                self.tabs.add(self.gerente_medicos.get_frame(), text= f"{emoji}  {cat}" )
+            elif cat== "Consultas":
+                self.gerente_consultas = Consultas(self.tabs)
+                self.tabs.add(self.gerente_consultas.get_frame(), text=f"{emoji}  {cat}")
+            else:
+                frame = ttk.Frame(self.tabs)
+                self.tabs.add(frame, text=f"{emoji}  {cat}")
+
+        footer = tk.Frame(self.root, bg="#eaf0f1", height=30)
+        footer.pack(fill=tk.X, side=tk.BOTTOM)
+        user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#eaf0f1", fg="#2f4f4f", font=("Segoe UI", 9))
+        user_info.pack(pady=5)
+
+    
+
+
+
 # Fade-in effect
 def fade_in(window):
     alpha = 0.0
