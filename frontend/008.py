@@ -1528,21 +1528,21 @@ class RelatoriosFrame(ttk.Frame):
                 # If conversion fails (e.g., value is not a number), default to 0.0
                 participantes_valores.append(0.0) 
 
-        fig2 = Figure(figsize=(4, 3.5), dpi=100) # Adjust size as needed
+        fig2 = Figure(figsize=(8, 6), dpi=100)  # Increased size from (4, 3.5) to (8, 6)
         ax2 = fig2.add_subplot(111)
         
         # Create bars
         bars = ax2.bar(campanhas_nomes, participantes_valores, color='#3498db') # Azul do tema
         
-        ax2.set_title('Número de Participantes por Campanha', fontsize=10, color='#2c3e50')
-        ax2.set_ylabel('Nº de Participantes', fontsize=8, color='#2c3e50')
-        ax2.tick_params(axis='x', rotation=90, labelsize=7) # Rotate labels for better visibility
-        ax2.tick_params(axis='y', labelsize=8)
+        ax2.set_title('Número de Participantes por Campanha', fontsize=12, color='#2c3e50')  # Increased font size
+        ax2.set_ylabel('Nº de Participantes', fontsize=10, color='#2c3e50')  # Increased font size
+        ax2.tick_params(axis='x', rotation=90, labelsize=9)  # Increased label size
+        ax2.tick_params(axis='y', labelsize=9)  # Increased label size
         
         # Add values on top of bars
         for bar in bars:
             yval = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width()/2.0, yval, int(yval) if yval.is_integer() else round(yval, 2), va='bottom', ha='center', fontsize=7) # Add text slightly above the bar
+            plt.text(bar.get_x() + bar.get_width()/2.0, yval, int(yval) if yval.is_integer() else round(yval, 2), va='bottom', ha='center', fontsize=9)  # Increased font size
 
         fig2.tight_layout() # Adjust layout to prevent overlap
 
