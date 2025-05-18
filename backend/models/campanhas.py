@@ -1,4 +1,4 @@
-from medicamentos import Medicamento
+from .medicamentos import Medicamento
 
 class Campanha: #Classe para campanhas de vacinação, referentes a um medicamento específico
 
@@ -30,3 +30,15 @@ class Campanha: #Classe para campanhas de vacinação, referentes a um medicamen
     @classmethod
     def search_id(cls, id):
         return([obj for obj in cls.instances if obj.idmedicamento == id])
+    
+    @classmethod
+    def delete_instance(cls,obj):
+        if obj in cls.instances:
+            try:
+                cls.instances.remove(obj)
+                del obj
+                return "Campanha apagada com sucesso"
+            except:
+                return f"Erro ao apagar Campanha {obj.nome}"
+        else:
+            return f"Campanha {obj.nome} não encontrada"

@@ -3,9 +3,10 @@ class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou 
 
     instances = []
 
-    def __init__(self,name,agerange,riskrange,gravidas,expiry):
+    def __init__(self,name,type,agerange,riskrange,gravidas,expiry):
 
         self.nome = name
+        self.tipo = type
         self.idade = agerange
         self.eficacia = riskrange
         self.gravidez = gravidas
@@ -15,7 +16,7 @@ class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou 
         Medicamento.instances.append(self)
 
     def get_self(self):
-        return(self.nome, self.idade, self.eficacia, self.gravidez, self.validade, self.id)
+        return(self.nome, self.tipo, self.idade, self.eficacia, self.gravidez, self.validade, self.id)
 
     @classmethod
     def get_all_instances(cls):

@@ -2,17 +2,16 @@ class Medico:
 
     instances = []
 
-    def __init__(self,name,availabilities,specialty):
-
-        self.nome = name
-        self.disponibilidades = availabilities
-        self.especialidade = specialty
-        self.id = f"MD{len(Medico.instances) + 1:04d}"
-            
+    def __init__(self, nome, especialidade, disponibilidade):
+        
+        self.nome = nome
+        self.specialty = especialidade
+        self.servico = disponibilidade
+        self.id = f"Med{len(Medico.instances)+1:04d}"
         Medico.instances.append(self)
 
     def get_self(self):
-        return((self.nome, self.disponibilidades, self.especialidade), id(self))
+        return(self.id, self.nome, self.servico, self.specialty)
     
     def edit_self(self,name,availabilities,specialty):
 
@@ -52,7 +51,7 @@ class Medico:
     
     @classmethod
     def show_by_id(cls, uuid):
-        for item in cls.get_all_instances():
-            if id(item) == uuid:
+        for item in cls.instances:
+            if item.id == uuid:
                 return item
         return f"Utilizador {uuid} não encontrado!"
