@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import json
 import tkinter as tk
 from tkinter import ttk, messagebox
 from ttkthemes import ThemedTk
@@ -5,7 +10,7 @@ from PIL import Image, ImageTk
 import threading
 import time
 from datetime import datetime
-from tkcalendar import DateEntry  
+from tkcalendar import DateEntry
 import csv
 from tkinter import filedialog
 from matplotlib.figure import Figure
@@ -13,6 +18,50 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
+from backend.Controllers import pessoascontroller as PC
+from backend.Controllers import medicamentoscontroller as MC
+from backend.Controllers import campanhascontroller as CC
+from backend.Controllers import medicoscontroller as DC
+
+
+def Read_File (filename):
+    with open(filename, 'r', encoding='utf-8') as ficheiro:
+        fullfile = json.load(ficheiro)        
+        pacientlist = fullfile.get('Pacientes',{})
+        medicationlist = fullfile.get('Medicamentos',{})
+        vaccinelist = fullfile.get('Vacinas',{})
+        Doctorlist = fullfile.get('Médicos',{})
+        campaignlist = fullfile.get('Campanhas',{})
+        consultationlist = fullfile.get('Consultas',{})
+        Queuelist = fullfile.get('Filas',{})
+        if pacientlist:
+            PC.read(pacientlist)
+        if medicationlist:
+            MC.read(medicationlist)
+        if vaccinelist:
+            MC.read(vaccinelist)
+        if Doctorlist:
+            DC.read(Doctorlist)
+
+    return
+
+#Read_File("pacientes.json")
+#Read_File("medicos.json")
+#print(PC.getAll())
+#print(DC.getAll())
+
+def Save_File (filepath):
+    with open(filepath, 'w', encoding='utf-8') as ficheiro:
+        data = {
+            'Pacientes': [PC.write(p) for p in PC.getAll()],
+            'Medicamentos': [MC.write(m) for m in MC.getAll() if m.tipo == "Medicamento"],
+            'Vacinas': [MC.write(v) for v in MC.getAll() if v.tipo == "Vacina"],
+            'Médicos': [DC.write(d) for d in DC.getAll()]
+        }
+        json.dump(data, ficheiro, ensure_ascii=False, indent=4)
+    return
+
+#Save_File("novoficheiro.json")
 
 
 
@@ -765,11 +814,13 @@ class RecursosFrame(ttk.Frame):
         scrollbar_vertical.pack(side="right", fill="y")
 
         # Tabela de recursos
+
         colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview", yscrollcommand=scrollbar_vertical.set)
         
         # Configura a scrollbar para controlar a tabela
         scrollbar_vertical.configure(command=self.tabela.yview)
+
         
         # Ajusta o tamanho das colunas
         self.tabela.column("Tipo", width=100, anchor="center")
@@ -778,6 +829,8 @@ class RecursosFrame(ttk.Frame):
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
+        self.tabela.column("ID", width=80, anchor="center")
+
         
         # Configura os cabeçalhos
         for col in colunas:
@@ -795,12 +848,8 @@ class RecursosFrame(ttk.Frame):
         self.tabela.configure(xscrollcommand=scrollbar_horizontal.set)
 
         # Dados iniciais (exemplo)
-        self.dados = [
-            {"Tipo": "Medicamento", "Nome": "Paracetamol", "Grupo-Alvo": "Adultos", "Grupo Risco": "Baixo",
-             "Gravidez": "Sim", "Data de Validade": "2025-12-31", "Quantidade em Stock": "100", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"},
-            {"Tipo": "Vacina", "Nome": "Vacina Gripe", "Grupo-Alvo": "Idosos", "Grupo Risco": "Médio",
-             "Gravidez": "Não", "Data de Validade": "2025-10-15", "Quantidade em Stock": "50", "Campanha": "Campanha de Vacinação Gripe", "Estado": "Disponível"}
-        ]
+        MC.addMedicine("Med1","10","12","m",0,"1","2","2024-11-23")
+        self.dados = MC.getAll()
 
         # Preenche a tabela com os dados iniciais
         self.atualizar_tabela(self.dados)
@@ -814,12 +863,14 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-                recurso["Tipo"],
-                recurso["Nome"],
-                recurso["Grupo-Alvo"],
-                recurso["Grupo Risco"],
-                recurso["Gravidez"],
-                recurso["Data de Validade"]
+
+                recurso.nome,
+                f"{recurso.idade[0]}-{recurso.idade[1]}",
+                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.gravidez,
+                recurso.validade,
+                recurso.id
+
             ))
 
     def novo_medicamento(self):
@@ -1339,12 +1390,15 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-                recurso["Tipo"],
-                recurso["Nome"],
-                recurso["Grupo-Alvo"],
-                recurso["Grupo Risco"],
-                recurso["Gravidez"],
-                recurso["Data de Validade"]
+
+                "Medicamento",
+                recurso.nome,
+                f"{recurso.idade[0]}-{recurso.idade[1]}",
+                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.gravidez,
+                recurso.validade,
+                recurso.id
+
             ))
 
 class RelatoriosFrame(ttk.Frame):
@@ -1366,6 +1420,7 @@ class RelatoriosFrame(ttk.Frame):
 
         # Título com estilo personalizado
         ttk.Label(self, text="Relatórios", style="Custom.TLabel").pack(pady=(0, 10))
+
 
         # Frame para a seleção do relatório e filtros de data
         controles_frame = ttk.Frame(self, style="Custom.TFrame")
@@ -1418,6 +1473,7 @@ class RelatoriosFrame(ttk.Frame):
                   style="App.TButton").pack(side="right")
 
         # Frame para o conteúdo do relatório (tabela e gráficos)
+
         self.conteudo_frame = ttk.Frame(self, style="Custom.TFrame")
         self.conteudo_frame.pack(fill="both", expand=True, pady=10)
 

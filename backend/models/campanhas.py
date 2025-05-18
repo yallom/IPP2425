@@ -1,36 +1,44 @@
-import weakref
-from medicamentos import Medicamento
+from .medicamentos import Medicamento
 
 class Campanha: #Classe para campanhas de vacinação, referentes a um medicamento específico
 
-    instances = weakref.WeakSet()
+    instances = []
 
-    def __init__(self,name,start_date,end_date,age_min,age_max,efficiency_min,efficiency_max,gravidas,idmedicine):
+    def __init__(self,name,dates,ages,efficiency,gravidas,idmedicine):
         
-        self.nome = name.strip()
-        self.datas = [start_date, end_date]
-        self.grupoidade = [int(age_min), int(age_max)]
-        self.gruporisco = [int(efficiency_min), int(efficiency_max)]
-        self.gravidas = int(gravidas)
+        self.nome = name
+        self.datas = dates
+        self.grupoidade = ages
+        self.gruporisco = efficiency
+        self.gravidas = gravidas
         self.idmedicamento = idmedicine
+        self.id = f"C{len(Campanha.instances) + 1:04d}"
 
-        Campanha.instances.add(self)
+        Campanha.instances.append(self)
 
-    def printself(self):
-        print(self.nome, self.datas, self.grupoidade, self.gruporisco, self.gravidas, self.idmedicamento)
-        print(id(self))
+    def get_self(self):
+        return(self.nome, self.datas, self.grupoidade, self.gruporisco, self.gravidas, self.idmedicamento, self.id)
 
     @classmethod
     def get_all_instances(cls):
-        print (list(cls.instances))
+        return (list(cls.instances))
     
     @classmethod
-    def get_instance(cls, arg):
-        print([obj.nome for obj in cls.instances if obj.idmedicamento == arg])
-
-prozac = Medicamento("Prozac", "10", "30", "0", "3", "1")
-q = Campanha("Campanha 1", "2024-10-13", "2024-10-15", prozac.idade[0], prozac.idade[1], prozac.eficacia[0], prozac.eficacia[1], prozac.gravidez, id(prozac))
-q.printself()
-Campanha.get_all_instances()
-
-Campanha.get_instance(id(prozac))
+    def get_instance(cls, id):
+        return([obj for obj in cls.instances if obj.id == id])
+    
+    @classmethod
+    def search_id(cls, id):
+        return([obj for obj in cls.instances if obj.idmedicamento == id])
+    
+    @classmethod
+    def delete_instance(cls,obj):
+        if obj in cls.instances:
+            try:
+                cls.instances.remove(obj)
+                del obj
+                return "Campanha apagada com sucesso"
+            except:
+                return f"Erro ao apagar Campanha {obj.nome}"
+        else:
+            return f"Campanha {obj.nome} não encontrada"
