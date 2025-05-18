@@ -22,6 +22,8 @@ from backend.Controllers import pessoascontroller as PC
 from backend.Controllers import medicamentoscontroller as MC
 from backend.Controllers import campanhascontroller as CC
 from backend.Controllers import medicoscontroller as DC
+from backend.Models.pacientes import Paciente
+from backend.Controllers.pessoascontroller import GestorPacientes
 
 
 def Read_File (filename):

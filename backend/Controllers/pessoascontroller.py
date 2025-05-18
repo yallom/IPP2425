@@ -1,8 +1,66 @@
 import sys
 import os
+import json
+import uuid
+from backend.Models.pacientes import Paciente
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Models.pacientes import Paciente
+
+class GestorPacientes:
+    def __init__(self, caminho_ficheiro='pacientes.json'):
+        self.caminho_ficheiro = caminho_ficheiro
+        self.pacientes = []
+        self.carregar_de_ficheiro()
+
+    def adicionar_paciente(self, paciente):
+        if not paciente.id:
+            paciente.id = str(uuid.uuid4())
+        self.pacientes.append(paciente)
+
+    def remover_paciente(self, id):
+        self.pacientes = [p for p in self.pacientes if p.id != id]
+
+    def editar_paciente(self, id, **kwargs):
+        paciente = self.obter_paciente(id)
+        if paciente:
+            for key, value in kwargs.items():
+                if hasattr(paciente, key):
+                    setattr(paciente, key, value)
+    
+    def atualizar_paciente(self, id, novo_paciente):
+        for i, paciente in enumerate(self.pacientes):
+            if paciente.id == id:
+                novo_paciente.id = id  # mantém o ID original
+                novo_paciente.historico_consultas = paciente.historico_consultas
+                novo_paciente.historico_vacinas = paciente.historico_vacinas
+                self.pacientes[i] = novo_paciente
+                return True
+        return False
+
+    def obter_paciente(self, id):
+        for paciente in self.pacientes:
+            if paciente.id == id:
+                return paciente
+        return None
+
+    def listar_pacientes(self):
+        return self.pacientes
+
+    def guardar_em_ficheiro(self):
+        dados = [p.to_dict() for p in self.pacientes]
+        with open(self.caminho_ficheiro, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, ensure_ascii=False, indent=4)
+
+    def carregar_de_ficheiro(self):
+        try:
+            with open(self.caminho_ficheiro, 'r', encoding='utf-8') as f:
+                dados = json.load(f)
+                self.pacientes = [Paciente.from_dict(d) for d in dados]
+        except FileNotFoundError:
+            self.pacientes = []
+
+#---------------------------------------------------------------------------------------------------------------      
 
 def addPacient(name: str, age: str, sex: str, gravidez: bool, doenca: str, tipo_sanguineo: str, morada):     #Cria uma nova Pessoa no sistema
     X = Paciente(name,age,sex,tipo_sanguineo,morada,doenca,gravidez)
