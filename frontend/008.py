@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+import json
 import tkinter as tk
 from tkinter import ttk, messagebox
 from ttkthemes import ThemedTk
@@ -20,11 +21,47 @@ from matplotlib import pyplot as plt  # Importação correta para usar pyplot
 from backend.Controllers import pessoascontroller as PC
 from backend.Controllers import medicamentoscontroller as MC
 from backend.Controllers import campanhascontroller as CC
+from backend.Controllers import medicoscontroller as DC
 
 
-def Save_File ():
-    DadosPacientes = PC.getAllObjects()
+def Read_File (filename):
+    with open(filename, 'r', encoding='utf-8') as ficheiro:
+        fullfile = json.load(ficheiro)        
+        pacientlist = fullfile.get('Pacientes',{})
+        medicationlist = fullfile.get('Medicamentos',{})
+        vaccinelist = fullfile.get('Vacinas',{})
+        Doctorlist = fullfile.get('Médicos',{})
+        campaignlist = fullfile.get('Campanhas',{})
+        consultationlist = fullfile.get('Consultas',{})
+        Queuelist = fullfile.get('Filas',{})
+        if pacientlist:
+            PC.read(pacientlist)
+        if medicationlist:
+            MC.read(medicationlist)
+        if vaccinelist:
+            MC.read(vaccinelist)
+        if Doctorlist:
+            DC.read(Doctorlist)
+
     return
+
+#Read_File("pacientes.json")
+#Read_File("medicos.json")
+#print(PC.getAll())
+#print(DC.getAll())
+
+def Save_File (filepath):
+    with open(filepath, 'w', encoding='utf-8') as ficheiro:
+        data = {
+            'Pacientes': [PC.write(p) for p in PC.getAll()],
+            'Medicamentos': [MC.write(m) for m in MC.getAll() if m.tipo == "Medicamento"],
+            'Vacinas': [MC.write(v) for v in MC.getAll() if v.tipo == "Vacina"],
+            'Médicos': [DC.write(d) for d in DC.getAll()]
+        }
+        json.dump(data, ficheiro, ensure_ascii=False, indent=4)
+    return
+
+#Save_File("novoficheiro.json")
 
 # Fade-in effect
 def fade_in(window):

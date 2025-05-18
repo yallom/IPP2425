@@ -2,25 +2,47 @@
 
 from ..Models.medicamentos import Medicamento    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package
 
-def addMedicine(name:str, age1:str, age2:str, sex:str, gravidez:int, risk1:str, risk2:str, expiry:str):    #Cria uma nova pessoa no sistema
-    newname = name.strip()
-    agerange = [int(age1.strip()), int(age2.strip())]
-    riskrange = [int(risk1.strip()), int(risk2.strip())]
+def addMedicine(name, age1, age2, gravidez, risk1, risk2, expiry, type):    #Cria uma nova pessoa no sistema
+    newname = name
+    agerange = [age1, age2]
+    riskrange = [risk1, risk2]
     pregnancy = gravidez
-    validade = expiry.strip()
+    validade = expiry
 
-    X = Medicamento(newname, agerange, riskrange, pregnancy, validade)
+    X = Medicamento(newname, type, agerange, riskrange, pregnancy, validade)
 
     return X
 
 def deleteMedicine(obj):    #Apaga uma pessoa da classe "Pessoa" atual
     return Medicamento.delete_instance(obj)
 
-#def searchMedicine(obj):    #Meio inútil, mantém-se por agora
-    return Medicamento.get_instance(obj)
-
-def getMedicine(id):    #Procura uma pessoa específica pelo seu ID
+def search(id):    #Procura uma pessoa específica pelo seu ID
     return Medicamento.show_by_id(id)
 
 def getAll():
-    return Medicamento.get_all_instances()
+    return Medicamento.instances
+
+def read(list):
+    try:
+        for m in list:
+            nome = m["nome"]
+            tipo = m["tipo"]
+            idade = m["idade"]
+            eficacia = m["eficacia"]
+            gravidez = m["gravidez"]
+            validade = m["validade"]
+            addMedicine(nome, idade[0], idade[1], tipo, gravidez, eficacia[0], eficacia[1], validade)
+    except Exception as e:
+        print(f"Erro ao ler medicamentos: {e}")
+
+def write(obj):
+    medicamento = {
+        'id': obj.id,
+        'nome': obj.nome,
+        'tipo': obj.tipo,
+        'idade': obj.idade,
+        'eficacia': obj.eficacia,
+        'gravidez': obj.gravidez,
+        'validade': obj.validade
+    }
+    return medicamento

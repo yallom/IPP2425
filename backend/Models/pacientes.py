@@ -2,38 +2,53 @@ class Paciente:
 
     instances = []
 
-    def __init__(self, name, age, sex, gravidez, risk, doenca="", tipo_sanguineo=""):
+    def __init__(self,name,age,sex,grupo_sanguineo,morada,doenca,pregnancy):
+        self.id = f"P{len(Paciente.instances)+1:04d}"
         self.nome = name
         self.idade = age
         self.sexo = sex
-        self.risco = risk
+        self.sangue = grupo_sanguineo
+        self.morada = morada
         self.doenca = doenca
-        self.sangue = tipo_sanguineo
+        self.gravidez = False
+        if self.sexo != "m":
+            self.gravidez = pregnancy
+        self.risco = self.risco_paciente()
+        self.historico_consultas = []
+        self.historico_vacinas = []
+        Paciente.instances.append(self)
 
-        if sex == "m":
-            self.gravidez = False
+    def risco_paciente(self):
+        if self.idade < 45:
+            risco = "Baixo"
+            if self.doenca:
+                risco = "Médio"
+        elif self.idade < 65:
+            risco = "Médio"
+            if self.gravidez or self.doenca:
+                risco = "Elevado"
         else:
-            self.gravidez = gravidez
-
-        self.id = f"P{len(Paciente.instances) + 1 :04d}"
-        Paciente.instances.append((self, id(self)))
+            risco = "Elevado"
+            if self.doenca:
+                risco = "Muito Elevado" 
+        return risco
 
     def get_self(self):
-        return (self.nome, self.idade, self.sexo, self.gravidez, self.risco, self.doenca, self.sangue, self.id)
+        return(self.id, self.nome, self.idade, self.sexo, self.sangue, self.morada, self.gravidez, self.risco, self.historico_consultas, self.historico_vacinas, self.doenca)
 
-    def edit_self(self, name, age, sex, gravidez, risk, doenca, tipo_sanguineo):
+    def edit_self(self,name,age,sex,grupo_sanguineo,morada,doenca,pregnancy):
         self.nome = name
         self.idade = age
         self.sexo = sex
-        self.risco = risk
+        self.sangue = grupo_sanguineo
+        self.morada = morada
         self.doenca = doenca
-        self.sangue = tipo_sanguineo
-
-        if sex == "m":
-            self.gravidez = False
-        else:
-            self.gravidez = gravidez
-
+        self.gravidez = False
+        if self.sexo != "m":
+            self.gravidez = pregnancy
+        self.risco = self.risco_paciente()  
+        self.historico_consultas = []
+        self.historico_vacinas = []
         return self.get_self()
 
 

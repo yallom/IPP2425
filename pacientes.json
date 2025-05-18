@@ -1,0 +1,2028 @@
+{"Pacientes": [
+    {
+        "id": "P0062",
+        "nome": "Ana Sousa",
+        "idade": 51,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-05-11"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0063",
+        "nome": "Bruno Matos",
+        "idade": 84,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "artrite",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-06-14"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-02-04"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-12-29"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-03-04"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-01-18"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0064",
+        "nome": "Carla Dias",
+        "idade": 54,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "artrite",
+            "doença cardíaca",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2023-10-22"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-10-19"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-11-24"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0065",
+        "nome": "Daniel Pinto",
+        "idade": 72,
+        "sexo": "m",
+        "grupo sanguíneo": "O+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": "Nenhuma",
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-07-07"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-06-19"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-05-12"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-01-18"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-05-14"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0066",
+        "nome": "Eduarda Lopes",
+        "idade": 64,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2023-04-15"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-04-21"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-05-10"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0067",
+        "nome": "Fábio Marques",
+        "idade": 64,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2025-01-01"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0068",
+        "nome": "Gabriela Cunha",
+        "idade": 57,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-04-07"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-10-27"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0069",
+        "nome": "Henrique Nogueira",
+        "idade": 30,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "diabetes",
+            "doença cardíaca",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-08-28"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-10-30"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-05-24"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2023-02-10"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2023-11-14"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0070",
+        "nome": "Isabel Faria",
+        "idade": 43,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-08-27"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2021-10-15"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-12-09"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0071",
+        "nome": "Jorge Batista",
+        "idade": 27,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua do Mar 14, Cascais",
+        "doenças crónicas": [
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-06-09"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-04-22"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-06-20"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0072",
+        "nome": "Kátia Ramos",
+        "idade": 76,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-10-02"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Costa",
+                    "data": "2025-02-05"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-01-18"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2025-04-04"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0073",
+        "nome": "Luís Carvalho",
+        "idade": 81,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "hipertensão",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-04-18"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0074",
+        "nome": "Marta Neves",
+        "idade": 88,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "diabetes",
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2023-04-27"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-08-06"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0075",
+        "nome": "Nuno Almeida",
+        "idade": 58,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "artrite",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-01-31"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-11-04"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0076",
+        "nome": "Olga Ferreira",
+        "idade": 69,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-08-06"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-02-07"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0077",
+        "nome": "Paulo Rocha",
+        "idade": 74,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2025-04-12"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-11-09"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-07-31"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2023-06-10"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0078",
+        "nome": "Quésia Martins",
+        "idade": 67,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "diabetes",
+            "asma",
+            "artrite"
+        ],
+        "gravidez": true,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-09-16"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-01-15"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2025-01-23"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-10-27"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0079",
+        "nome": "Rui Costa",
+        "idade": 22,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "asma",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-09-10"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-07-21"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0080",
+        "nome": "Sofia Cardoso",
+        "idade": 89,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Travessa do Sol 944, São Pedro, Lisboa",
+        "doenças crónicas": [
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2022-11-03"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-09-20"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-04-27"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-09-23"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-05-21"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0081",
+        "nome": "Tiago Tavares",
+        "idade": 25,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-01-21"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2021-09-21"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0082",
+        "nome": "Úrsula Mendes",
+        "idade": 49,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Travessa do Sol 944, São Pedro, Lisboa",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2025-03-15"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-08-17"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-06-27"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0083",
+        "nome": "Vasco Correia",
+        "idade": 37,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "artrite",
+            "diabetes",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-12-01"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-11-24"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2023-11-28"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2023-11-16"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0084",
+        "nome": "Wanda Lima",
+        "idade": 50,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-11-10"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-09-07"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2021-12-06"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0085",
+        "nome": "Xavier Dias",
+        "idade": 88,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "diabetes",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-05-21"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-05-17"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0086",
+        "nome": "Yara Monteiro",
+        "idade": 87,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "asma",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-06-04"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-01-13"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2022-01-10"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0087",
+        "nome": "Zé Pedro",
+        "idade": 44,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2025-03-17"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-11-10"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0088",
+        "nome": "Alice Gomes",
+        "idade": 47,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-04-11"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2021-08-18"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0089",
+        "nome": "Bernardo Silva",
+        "idade": 56,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-09-26"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-09-13"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0090",
+        "nome": "Cláudia Reis",
+        "idade": 68,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-04-02"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-08-07"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-09-11"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2024-05-11"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2025-02-11"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0091",
+        "nome": "Diogo Teixeira",
+        "idade": 18,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "asma",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2021-07-19"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-09-14"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2022-12-22"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0092",
+        "nome": "Elisa Martins",
+        "idade": 78,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "artrite",
+            "asma",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-04-18"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-01-22"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0093",
+        "nome": "Francisco Louro",
+        "idade": 80,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "artrite",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-10-11"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-01-04"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-10-22"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0094",
+        "nome": "Gonçalo Fonseca",
+        "idade": 36,
+        "sexo": "M",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": "Asma",
+        "gravidez": "Não",
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-12-03"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-07-29"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2021-05-18"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0095",
+        "nome": "Helena Soares",
+        "idade": 35,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-10-15"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Morais",
+                    "data": "2023-12-10"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-04-26"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2022-05-05"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2023-11-07"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0096",
+        "nome": "Igor Peixoto",
+        "idade": 81,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "asma",
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-12-14"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-01-05"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-10-13"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0097",
+        "nome": "Joana Campos",
+        "idade": 87,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2023-10-28"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-10-04"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-06-03"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0098",
+        "nome": "Kevin Andrade",
+        "idade": 25,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "asma",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-11-21"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2022-06-14"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2024-06-24"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-09-13"
+                },
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-10-16"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0099",
+        "nome": "Laura Viana",
+        "idade": 27,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "diabetes",
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-06-23"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-07-21"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-11-10"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0100",
+        "nome": "Mariana Salgado",
+        "idade": 73,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Azul 98, Viseu",
+        "doenças crónicas": [
+            "hipertensão",
+            "diabetes",
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-11-13"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-07-25"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-02-26"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2023-11-15"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2022-01-13"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0101",
+        "nome": "Nelson Ribeiro",
+        "idade": 74,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2023-11-29"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-08-27"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-01-27"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0102",
+        "nome": "Otávio Cruz",
+        "idade": 27,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua das Flores 652, Santo António, Faro",
+        "doenças crónicas": [
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-09-04"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2022-06-27"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-06-21"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2024-05-01"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2022-07-14"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0103",
+        "nome": "Patrícia Franco",
+        "idade": 84,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-07-04"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-11-11"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0104",
+        "nome": "Raquel Torres",
+        "idade": 55,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "hipertensão",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2022-06-05"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2022-09-25"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-11-01"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2025-04-16"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0105",
+        "nome": "Samuel Lopes",
+        "idade": 33,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "diabetes"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-04-08"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-01-06"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-12-17"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-10-01"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0106",
+        "nome": "Tatiana Borges",
+        "idade": 24,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "asma",
+            "diabetes"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-02-12"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2022-03-17"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2021-11-20"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0107",
+        "nome": "Urbano Matias",
+        "idade": 17,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Travessa do Sol 944, São Pedro, Lisboa",
+        "doenças crónicas": [
+            "hipertensão",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2023-12-21"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Costa",
+                    "data": "2025-03-03"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-12-13"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-04-29"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2022-05-07"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0108",
+        "nome": "Vanessa Sousa",
+        "idade": 16,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "asma"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2022-08-21"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0109",
+        "nome": "Walter Pinheiro",
+        "idade": 46,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "asma",
+            "diabetes",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-11-17"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0110",
+        "nome": "Ximena Rocha",
+        "idade": 18,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "asma",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2022-05-30"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-09-05"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0111",
+        "nome": "Yuri Matos",
+        "idade": 34,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-12-08"
+                },
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2024-02-03"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2022-06-28"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-12-01"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0112",
+        "nome": "Zélia Duarte",
+        "idade": 63,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Travessa do Sol 944, São Pedro, Lisboa",
+        "doenças crónicas": [
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-09-26"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-09-06"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0113",
+        "nome": "Brígida Teles",
+        "idade": 82,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua do Mar 14, Cascais",
+        "doenças crónicas": [
+            "doença cardíaca"
+        ],
+        "gravidez": true,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-09-17"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-07-28"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2024-07-18"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2024-01-01"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0114",
+        "nome": "César Moura",
+        "idade": 58,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "hipertensão",
+            "asma",
+            "artrite"
+        ],
+        "gravidez": false,
+        "risco": "Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-02-10"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2024-06-01"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0115",
+        "nome": "Diana Leal",
+        "idade": 80,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "artrite",
+            "diabetes",
+            "asma"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2021-09-07"
+                },
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-12-07"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2025-03-13"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0116",
+        "nome": "Eduardo Gomes",
+        "idade": 41,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
+        "doenças crónicas": [
+            "doença cardíaca",
+            "diabetes",
+            "artrite"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Morais",
+                    "data": "2022-04-20"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2023-05-06"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0117",
+        "nome": "Filipa Rocha",
+        "idade": 43,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "diabetes",
+            "asma",
+            "artrite"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pediatria",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-03-09"
+                },
+                {
+                    "tipo": "Rotina",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2024-05-09"
+                },
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2022-03-08"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0118",
+        "nome": "Gilberto Almeida",
+        "idade": 77,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Nova 301, Porto",
+        "doenças crónicas": [
+            "diabetes",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Costa",
+                    "data": "2023-04-10"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2023-06-13"
+                },
+                {
+                    "nome": "Vacina da gripe",
+                    "data administração": "2025-01-11"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0119",
+        "nome": "Helder Ramos",
+        "idade": 35,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Avenida Central 714, Santo António, Faro",
+        "doenças crónicas": [
+            "diabetes"
+        ],
+        "gravidez": true,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2021-05-28"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-05-11"
+                },
+                {
+                    "nome": "Vacina do tétano",
+                    "data administração": "2021-12-21"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0120",
+        "nome": "Irene Dias",
+        "idade": 86,
+        "sexo": "f",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua Verde 120, Braga",
+        "doenças crónicas": [
+            "artrite",
+            "asma",
+            "doença cardíaca"
+        ],
+        "gravidez": false,
+        "risco": "Muito Elevado",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Cardiologia",
+                    "médico": "Dr(a). Costa",
+                    "data": "2021-12-17"
+                },
+                {
+                    "tipo": "Neurologia",
+                    "médico": "Dr(a). Ribeiro",
+                    "data": "2021-10-06"
+                },
+                {
+                    "tipo": "Urgência",
+                    "médico": "Dr(a). Pinho",
+                    "data": "2021-11-30"
+                }
+            ],
+            "vacinas": []
+        }
+    },
+    {
+        "id": "P0121",
+        "nome": "Jaime Costa",
+        "idade": 23,
+        "sexo": "m",
+        "grupo sanguíneo": "AB+",
+        "morada": "Rua do Mar 14, Cascais",
+        "doenças crónicas": [
+            "diabetes",
+            "artrite",
+            "hipertensão"
+        ],
+        "gravidez": false,
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [
+                {
+                    "tipo": "Pneumologia",
+                    "médico": "Dr(a). Almeida",
+                    "data": "2024-07-22"
+                }
+            ],
+            "vacinas": [
+                {
+                    "nome": "Vacina COVID-19",
+                    "data administração": "2024-12-04"
+                }
+            ]
+        }
+    },
+    {
+        "id": "P0122",
+        "nome": "Inês Freitas",
+        "idade": 18,
+        "sexo": "F",
+        "grupo sanguíneo": "O-",
+        "morada": "Avenida dasAgras394, fafe",
+        "doenças crónicas": "Nenhuma",
+        "gravidez": "Não",
+        "risco": "Médio",
+        "histórico": {
+            "consultas": [],
+            "vacinas": []
+        }
+    }
+]}
