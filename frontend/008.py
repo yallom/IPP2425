@@ -46,8 +46,9 @@ def Read_File (filename):
     return
 
 MC.addMedicine("Paracetamol", 1, 20, 0, 1, 2, "10-05-2026", "Medicamento")
-#Read_File("pacientes.json")
-#Read_File("medicos.json")
+Read_File("pacientes.json")
+Read_File("medicos.json")
+Read_File("novoficheiro.json")
 #print(PC.getAll())
 #print(DC.getAll())
 
@@ -427,7 +428,7 @@ class Interface_Medicos:
 
         janela_edicao = tk.Toplevel()
         janela_edicao.title("Editar Médico")
-        janela_edicao.geometry("400x300")
+        janela_edicao.geometry("400x350")
 
         tk.Label(janela_edicao, text="Nome:").pack(pady=4)
         entry_nome = tk.Entry(janela_edicao, width=30)
@@ -439,17 +440,52 @@ class Interface_Medicos:
         entry_esp.set(valores[2])
         entry_esp.pack(pady=4)
 
+        # Disponibilidade grid selection
         tk.Label(janela_edicao, text="Disponibilidade:").pack(pady=4)
-        entry_disp = tk.Entry(janela_edicao, width=30)
-        entry_disp.insert(0, valores[3])
-        entry_disp.pack(pady=4)
+        disponibilidade_selecionada = [row[:] for row in medico.servico] if hasattr(medico, "servico") else []
+
+        def selecionar_disponibilidade():
+            dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+            horarios = [f"{h:02d}-{h+2:02d}:00" for h in range(8, 20, 2)]
+            janela_disp = tk.Toplevel(janela_edicao)
+            janela_disp.title("Editar Disponibilidade")
+            janela_disp.geometry("400x300")
+
+            check_vars = [[tk.BooleanVar(value=(disponibilidade_selecionada[i][j] if disponibilidade_selecionada and i < len(disponibilidade_selecionada) and j < len(disponibilidade_selecionada[i]) else 0))
+                           for j in range(len(horarios))] for i in range(len(dias))]
+
+            for i, dia in enumerate(dias):
+                tk.Label(janela_disp, text=dia, font=("Segoe UI", 10, "bold")).grid(row=0, column=i+1, padx=5, pady=5)
+            for j, hora in enumerate(horarios):
+                tk.Label(janela_disp, text=hora).grid(row=j+1, column=0, padx=5, pady=5)
+                for i, dia in enumerate(dias):
+                    chk = tk.Checkbutton(janela_disp, variable=check_vars[i][j])
+                    chk.grid(row=j+1, column=i+1)
+
+            def salvar():
+                for i in range(len(dias)):
+                    for j in range(len(horarios)):
+                        disponibilidade_selecionada[i][j] = 1 if check_vars[i][j].get() else 0
+                janela_disp.destroy()
+
+            tk.Button(janela_disp, text="Confirmar", command=salvar).grid(row=len(horarios)+1, column=0, columnspan=len(dias)+1, pady=10)
+
+        # Inicializa a disponibilidade se necessário
+        if not disponibilidade_selecionada or not isinstance(disponibilidade_selecionada[0], list):
+            disponibilidade_selecionada = [[0 for _ in range(6)] for _ in range(7)]
+
+        label_disp = tk.Label(janela_edicao, text="")
+        label_disp.pack(pady=2)
+
+        btn_disp = tk.Button(janela_edicao, text="Editar Disponibilidade", command=selecionar_disponibilidade)
+        btn_disp.pack(pady=4)
 
         def salvar():
             nome = entry_nome.get()
             esp = entry_esp.get()
-            disp = entry_disp.get()
+            disp = disponibilidade_selecionada
             if nome and esp and disp:
-                DC.edit(medico, nome, esp, disp)
+                DC.edit(medico, nome, disp, esp)
                 self.atualizar_tabela()
                 messagebox.showinfo("Sucesso", "Médico atualizado com sucesso!")
                 janela_edicao.destroy()
@@ -1397,7 +1433,7 @@ class RecursosFrame(ttk.Frame):
 
         # Tabela de recursos
 
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
+        colunas = ("ID", "Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview", yscrollcommand=scrollbar_vertical.set)
         
         # Configura a scrollbar para controlar a tabela
@@ -1405,13 +1441,13 @@ class RecursosFrame(ttk.Frame):
 
         
         # Ajusta o tamanho das colunas
+        self.tabela.column("ID", width=80, anchor="center")
         self.tabela.column("Tipo", width=100, anchor="center")
         self.tabela.column("Nome", width=150, anchor="center")
         self.tabela.column("Grupo-Alvo", width=150, anchor="center")
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        self.tabela.column("ID", width=80, anchor="center")
 
         
         # Configura os cabeçalhos
@@ -1444,13 +1480,13 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-
+                recurso.id, 
                 recurso.nome,
                 f"{recurso.idade[0]}-{recurso.idade[1]}",
                 f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
                 recurso.gravidez,
                 recurso.validade,
-                recurso.id
+                
 
             ))
 
@@ -1779,16 +1815,12 @@ class RecursosFrame(ttk.Frame):
 
         # Cria um dicionário com os valores da tabela
         recurso = {
-            "Tipo": valores[0],
-            "Nome": valores[1],
-            "Grupo-Alvo": valores[2],
-            "Grupo Risco": valores[3],
-            "Gravidez": valores[4],
+            "Tipo": valores[1],
+            "Nome": valores[2],
+            "Grupo-Alvo": valores[3],
+            "Grupo Risco": valores[4],
+            "Gravidez": valores[5],
             "Data de Validade": data_validade,
-            
-         
-            "Sexo": ""
-        
         }
 
         print("Recurso criado:", recurso)  # Debug
@@ -1884,9 +1916,9 @@ class RecursosFrame(ttk.Frame):
                 elif campo == "Gravidez":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["M", "F"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Elevado", "Muito Elevado"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
                 entry.set(valor)
@@ -1957,15 +1989,13 @@ class RecursosFrame(ttk.Frame):
         # Insere os novos dados
         for recurso in dados:
             self.tabela.insert('', 'end', values=(
-
-                "Medicamento",
+                recurso.id,
+                recurso.tipo,
                 recurso.nome,
                 f"{recurso.idade[0]}-{recurso.idade[1]}",
                 f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
                 recurso.gravidez,
                 recurso.validade,
-                recurso.id
-
             ))
 
 class RelatoriosFrame(ttk.Frame):

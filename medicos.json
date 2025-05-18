@@ -5,67 +5,67 @@
         "especialidade": "Pneumologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -75,67 +75,67 @@
         "especialidade": "Cardiologia",
         "disponibilidade": [
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -145,67 +145,67 @@
         "especialidade": "Neurologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -215,67 +215,67 @@
         "especialidade": "Medicina Interna",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -285,67 +285,67 @@
         "especialidade": "Pediatria",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -355,67 +355,67 @@
         "especialidade": "Pneumologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -425,67 +425,67 @@
         "especialidade": "Oftalmologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -495,67 +495,67 @@
         "especialidade": "Urologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ]
         ]
     },
@@ -565,67 +565,67 @@
         "especialidade": "Dermatologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                false
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -635,67 +635,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                true
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -705,67 +705,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -775,67 +775,67 @@
         "especialidade": "Ginecologia",
         "disponibilidade": [
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
             ]
         ]
     },
@@ -845,67 +845,67 @@
         "especialidade": "Dermatologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -915,67 +915,67 @@
         "especialidade": "Psiquiatria",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ]
         ]
     },
@@ -985,67 +985,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                false
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -1055,67 +1055,67 @@
         "especialidade": "Cardiologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -1125,67 +1125,67 @@
         "especialidade": "Psiquiatria",
         "disponibilidade": [
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ]
         ]
     },
@@ -1195,67 +1195,67 @@
         "especialidade": "Psiquiatria",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -1265,67 +1265,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -1335,67 +1335,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ]
         ]
     },
@@ -1405,67 +1405,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -1475,67 +1475,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
             ]
         ]
     },
@@ -1545,67 +1545,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
+                0,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -1615,67 +1615,67 @@
         "especialidade": "Oncologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -1685,67 +1685,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -1755,67 +1755,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -1825,67 +1825,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
             ]
         ]
     },
@@ -1895,67 +1895,67 @@
         "especialidade": "Neurologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                true
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -1965,67 +1965,67 @@
         "especialidade": "Endocrinologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ]
         ]
     },
@@ -2035,67 +2035,67 @@
         "especialidade": "Endocrinologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -2105,67 +2105,67 @@
         "especialidade": "Neurologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -2175,67 +2175,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                true
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -2245,67 +2245,67 @@
         "especialidade": "Cardiologia",
         "disponibilidade": [
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -2315,67 +2315,67 @@
         "especialidade": "Oncologia",
         "disponibilidade": [
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                false
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ]
         ]
     },
@@ -2385,67 +2385,67 @@
         "especialidade": "Ortopedia",
         "disponibilidade": [
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -2455,67 +2455,67 @@
         "especialidade": "Psiquiatria",
         "disponibilidade": [
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ]
         ]
     },
@@ -2525,67 +2525,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -2595,67 +2595,67 @@
         "especialidade": "Cardiologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -2665,67 +2665,67 @@
         "especialidade": "Ortopedia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                true,
-                true,
-                true
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ]
         ]
     },
@@ -2735,67 +2735,67 @@
         "especialidade": "Ortopedia",
         "disponibilidade": [
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0
             ]
         ]
     },
@@ -2805,67 +2805,67 @@
         "especialidade": "Gastroenterologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0
             ]
         ]
     },
@@ -2875,67 +2875,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                true,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                false,
-                false,
-                false
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                false,
-                false,
-                false
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0
             ]
         ]
     },
@@ -2945,67 +2945,67 @@
         "especialidade": "Oncologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                false
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false
+                0,
+                1,
+                1,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -3015,67 +3015,67 @@
         "especialidade": "Oncologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                false
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                true,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -3085,67 +3085,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                true,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -3155,67 +3155,67 @@
         "especialidade": "Pediatria",
         "disponibilidade": [
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                true,
-                false,
-                true,
-                false
+                0,
+                1,
+                1,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1
             ]
         ]
     },
@@ -3225,67 +3225,67 @@
         "especialidade": "Reumatologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                false,
-                true,
-                false
+                1,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                0,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                false,
-                true,
-                false,
-                false,
-                false,
-                true,
-                true
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
             ]
         ]
     },
@@ -3295,67 +3295,67 @@
         "especialidade": "Neurologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                true,
-                true,
-                true,
-                false
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                1,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                true,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                false,
-                true,
-                false,
-                true
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1
             ]
         ]
     },
@@ -3365,67 +3365,67 @@
         "especialidade": "Oncologia",
         "disponibilidade": [
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                false,
-                false,
-                true
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                false
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                true,
-                true
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                true
+                1,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                false
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0
             ]
         ]
     },
@@ -3435,67 +3435,67 @@
         "especialidade": "Otorrinolaringologia",
         "disponibilidade": [
             [
-                true,
-                true,
-                true,
-                true,
-                false,
-                false,
-                true
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
             ],
             [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false,
-                false
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
             ],
             [
-                false,
-                true,
-                false,
-                true,
-                true,
-                true,
-                false
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                true,
-                false,
-                false,
-                true,
-                false
+                1,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0
             ],
             [
-                true,
-                true,
-                false,
-                true,
-                true,
-                true,
-                true
+                1,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1
             ],
             [
-                false,
-                false,
-                false,
-                true,
-                true,
-                false,
-                false
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
             ],
             [
-                true,
-                false,
-                true,
-                false,
-                false,
-                false,
-                false
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
             ]
         ]
     },

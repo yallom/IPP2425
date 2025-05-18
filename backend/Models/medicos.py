@@ -16,8 +16,8 @@ class Medico:
     def edit_self(self,name,availabilities,specialty):
 
         self.nome = name
-        self.disponibilidades = availabilities
-        self.especialidade = specialty
+        self.servico = availabilities
+        self.specialty = specialty
 
         return self.get_self()
 
