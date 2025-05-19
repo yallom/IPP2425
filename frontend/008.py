@@ -54,7 +54,7 @@ MC.addMedicine("Vacina da Gravidez", "Adultos", "Apenas", "Médio", "2025-12-31"
 
 Read_File("pacientes.json")
 Read_File("medicos.json")
-Read_File("novoficheiro.json")
+#Read_File("novoficheiro.json")
 #print(PC.getAll())
 #print(DC.getAll())
 
@@ -925,7 +925,6 @@ class Consultas:
     def __init__(self, parent):
         self.frame = tk.Frame(parent, bg="#f5f5f5")
         self.consultas = AC.getAll()  # Lista de consultas (paciente, medico, especialidade, data)
-        print(AC.getAll())
         self.criar_interface()
         self.on_load()
 
@@ -1186,7 +1185,6 @@ class Consultas:
     def atualizar_lista_eventos(self, event=None):
         data_selecionada = self.calendario.get_date()
         self.lista_eventos.delete(0, tk.END)
-        print("GETALL:", AC.getAll())
 
         for c in AC.getAll():
             if c.data.startswith(data_selecionada):
@@ -1195,7 +1193,6 @@ class Consultas:
     def carregar_consultas_na_tabela(self): 
         self.tabela.delete(*self.tabela.get_children())
 
-        print("GETALL2:", AC.getAll())
         for consulta in AC.getAll():
             paciente = PC.search(consulta.id_paciente)
             medico = DC.search(consulta.id_medico)
