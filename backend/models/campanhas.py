@@ -4,7 +4,7 @@ class Campanha: #Classe para campanhas de vacinação, referentes a um medicamen
 
     instances = []
 
-    def __init__(self,name,dates,ages,efficiency,gravidas,idmedicine):
+    def __init__(self,name,dates,ages,efficiency,gravidas,idmedicine,maxpeople):
         
         self.nome = name
         self.datas = dates
@@ -12,7 +12,9 @@ class Campanha: #Classe para campanhas de vacinação, referentes a um medicamen
         self.gruporisco = efficiency
         self.gravidas = gravidas
         self.idmedicamento = idmedicine
-        self.id = f"C{len(Campanha.instances) + 1:04d}"
+        self.id = f"C{int(Campanha.instances[-1].id[1:5])+1:04d}" if len(Campanha.instances) > 0 else "C0001"
+        self.maximo = maxpeople
+        self.pacientes = []
 
         Campanha.instances.append(self)
 
@@ -42,3 +44,7 @@ class Campanha: #Classe para campanhas de vacinação, referentes a um medicamen
                 return f"Erro ao apagar Campanha {obj.nome}"
         else:
             return f"Campanha {obj.nome} não encontrada"
+        
+    def add_patient(self, patient):
+        self.pacientes.append(patient)
+        return f"Paciente {patient.nome} adicionado ao medicamento {self.nome} com sucesso!"

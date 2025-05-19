@@ -11,8 +11,7 @@ class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou 
         self.eficacia = riskrange
         self.gravidez = gravidas
         self.validade = expiry
-        self.id = f"M{len(Medicamento.instances) + 1:04d}"
-        
+        self.id = f"M{int(Medicamento.instances[-1].id[1:5])+1:04d}" if len(Medicamento.instances) > 0 else "M0001"
         Medicamento.instances.append(self)
 
     def get_self(self):
@@ -43,3 +42,7 @@ class Medicamento: #uma classe de medicamentos referentes a um grupo etário ou 
             if item.id == uuid:
                 return item
         return f"Medicamento {uuid} não encontrado!"
+    
+    def add_patient(self, patient):
+        self.pacientes.append(patient)
+        return f"Paciente {patient.nome} adicionado ao medicamento {self.nome} com sucesso!"

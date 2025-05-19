@@ -7,7 +7,7 @@ class Medico:
         self.nome = nome
         self.specialty = especialidade
         self.servico = disponibilidade
-        self.id = f"Med{len(Medico.instances)+1:04d}"
+        self.id = f"Med{int(Medico.instances[-1].id[3:7])+1:04d}" if len(Medico.instances) > 0 else "Med0001"
         Medico.instances.append(self)
 
     def get_self(self):
@@ -32,12 +32,12 @@ class Medico:
 
     @classmethod
     def delete_instance(cls,obj):
-        if (obj,id(obj)) in cls.instances:
-            #print("Utilizador encontrado") 
+        if obj in cls.instances:
+            print("Utilizador encontrado") 
             try:
-                #print("A iniciar remoção do utilizador")
-                cls.instances.remove((obj, id(obj)))
-                #print("Utilizador removido de instances")
+                print("A iniciar remoção do utilizador")
+                cls.instances.remove(obj)
+                print("Utilizador removido de instances")
                 del obj
                 return "Utilizador apagado com sucesso"
             except:

@@ -9,6 +9,7 @@ def addMedico(nome: str, especialidade: str, disponibilidade: list):
     return X
 
 def delete(obj):
+    print("Deletando médico:", obj.nome, obj.id)
     return Medico.delete_instance(obj)
 
 def search(id):

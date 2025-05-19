@@ -1,0 +1,54 @@
+[
+  {
+    "nome": "Vacinação Gripe 2025",
+    "datas": [
+      "2025-05-01",
+      "2025-05-15"
+    ],
+    "grupoidade": "Idosos",
+    "gruporisco": "Médio",
+    "gravidas": "Não",
+    "idmedicamento": "M0001",
+    "id": "C0001",
+    "maximo": 1000
+  },
+  {
+    "nome": "COVID-19 Dose Extra",
+    "datas": [
+      "2025-06-01",
+      "2025-06-30"
+    ],
+    "grupoidade": "Adultos",
+    "gruporisco": "Alto",
+    "gravidas": "Apenas",
+    "idmedicamento": "M0002",
+    "id": "C0002",
+    "maximo": 500
+  },
+  {
+    "nome": "Vacina Sarampo Crianças",
+    "datas": [
+      "2025-07-10",
+      "2025-07-24"
+    ],
+    "grupoidade": "Bebés",
+    "gruporisco": "Baixo",
+    "gravidas": "Não",
+    "idmedicamento": "M0003",
+    "id": "C0003",
+    "maximo": 300
+  },
+  {
+    "nome": "Refuerzo Hepatite B",
+    "datas": [
+      "2025-08-15",
+      "2025-09-01"
+    ],
+    "grupoidade": "Jovens",
+    "gruporisco": "Médio",
+    "gravidas": "Sim",
+    "idmedicamento": "M0004",
+    "id": "C0004",
+    "maximo": 200
+  }
+]

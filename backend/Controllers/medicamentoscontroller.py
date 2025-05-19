@@ -2,10 +2,10 @@
 
 from ..Models.medicamentos import Medicamento    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package
 
-def addMedicine(name, age1, age2, gravidez, risk1, risk2, expiry, type):    #Cria uma nova pessoa no sistema
+def addMedicine(name, age, gravidez, risk, expiry, type):    #Cria uma nova pessoa no sistema
     newname = name
-    agerange = [age1, age2]
-    riskrange = [risk1, risk2]
+    agerange = age
+    riskrange = risk
     pregnancy = gravidez
     validade = expiry
 

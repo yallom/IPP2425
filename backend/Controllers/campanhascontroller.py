@@ -5,15 +5,15 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from ..Models.campanhas import Campanha    #Import da classe "Pessoa", torna este ficheiro executável apenas como um package
 
-def addCampaign(name:str, date1:str, date2:str, gravidez:int, age1:str, age2:str, risk1:str, risk2:str, id):    #Cria uma nova pessoa no sistema
+def addCampaign(name:str, date1:str, date2:str, gravidez:int, age, risk, id, maxpeople):    #Cria uma nova pessoa no sistema
     newname = name.strip()
-    daterange = [int(date1.strip()), int(date2.strip())]
-    agerange = [int(age1.strip()), int(age2.strip())]
-    riskrange = [int(risk1.strip()), int(risk2.strip())]
+    daterange = [date1,date2]
+    agerange = age
+    riskrange = risk
     pregnancy = gravidez
     medicine = id
 
-    X = Campanha(newname, daterange, agerange, riskrange, pregnancy, medicine)
+    X = Campanha(newname, daterange, agerange, riskrange, pregnancy, medicine, maxpeople)
 
     return X
 
