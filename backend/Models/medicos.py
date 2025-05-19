@@ -20,15 +20,18 @@ class Medico:
         self.specialty = specialty
 
         return self.get_self()
-
+    
+    @classmethod
+    def search_specialty(cls, specialty):
+        medicos = []
+        for medico in cls.instances:
+            if medico.specialty == specialty:
+                medicos.append(medico)
+        return "Médico não encontrado"
 
     @classmethod
     def get_all_instances(cls):
         return ([obj[0] for obj in list(cls.instances)])
-
-    #@classmethod
-    #def get_instance(cls,arg):    #Meio inútil, mantém-se por agora
-        return([tuple[0].get_self() for tuple in cls.instances if tuple == arg])
 
     @classmethod
     def delete_instance(cls,obj):

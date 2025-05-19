@@ -25,6 +25,10 @@ def getAll():
 def getAllMedicos():
     return [obj.get_self() for obj in Medico.instances]
 
+def searchType(tipo):
+    medicos = Medico.search_specialty(tipo)
+    return medicos
+
 def write(obj):
     medico = {
         'id': obj.id,
