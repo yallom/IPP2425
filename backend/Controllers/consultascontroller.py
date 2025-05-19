@@ -9,6 +9,9 @@ def addConsulta(id_paciente, data, hora, id_medico, tipo):
     X = Consulta(id_paciente, data, hora, id_medico, tipo)
     return X
 
+def getAll():
+    return Consulta.instances
+
 def intervalo30(start,end):
     horarios = []
     inicio = datetime.strptime(start, "%H:%M")

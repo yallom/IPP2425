@@ -1016,7 +1016,7 @@ class Consultas:
         style.configure("Treeview", font=("Segoe UI", 10), rowheight=25)
 
         # Tabela de consultas
-        colunas = ("paciente", "medico", "especialidade", "data")
+        colunas = ("id", "paciente", "medico", "especialidade", "data")
         self.tabela = ttk.Treeview(esquerda, columns=colunas, show="headings", height=12)
 
         for col in colunas:
@@ -1050,13 +1050,13 @@ class Consultas:
 
         # Combobox de pacientes
         tk.Label(janela, text="Paciente:").pack(pady=4)
-        pacientes_dict = {f"{p.id} - {p.nome}": p.id for p in PC.listar_pacientes()}
+        pacientes_dict = {f"{p.id} - {p.nome}": p.id for p in PC.getAll()}
         combo_paciente = ttk.Combobox(janela, values=list(pacientes_dict.keys()), width=35, state="readonly")
         combo_paciente.pack(pady=4)
 
         # Combobox de especialidades
         tk.Label(janela, text="Especialidade:").pack(pady=4)
-        especialidades = sorted(list(set(m.speciality for m in DC.listar_medicos())))
+        especialidades = sorted(list(set(m.specialty for m in DC.getAll())))
         combo_esp = ttk.Combobox(janela, values=especialidades, width=35, state="readonly")
         combo_esp.pack(pady=4)
 
@@ -1068,7 +1068,7 @@ class Consultas:
         # Função para atualizar médicos ao selecionar especialidade
         def atualizar_medicos(event):
             esp_selecionada = combo_esp.get()
-            medicos_filtrados = DC.listar_medicos_formatado_por_especialidade(esp_selecionada)
+            medicos_filtrados = [f"{m.id} - {m.nome}" for m in DC.searchType(esp_selecionada)]
             combo_medico["values"] = medicos_filtrados
             combo_medico.set("")  # limpa seleção anterior
         combo_esp.bind("<<ComboboxSelected>>", atualizar_medicos)
@@ -1076,7 +1076,7 @@ class Consultas:
 
         # Calendário para seleção da data
         tk.Label(janela, text="Data:").pack(pady=4)
-        calendario = Calendar(janela, date_pattern="yyyy-mm-dd", mindate=datetime.date.today())
+        calendario = Calendar(janela, date_pattern="yyyy-mm-dd", mindate=datetime.today().date())
         calendario.pack(pady=4)
 
         # Combobox de hora
@@ -1092,14 +1092,14 @@ class Consultas:
                 return
 
             id_medico = combo_medico.get().split(" - ")[0]
-            medico = DC.obter_medico(id_medico)
+            medico = DC.search(id_medico)
             if not medico:
                 combo_hora["values"] = []
                 combo_hora.set("")
                 return
 
             data_str = calendario.get_date()
-            data_obj = datetime.datetime.strptime(data_str, "%Y-%m-%d")
+            data_obj = datetime.strptime(data_str, "%Y-%m-%d")
             dia_semana = data_obj.weekday()  # 0 = segunda, 6 = domingo
 
             blocos = [
@@ -1116,10 +1116,11 @@ class Consultas:
 
             for i in range(6):  # para cada bloco
                 if matriz[i][dia_semana]:
-                    horarios_disponiveis.extend(AC.gerar_horarios_30min(*blocos[i]))
+                    horarios_disponiveis.extend(AC.intervalo30(*blocos[i]))
+            print(horarios_disponiveis)
 
             # Horários já ocupados
-            horas_ocupadas = AC.horas_ocupadas_medico_data(medico.id, data_str)
+            horas_ocupadas = [consulta.hora for consulta in AC.getAll() if consulta.data == data_str]
 
             # Filtrar horários livres
             horas_livres = [h for h in horarios_disponiveis if h not in horas_ocupadas]
@@ -1139,25 +1140,25 @@ class Consultas:
 
             id_paciente = pacientes_dict[combo_paciente.get()]
             paciente_nome = combo_paciente.get().split(" - ")[1]
-            medico_nome = combo_medico.get().split(" - ")[1]
+            medico_id = combo_medico.get().split(" - ")[0]
             especialidade = combo_esp.get()
             data_str = calendario.get_date()
             hora_str = combo_hora.get()
 
-            try:
-                mensagem = AC.marcar_consulta(id_paciente, especialidade, data_str, hora_str)
-                AC.guardar_em_ficheiro()
-                self.carregar_consultas_na_tabela()
+            """try:"""
+            mensagem = AC.addConsulta(id_paciente, data_str, hora_str, medico_id, especialidade)
+            self.carregar_consultas_na_tabela()
 
-                # Adicionar à tabela (criar novamente o texto do médico e paciente)
-                
+            # Adicionar à tabela (criar novamente o texto do médico e paciente)
+            
 
-                self.atualizar_lista_eventos(None)
-                messagebox.showinfo("Sucesso", mensagem)
-                janela.destroy()
+            self.atualizar_lista_eventos(None)
+            messagebox.showinfo("Sucesso", mensagem)
+            janela.destroy()
 
-            except Exception as e:
+            """except Exception as e:
                 messagebox.showerror("Erro", f"Não foi possível marcar a consulta.\n{e}")
+                print(e)"""
 
 
         tk.Button(janela, text="Marcar", bg="#2c3e50", fg="white", command=guardar).pack(pady=12)
@@ -1229,28 +1230,28 @@ class Consultas:
             messagebox.showwarning("Aviso", "Selecione uma consulta para eliminar.")
             return
 
+        valores = self.tabela.item(selecionado, "values")
         resposta = messagebox.askyesno("Confirmar", "Tem a certeza que quer eliminar esta consulta?")
         if resposta:
-            idx = self.tabela.index(selecionado)
             self.tabela.delete(selecionado)
-            del AC.consultas[idx]
-            AC.guardar_em_ficheiro()
+            print(valores[0])
+            AC.delete(valores[0])
             self.atualizar_lista_eventos(None)
 
-    def atualizar_lista_eventos(self, event):
+    def atualizar_lista_eventos(self, event=None):
         data_selecionada = self.calendario.get_date()
         self.lista_eventos.delete(0, tk.END)
 
-        for c in AC.consultas:
-            if c[3].startswith(data_selecionada):
-                self.lista_eventos.insert(tk.END, f"{c[0]} - {c[1]} ({c[2]}) - {c[3][11:]}")
+        for c in AC.getAll():
+            if c.data.startswith(data_selecionada):
+                self.lista_eventos.insert(tk.END, f"{PC.search(c.id_paciente).nome} - {DC.search(c.id_medico).nome} ({c.tipo}) - {c.data} - {c.hora}")
 
     def carregar_consultas_na_tabela(self): 
         self.tabela.delete(*self.tabela.get_children())
 
-        for consulta in AC.consultas:
-            paciente = PC.obter_paciente(consulta.id_paciente)
-            medico = DC.obter_medico(consulta.id_medico)
+        for consulta in AC.getAll():
+            paciente = PC.search(consulta.id_paciente)
+            medico = DC.search(consulta.id_medico)
 
             paciente_nome = f"{paciente.nome} ({paciente.id})" if paciente else "Desconhecido"
             medico_nome = f"{medico.nome} ({medico.id})" if medico else "Desconhecido"
@@ -1258,7 +1259,7 @@ class Consultas:
             especialidade = consulta.tipo
             data_hora = f"{consulta.data} {consulta.hora}"
 
-            self.tabela.insert("", "end", values=(paciente_nome, medico_nome, especialidade, data_hora))
+            self.tabela.insert("", "end", values=(consulta.id, paciente_nome, medico_nome, especialidade, data_hora))
 
 
 

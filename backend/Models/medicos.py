@@ -27,7 +27,7 @@ class Medico:
         for medico in cls.instances:
             if medico.specialty == specialty:
                 medicos.append(medico)
-        return "Médico não encontrado"
+        return medicos
 
     @classmethod
     def get_all_instances(cls):

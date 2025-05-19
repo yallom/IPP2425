@@ -17,9 +17,10 @@ class Consulta:
     def __str__(self):
         return f"Consulta {self.id}: {self.data} {self.hora} | Médico: {self.id_medico} | Paciente: {self.id_paciente}"
             
-    def search_by_id(self, id_consulta):
-        for consulta in Consulta.instances:
-            if consulta.id_consulta == id_consulta:
+    @classmethod        
+    def search_by_id(cls, id_consulta):
+        for consulta in cls.instances:
+            if consulta.id == id_consulta:
                 return consulta
         return "Consulta não encontrada"
     
