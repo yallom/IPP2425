@@ -76,7 +76,6 @@ CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.id
 
 
 
-<<<<<<< Updated upstream
 """class DashboardApp:
     def __init__(self, root):
         self.root = root
@@ -130,10 +129,6 @@ CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.id
         user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#eaf0f1", fg="#2f4f4f", font=("Segoe UI", 9))
         user_info.pack(pady=5)
 """
-=======
-
-
->>>>>>> Stashed changes
     
 
 
@@ -2677,19 +2672,14 @@ class RelatoriosFrame(ttk.Frame):
         if relatorio == "Campanhas":
             self.atualizar_relatorio_campanhas()
         elif relatorio == "Consultas":
-            # Obtém os dados das consultas
-            try:
-                consultas_frame = self.master.frames["Consultas"]
-                todas_consultas = consultas_frame.consultas
-            except (AttributeError, KeyError):
-                messagebox.showerror("Erro", "Não foi possível acessar os dados das consultas.")
-                return
+            # Obtém os dados das consultas do backend
+            todas_consultas = AC.getAll()
 
             # Filtra as consultas pelo período selecionado
             consultas_filtradas = []
             for consulta in todas_consultas:
                 try:
-                    data_consulta = datetime.strptime(consulta["Data"], "%Y-%m-%d").date()
+                    data_consulta = datetime.strptime(getattr(consulta, "data", ""), "%Y-%m-%d").date()
                     if data_inicio <= data_consulta <= data_fim:
                         consultas_filtradas.append(consulta)
                 except ValueError:
@@ -2855,25 +2845,32 @@ class RelatoriosFrame(ttk.Frame):
         if relatorio == "Campanhas":
             self.mostrar_relatorio_campanhas()
         elif relatorio == "Consultas":
-            self.mostrar_relatorio_consultas()
+            self.mostrar_relatorio_consultas(Consultas=AC.getAll())
 
-    def mostrar_relatorio_consultas(self):
+    def mostrar_relatorio_consultas(self, consultas_objs=None):
         """Exibe o relatório de consultas com visualizações e estatísticas."""
         # Limpa o frame de conteúdo
         for widget in self.conteudo_frame.winfo_children():
             widget.destroy()
 
-        # Dados de exemplo para demonstração
-        consultas = [
-            {"Data": "2025-01-15", "Médico": "Dr. Silva", "Paciente": "Maria Santos", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
-            {"Data": "2025-01-16", "Médico": "Dra. Oliveira", "Paciente": "João Pereira", "Tipo": "Urgência", "Duração": 45, "Estado": "Concluída"},
-            {"Data": "2025-01-17", "Médico": "Dr. Santos", "Paciente": "Ana Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
-            {"Data": "2025-01-18", "Médico": "Dra. Oliveira", "Paciente": "Pedro Lima", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Concluída"},
-            {"Data": "2025-01-19", "Médico": "Dr. Silva", "Paciente": "Carla Mendes", "Tipo": "Urgência", "Duração": 60, "Estado": "Concluída"},
-            {"Data": "2025-01-20", "Médico": "Dr. Santos", "Paciente": "Ricardo Alves", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"},
-            {"Data": "2025-01-21", "Médico": "Dra. Oliveira", "Paciente": "Sofia Martins", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Agendada"},
-            {"Data": "2025-01-22", "Médico": "Dr. Silva", "Paciente": "Miguel Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"}
-        ]
+        # Usa as consultas filtradas se fornecidas, senão busca todas
+        if consultas_objs is None:
+            consultas_objs = AC.getAll()
+
+        # Constrói a lista de dicionários para o relatório
+        consultas = []
+        for c in consultas_objs:
+            paciente = PC.search(getattr(c, "id_paciente", None))
+            medico = DC.search(getattr(c, "id_medico", None))
+            consultas.append({
+                "Data": getattr(c, "data", ""),
+                "Médico": medico.nome if medico else "Desconhecido",
+                "Paciente": paciente.nome if paciente else "Desconhecido",
+                "Tipo": getattr(c, "tipo", "Consulta"),
+                "Duração": getattr(c, "duracao", 30),
+                "Estado": getattr(c, "estado", "Concluída")
+            })
+
 
         # Frame principal para estatísticas e gráficos
         main_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame")
@@ -2894,7 +2891,7 @@ class RelatoriosFrame(ttk.Frame):
             ("Total de Consultas", total_consultas, "#2c3e50"),  # Azul escuro do tema
             ("Consultas Concluídas", consultas_concluidas, "#34495e"),  # Azul mais claro
             ("Consultas Agendadas", consultas_agendadas, "#3498db"),  # Azul médio
-            ("Duração Média", f"{media_duracao:.1f} min", "#2980b9")  # Azul mais escuro
+           
         ]
 
         for i, (label, value, color) in enumerate(stats):
