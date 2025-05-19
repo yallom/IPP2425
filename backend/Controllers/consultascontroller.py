@@ -27,13 +27,15 @@ def search(id):
 
 def delete(id):
     x = search(id)
+    print(id,x)
     Consulta.delete_instance(x)
     return False
 
 def cascadeDelete(id):
+    print(f"ID: {id}")
     consultas = Consulta.search_secondary(id)
     if consultas:
-        for consulta in consultas:
+        for consulta in list(consultas):
             Consulta.delete_instance(consulta)
         return True
     else:

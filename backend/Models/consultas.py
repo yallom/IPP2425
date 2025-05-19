@@ -24,9 +24,10 @@ class Consulta:
                 return consulta
         return "Consulta não encontrada"
     
-    def search_secondary(self, id):
+    @classmethod
+    def search_secondary(cls, id):
         consultas = []
-        for consulta in Consulta.instances:
+        for consulta in cls.instances:
             if consulta.id_medico == id or consulta.id_paciente == id:
                 consultas.append(consulta)
         print (f"Consultas encontradas: {len(consultas)}")
@@ -39,9 +40,10 @@ class Consulta:
             try:
                 print("A iniciar desmarcação da consulta")
                 cls.instances.remove(obj)
+                print("Consulta desmarcada")
                 del obj
-                return "Consulta desmarcada com sucesso"
+                print("Consulta desmarcada com sucesso")
             except:
                 return f"Erro ao desmarcar consulta {obj.id}"
         else:
-            return f"Consulta {obj.id} não encontrada"
+            return f"Consulta não encontrada"

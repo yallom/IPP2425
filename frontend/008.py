@@ -74,65 +74,6 @@ def Save_File (filepath):
 x1 = MC.search("M0001")
 CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.idade, x1.eficacia, "M0001", 100)
 
-
-
-"""class DashboardApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Dashboard - Saúde Comunitária")
-        self.root.geometry("1000x600")
-        self.root.configure(bg="#eaf0f1")
-        self.create_widgets()
-
-    def create_widgets(self):
-        header = tk.Frame(self.root, bg="#eaf0f1", height=50)
-        header.pack(fill=tk.X, side=tk.TOP)
-        title = tk.Label(header, text="Bem-vindo, admin", font=("Segoe UI", 16, "bold"), bg="#eaf0f1", fg="#2f4f4f")
-        title.pack(pady=10)
-
-        style = ttk.Style()
-        style.theme_use("default")
-        style.configure("TNotebook", background="#eaf0f1", borderwidth=0)
-        style.configure("TNotebook.Tab", font=("Segoe UI", 11), padding=[10, 5], background="#dfe6e9")
-        style.map("TNotebook.Tab",
-                  background=[("selected", "#b2bec3")],
-                  foreground=[("selected", "#2d3436")])
-
-        self.tabs = ttk.Notebook(self.root)
-        self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
-
-        categorias = [
-            ("Médicos", "🩺"),
-            ("Pacientes", "👤"),
-            ("Consultas", "📅"),
-            ("Campanhas", "📢"),
-            ("Recursos", "💉"),
-            ("Relatórios", "📊")
-        ]
-        ##Atenção criar classes paciente e medicos e consulta 
-        for cat, emoji in categorias:
-            if cat == "Pacientes":
-                self.gerente_pacientes = Interface_Paciente(self.tabs)
-                self.tabs.add(self.gerente_pacientes.get_frame(), text=f"{emoji}  {cat}")
-            elif cat == "Médicos": 
-                self.gerente_medicos = Interface_Medicos(self.tabs)
-                self.tabs.add(self.gerente_medicos.get_frame(), text= f"{emoji}  {cat}" )
-            #elif cat== "Consultas":
-                #self.gerente_consultas = Consultas(self.tabs)
-                #self.tabs.add(self.gerente_consultas.get_frame(), text=f"{emoji}  {cat}")
-            else:
-                frame = ttk.Frame(self.tabs)
-                self.tabs.add(frame, text=f"{emoji}  {cat}")
-
-        footer = tk.Frame(self.root, bg="#eaf0f1", height=30)
-        footer.pack(fill=tk.X, side=tk.BOTTOM)
-        user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#eaf0f1", fg="#2f4f4f", font=("Segoe UI", 9))
-        user_info.pack(pady=5)
-"""
-    
-
-
-
 # Fade-in effect
 def fade_in(window):
     alpha = 0.0
@@ -516,6 +457,7 @@ class Interface_Medicos:
         confirmar = messagebox.askyesno("Confirmar", f"Tem certeza que deseja eliminar o médico '{valores[1]}'?")
         if confirmar:
             DC.delete(medico)
+            AC.cascadeDelete(medico.id)
             self.atualizar_tabela()
             messagebox.showinfo("Sucesso", "Médico eliminado com sucesso!")
 
@@ -950,6 +892,7 @@ class Interface_Paciente:
         confirmar = messagebox.askyesno("Confirmar", f"Tem a certeza que quer remover o paciente com ID {paciente_id}?")
         if confirmar:
             PC.delete(paciente_id)
+            AC.cascadeDelete(paciente_id)
             self.atualizar_tabela()
 
     
@@ -981,9 +924,10 @@ class Consultas:
 
     def __init__(self, parent):
         self.frame = tk.Frame(parent, bg="#f5f5f5")
-        self.consultas = []  # Lista de consultas (paciente, medico, especialidade, data)
+        self.consultas = AC.getAll()  # Lista de consultas (paciente, medico, especialidade, data)
+        print(AC.getAll())
         self.criar_interface()
-        self.carregar_consultas_na_tabela()
+        self.on_load()
 
     def criar_interface(self):
         # Título
@@ -1041,7 +985,7 @@ class Consultas:
         self.lista_eventos = tk.Listbox(frame_lista, font=("Segoe UI", 10))
         self.lista_eventos.pack(fill="both", expand=True, padx=10, pady=5)
 
-        self.calendario.bind("<<CalendarSelected>>", self.atualizar_lista_eventos)
+        self.calendario.bind("<<CalendarSelected>>", self.on_load)
 
     def abrir_formulario_consulta(self):
         janela = tk.Toplevel()
@@ -1236,11 +1180,13 @@ class Consultas:
             self.tabela.delete(selecionado)
             print(valores[0])
             AC.delete(valores[0])
+            self.carregar_consultas_na_tabela()
             self.atualizar_lista_eventos(None)
 
     def atualizar_lista_eventos(self, event=None):
         data_selecionada = self.calendario.get_date()
         self.lista_eventos.delete(0, tk.END)
+        print("GETALL:", AC.getAll())
 
         for c in AC.getAll():
             if c.data.startswith(data_selecionada):
@@ -1249,6 +1195,7 @@ class Consultas:
     def carregar_consultas_na_tabela(self): 
         self.tabela.delete(*self.tabela.get_children())
 
+        print("GETALL2:", AC.getAll())
         for consulta in AC.getAll():
             paciente = PC.search(consulta.id_paciente)
             medico = DC.search(consulta.id_medico)
@@ -1260,6 +1207,10 @@ class Consultas:
             data_hora = f"{consulta.data} {consulta.hora}"
 
             self.tabela.insert("", "end", values=(consulta.id, paciente_nome, medico_nome, especialidade, data_hora))
+
+    def on_load(self):
+        self.carregar_consultas_na_tabela()
+        self.atualizar_lista_eventos(None)
 
 
 
@@ -2901,6 +2852,14 @@ class DashboardApp:
         self.selected_tab = None
         self.create_widgets()
 
+    def on_tab_change(self, event):
+        selected_tab = event.widget.select()
+        selected_frame = event.widget.nametowidget(selected_tab)
+
+        if hasattr(self, 'consultas_interface') and selected_frame == self.consultas_interface.get_frame():
+            self.consultas_interface.carregar_consultas_na_tabela()
+            self.consultas_interface.atualizar_lista_eventos()
+                    
     def create_widgets(self):
         # Cabeçalho
         header = tk.Frame(self.root, bg="#2c3e50", height=50)  # Fundo cinza escuro para o cabeçalho
@@ -2917,7 +2876,8 @@ class DashboardApp:
                   background=[("selected", "#2c3e50")],
                   foreground=[("selected", "white")])
 
-        self.tabs = ttk.Notebook(self.root)
+        self.tabs = ttk.Notebook(self.root)    
+        self.tabs.bind("<<NotebookTabChanged>>", self.on_tab_change)
         self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
 
         categorias = [
@@ -2941,10 +2901,11 @@ class DashboardApp:
                 self.frames[cat] = frame
                 self.tabs.add(frame, text=f"{emoji}  {cat}")
             elif cat == "Consultas":
-                interface = Consultas(self.tabs)
-                frame = interface.get_frame()
-                self.frames[cat] = interface
+                self.consultas_interface = Consultas(self.tabs)
+                frame = self.consultas_interface.get_frame()
+                self.frames[cat] = self.consultas_interface
                 self.tabs.add(frame, text=f"{emoji}  {cat}")
+                #self.consultas_interface.on_load()
             elif cat == "Campanhas":
                 frame = CampanhasFrame(self.tabs)
                 self.frames[cat] = frame
