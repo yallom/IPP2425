@@ -76,6 +76,7 @@ CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.id
 
 
 
+<<<<<<< Updated upstream
 """class DashboardApp:
     def __init__(self, root):
         self.root = root
@@ -129,6 +130,10 @@ CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.id
         user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#eaf0f1", fg="#2f4f4f", font=("Segoe UI", 9))
         user_info.pack(pady=5)
 """
+=======
+
+
+>>>>>>> Stashed changes
     
 
 
@@ -976,6 +981,199 @@ class Interface_Paciente:
 
     def get_frame(self):
         return self.frame  # ou self.main_frame, dependendo do nom
+    
+class ConsultasFrame(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.frame = tk.Frame(parent, bg="#f5f5f5")
+        self.consultas = []  # Lista de consultas (paciente, medico, especialidade, data)
+        self.criar_interface()
+
+    def criar_interface(self):
+        # Título
+        titulo = tk.Label(self.frame, text="Gestão de Consultas",font=("Segoe UI", 16, "bold"), fg="#2c3e50", bg="#f5f5f5")
+        titulo.pack(pady=10)
+
+        conteudo = tk.Frame(self.frame, bg="#f5f5f5")
+        conteudo.pack(fill="both", expand=True, padx=20)
+
+        # ------------------ LADO ESQUERDO - TABELA + BOTÕES ------------------
+        esquerda = tk.Frame(conteudo, bg="#f5f5f5")
+        esquerda.pack(side="left", fill="both", expand=True)
+
+        # Botões no topo da tabela
+        botoes_frame = tk.Frame(esquerda, bg="#f5f5f5")
+        botoes_frame.pack(pady=5)
+
+        btn_nova_consulta = tk.Button(botoes_frame, text="+ Marcar Consulta", bg="#2c3e50", fg="white",font=("Segoe UI", 10), command=self.abrir_formulario_consulta)
+        btn_nova_consulta.pack(side=tk.LEFT, padx=5)
+
+        btn_editar_consulta = tk.Button(botoes_frame, text="Editar Consulta", bg="#2c3e50", fg="white",font=("Segoe UI", 10), command=self.editar_consulta)
+        btn_editar_consulta.pack(side=tk.LEFT, padx=5)
+
+        btn_eliminar_consulta = tk.Button(botoes_frame, text="Eliminar Consulta", bg="#c0392b", fg="white",font=("Segoe UI", 10), command=self.eliminar_consulta)
+        btn_eliminar_consulta.pack(side=tk.LEFT, padx=5)
+
+        # Estilo da Tabela
+        style = ttk.Style()
+        style.configure("Treeview.Heading", background="#2c3e50", foreground="white", font=("Segoe UI", 10, "bold"))
+        style.configure("Treeview", font=("Segoe UI", 10), rowheight=25)
+
+        # Tabela de consultas
+        colunas = ("paciente", "medico", "especialidade", "data")
+        self.tabela = ttk.Treeview(esquerda, columns=colunas, show="headings", height=12)
+
+        for col in colunas:
+            self.tabela.heading(col, text=col.capitalize())
+            self.tabela.column(col, anchor=tk.CENTER, width=130)
+
+        self.tabela.pack(fill="both", expand=True, pady=5)
+
+        # ------------------ LADO DIREITO - CALENDÁRIO + LISTA ------------------
+        direita = tk.Frame(conteudo, bg="#f5f5f5")
+        direita.pack(side="right", fill="both", expand=True, padx=(20, 0))
+
+        frame_calendario = tk.Frame(direita, bg="#f5f5f5")
+        frame_calendario.pack(fill="both", expand=True)
+
+        self.calendario = Calendar(frame_calendario, selectmode='day', date_pattern='yyyy-mm-dd')
+        self.calendario.pack(expand=True, pady=5)
+
+        frame_lista = tk.Frame(direita, bg="#f5f5f5")
+        frame_lista.pack(fill="both", expand=True)
+
+        self.lista_eventos = tk.Listbox(frame_lista, font=("Segoe UI", 10))
+        self.lista_eventos.pack(fill="both", expand=True, padx=10, pady=5)
+
+        self.calendario.bind("<<CalendarSelected>>", self.atualizar_lista_eventos)
+
+    def abrir_formulario_consulta(self):
+        janela_novaconsulta = tk.Toplevel()
+        janela_novaconsulta.title("Nova Consulta")
+        janela_novaconsulta.geometry("400x350")
+
+        tk.Label(janela_novaconsulta, text="Paciente:").pack(pady=4)
+        entry_paciente = tk.Entry(janela_novaconsulta, width=30)
+        entry_paciente.pack(pady=4)
+
+        tk.Label(janela_novaconsulta, text="Médico:").pack(pady=4)
+        entry_medico = tk.Entry(janela_novaconsulta, width=30)
+        entry_medico.pack(pady=4)
+
+        tk.Label(janela_novaconsulta, text="Especialidade:").pack(pady=4)
+        entry_esp = tk.Entry(janela_novaconsulta, width=30)
+        entry_esp.pack(pady=4)
+
+        tk.Label(janela_novaconsulta, text="Data e Hora (AAAA-MM-DD HH:MM):").pack(pady=4)
+        entry_data = tk.Entry(janela_novaconsulta, width=30)
+        entry_data.pack(pady=4)
+
+        def guardar():
+            paciente = entry_paciente.get()
+            medico = entry_medico.get()
+            esp = entry_esp.get()
+            data = entry_data.get()
+
+            if not (paciente and medico and esp and data):
+                messagebox.showwarning("Aviso", "Preencha todos os campos.")
+                return
+
+            try:
+                datetime.datetime.strptime(data, "%Y-%m-%d %H:%M")
+            except ValueError:
+                messagebox.showerror("Erro", "Formato de data inválido.")
+                return
+
+            self.consultas.append((paciente, medico, esp, data))
+            self.tabela.insert("", tk.END, values=(paciente, medico, esp, data))
+            self.atualizar_lista_eventos(None)
+            janela_novaconsulta.destroy()
+
+        tk.Button(janela_novaconsulta, text="Marcar", bg="#2c3e50", fg="white", command=guardar).pack(pady=10)
+
+    def editar_consulta(self):
+        selecionado = self.tabela.focus()
+        if not selecionado:
+            messagebox.showwarning("Aviso", "Selecione uma consulta para editar.")
+            return
+
+        valores = self.tabela.item(selecionado, "values")
+        if not valores:
+            return
+
+        idx = self.tabela.index(selecionado)
+
+        janela_editarconsulta = tk.Toplevel()
+        janela_editarconsulta.title("Editar Consulta")
+        janela_editarconsulta.geometry("400x350")
+
+        tk.Label(janela_editarconsulta, text="Paciente:").pack(pady=4)
+        entry_paciente = tk.Entry(janela_editarconsulta, width=30)
+        entry_paciente.insert(0, valores[0])
+        entry_paciente.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Médico:").pack(pady=4)
+        entry_medico = tk.Entry(janela_editarconsulta, width=30)
+        entry_medico.insert(0, valores[1])
+        entry_medico.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Especialidade:").pack(pady=4)
+        entry_esp = tk.Entry(janela_editarconsulta, width=30)
+        entry_esp.insert(0, valores[2])
+        entry_esp.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Data e Hora (AAAA-MM-DD HH:MM):").pack(pady=4)
+        entry_data = tk.Entry(janela_editarconsulta, width=30)
+        entry_data.insert(0, valores[3])
+        entry_data.pack(pady=4)
+
+        def guardar():
+            paciente = entry_paciente.get()
+            medico = entry_medico.get()
+            esp = entry_esp.get()
+            data = entry_data.get()
+
+            if not (paciente and medico and esp and data):
+                messagebox.showwarning("Aviso", "Preencha todos os campos.")
+                return
+
+            try:
+                datetime.datetime.strptime(data, "%Y-%m-%d %H:%M")
+            except ValueError:
+                messagebox.showerror("Erro", "Formato de data inválido.")
+                return
+
+            self.consultas[idx] = (paciente, medico, esp, data)
+            self.tabela.item(selecionado, values=(paciente, medico, esp, data))
+            self.atualizar_lista_eventos(None)
+            janela_editarconsulta.destroy()
+
+        tk.Button(janela_editarconsulta, text="Salvar Alterações", bg="#2c3e50", fg="white", command=guardar).pack(pady=10)
+
+    def eliminar_consulta(self):
+        selecionado = self.tabela.focus()
+        if not selecionado:
+            messagebox.showwarning("Aviso", "Selecione uma consulta para eliminar.")
+            return
+
+        resposta = messagebox.askyesno("Confirmar", "Tem a certeza que quer eliminar esta consulta?")
+        if resposta:
+            idx = self.tabela.index(selecionado)
+            self.tabela.delete(selecionado)
+            del self.consultas[idx]
+            self.atualizar_lista_eventos(None)
+
+    def atualizar_lista_eventos(self, event):
+        data_selecionada = self.calendario.get_date()
+        self.lista_eventos.delete(0, tk.END)
+
+        for c in self.consultas:
+            if c[3].startswith(data_selecionada):
+                self.lista_eventos.insert(tk.END, f"{c[0]} - {c[1]} ({c[2]}) - {c[3][11:]}")
+
+    def get_frame(self):
+        return self.frame
+
 
 class Consultas:
 
@@ -2936,6 +3134,11 @@ class DashboardApp:
                 frame = interface.get_frame()
                 self.frames[cat] = interface
                 self.tabs.add(frame, text=f"{emoji}  {cat}")
+            elif cat == "Consultas":
+                interface = ConsultasFrame(self.tabs)
+                self.frames[cat] = interface
+                self.tabs.add(frame, text=f"{emoji}  {cat}")
+                
             elif cat == "Relatórios":
                 frame = RelatoriosFrame(self.tabs)
                 self.frames[cat] = frame
