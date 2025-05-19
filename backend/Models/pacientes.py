@@ -3,7 +3,7 @@ class Paciente:
     instances = []
 
     def __init__(self,name,age,sex,grupo_sanguineo,morada,doenca,pregnancy):
-        self.id = f"P{len(Paciente.instances)+1:04d}"
+        self.id = f"P{int(Paciente.instances[-1].id[1:5])+1:04d}" if len(Paciente.instances) > 0 else "P0001"
         self.nome = name
         self.idade = age
         self.sexo = sex

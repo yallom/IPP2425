@@ -10,10 +10,10 @@
                 20
             ],
             "eficacia": [
-                1,
-                2
+                "Médio",
+                "Elevado"
             ],
-            "gravidez": 0,
+            "gravidez": "Sim",
             "validade": "10-05-2026"
         }
     ],

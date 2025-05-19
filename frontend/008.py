@@ -18,10 +18,13 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib import style
 import numpy as np
 from matplotlib import pyplot as plt  # Importação correta para usar pyplot
+from datetime import datetime
+from tkcalendar import Calendar
 from backend.Controllers import pessoascontroller as PC
 from backend.Controllers import medicamentoscontroller as MC
 from backend.Controllers import campanhascontroller as CC
 from backend.Controllers import medicoscontroller as DC
+from backend.Controllers import consultascontroller as AC
 
 
 def Read_File (filename):
@@ -45,9 +48,13 @@ def Read_File (filename):
 
     return
 
-MC.addMedicine("Paracetamol", 1, 20, 0, 1, 2, "10-05-2026", "Medicamento")
-#Read_File("pacientes.json")
-#Read_File("medicos.json")
+MC.addMedicine("Paracetamol", "Bebés", "Sim", "Baixo", "2025-12-31", "Medicamento")
+MC.addMedicine("Vacina da Gripe", "Adultos", "Não", "Médio", "2025-12-31", "Vacina")
+MC.addMedicine("Vacina da Gravidez", "Adultos", "Apenas", "Médio", "2025-12-31", "Vacina")
+
+Read_File("pacientes.json")
+Read_File("medicos.json")
+#Read_File("novoficheiro.json")
 #print(PC.getAll())
 #print(DC.getAll())
 
@@ -64,67 +71,8 @@ def Save_File (filepath):
 
 #Save_File("fdsbora.json")
 
-
-
-
-
-
-class DashboardApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Dashboard - Saúde Comunitária")
-        self.root.geometry("1000x600")
-        self.root.configure(bg="#eaf0f1")
-        self.create_widgets()
-
-    def create_widgets(self):
-        header = tk.Frame(self.root, bg="#eaf0f1", height=50)
-        header.pack(fill=tk.X, side=tk.TOP)
-        title = tk.Label(header, text="Bem-vindo, admin", font=("Segoe UI", 16, "bold"), bg="#eaf0f1", fg="#2f4f4f")
-        title.pack(pady=10)
-
-        style = ttk.Style()
-        style.theme_use("default")
-        style.configure("TNotebook", background="#eaf0f1", borderwidth=0)
-        style.configure("TNotebook.Tab", font=("Segoe UI", 11), padding=[10, 5], background="#dfe6e9")
-        style.map("TNotebook.Tab",
-                  background=[("selected", "#b2bec3")],
-                  foreground=[("selected", "#2d3436")])
-
-        self.tabs = ttk.Notebook(self.root)
-        self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
-
-        categorias = [
-            ("Médicos", "🩺"),
-            ("Pacientes", "👤"),
-            ("Consultas", "📅"),
-            ("Campanhas", "📢"),
-            ("Recursos", "💉"),
-            ("Relatórios", "📊")
-        ]
-        ##Atenção criar classes paciente e medicos e consulta 
-        for cat, emoji in categorias:
-            if cat == "Pacientes":
-                self.gerente_pacientes = Interface_Paciente(self.tabs)
-                self.tabs.add(self.gerente_pacientes.get_frame(), text=f"{emoji}  {cat}")
-            elif cat == "Médicos": 
-                self.gerente_medicos = Interface_Medicos(self.tabs)
-                self.tabs.add(self.gerente_medicos.get_frame(), text= f"{emoji}  {cat}" )
-            elif cat== "Consultas":
-                self.gerente_consultas = Consultas(self.tabs)
-                self.tabs.add(self.gerente_consultas.get_frame(), text=f"{emoji}  {cat}")
-            else:
-                frame = ttk.Frame(self.tabs)
-                self.tabs.add(frame, text=f"{emoji}  {cat}")
-
-        footer = tk.Frame(self.root, bg="#eaf0f1", height=30)
-        footer.pack(fill=tk.X, side=tk.BOTTOM)
-        user_info = tk.Label(footer, text="Utilizador: admin | Projeto IPP 2025", bg="#eaf0f1", fg="#2f4f4f", font=("Segoe UI", 9))
-        user_info.pack(pady=5)
-
-    
-
-
+x1 = MC.search("M0001")
+CC.addCampaign("Vacina da Gripe", "2025-12-01", "2025-12-31", x1.gravidez, x1.idade, x1.eficacia, "M0001", 100)
 
 # Fade-in effect
 def fade_in(window):
@@ -323,7 +271,7 @@ class Interface_Medicos:
         scroll_x.pack(side="bottom", fill="x")
         scroll_y.pack(side="right", fill="y")
 
-        colunas = ("id", "nome", "especialidade", "disponibilidade")
+        colunas = ("id", "nome", "especialidade")
         self.tabela = ttk.Treeview(
             frame_tabela, columns=colunas, show="headings", height=12,
             yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set
@@ -335,12 +283,10 @@ class Interface_Medicos:
         self.tabela.heading("id", text="ID")
         self.tabela.heading("nome", text="Nome")
         self.tabela.heading("especialidade", text="Especialidade")
-        self.tabela.heading("disponibilidade", text="Disponibilidade")
         
-        self.tabela.column("id", anchor=tk.CENTER, width=120, stretch = False)
-        self.tabela.column("nome", anchor=tk.CENTER, width=120, stretch = False)
-        self.tabela.column("especialidade", anchor=tk.CENTER, width=120, stretch = False)
-        self.tabela.column("disponibilidade", anchor=tk.CENTER, stretch=True)
+        self.tabela.column("id", anchor=tk.CENTER, width=120, stretch = True)
+        self.tabela.column("nome", anchor=tk.CENTER, width=120, stretch = True)
+        self.tabela.column("especialidade", anchor=tk.CENTER, width=120, stretch = True)
         self.tabela.pack(fill="both", expand=True)
 
     def formulario_adicao_medico(self):
@@ -427,7 +373,7 @@ class Interface_Medicos:
 
         janela_edicao = tk.Toplevel()
         janela_edicao.title("Editar Médico")
-        janela_edicao.geometry("400x300")
+        janela_edicao.geometry("400x350")
 
         tk.Label(janela_edicao, text="Nome:").pack(pady=4)
         entry_nome = tk.Entry(janela_edicao, width=30)
@@ -439,17 +385,52 @@ class Interface_Medicos:
         entry_esp.set(valores[2])
         entry_esp.pack(pady=4)
 
+        # Disponibilidade grid selection
         tk.Label(janela_edicao, text="Disponibilidade:").pack(pady=4)
-        entry_disp = tk.Entry(janela_edicao, width=30)
-        entry_disp.insert(0, valores[3])
-        entry_disp.pack(pady=4)
+        disponibilidade_selecionada = [row[:] for row in medico.servico] if hasattr(medico, "servico") else []
+
+        def selecionar_disponibilidade():
+            dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+            horarios = [f"{h:02d}-{h+2:02d}:00" for h in range(8, 20, 2)]
+            janela_disp = tk.Toplevel(janela_edicao)
+            janela_disp.title("Editar Disponibilidade")
+            janela_disp.geometry("400x300")
+
+            check_vars = [[tk.BooleanVar(value=(disponibilidade_selecionada[i][j] if disponibilidade_selecionada and i < len(disponibilidade_selecionada) and j < len(disponibilidade_selecionada[i]) else 0))
+                           for j in range(len(horarios))] for i in range(len(dias))]
+
+            for i, dia in enumerate(dias):
+                tk.Label(janela_disp, text=dia, font=("Segoe UI", 10, "bold")).grid(row=0, column=i+1, padx=5, pady=5)
+            for j, hora in enumerate(horarios):
+                tk.Label(janela_disp, text=hora).grid(row=j+1, column=0, padx=5, pady=5)
+                for i, dia in enumerate(dias):
+                    chk = tk.Checkbutton(janela_disp, variable=check_vars[i][j])
+                    chk.grid(row=j+1, column=i+1)
+
+            def salvar():
+                for i in range(len(dias)):
+                    for j in range(len(horarios)):
+                        disponibilidade_selecionada[i][j] = 1 if check_vars[i][j].get() else 0
+                janela_disp.destroy()
+
+            tk.Button(janela_disp, text="Confirmar", command=salvar).grid(row=len(horarios)+1, column=0, columnspan=len(dias)+1, pady=10)
+
+        # Inicializa a disponibilidade se necessário
+        if not disponibilidade_selecionada or not isinstance(disponibilidade_selecionada[0], list):
+            disponibilidade_selecionada = [[0 for _ in range(6)] for _ in range(7)]
+
+        label_disp = tk.Label(janela_edicao, text="")
+        label_disp.pack(pady=2)
+
+        btn_disp = tk.Button(janela_edicao, text="Editar Disponibilidade", command=selecionar_disponibilidade)
+        btn_disp.pack(pady=4)
 
         def salvar():
             nome = entry_nome.get()
             esp = entry_esp.get()
-            disp = entry_disp.get()
+            disp = disponibilidade_selecionada
             if nome and esp and disp:
-                DC.edit(medico, nome, esp, disp)
+                DC.edit(medico, nome, disp, esp)
                 self.atualizar_tabela()
                 messagebox.showinfo("Sucesso", "Médico atualizado com sucesso!")
                 janela_edicao.destroy()
@@ -476,6 +457,7 @@ class Interface_Medicos:
         confirmar = messagebox.askyesno("Confirmar", f"Tem certeza que deseja eliminar o médico '{valores[1]}'?")
         if confirmar:
             DC.delete(medico)
+            AC.cascadeDelete(medico.id)
             self.atualizar_tabela()
             messagebox.showinfo("Sucesso", "Médico eliminado com sucesso!")
 
@@ -500,6 +482,7 @@ class Interface_Medicos:
 
     def get_frame(self):
         return self.frame
+
 class Interface_Paciente:
     
     def __init__(self, parent):
@@ -552,6 +535,7 @@ class Interface_Paciente:
         # Frame para conter a tabela e as scrollbars
         frame_tabela = tk.Frame(self.frame, bg="#f5f5f5")
         frame_tabela.pack(fill="both", expand=True, padx=20)
+        
 
         # Scrollbars
         scroll_x = ttk.Scrollbar(frame_tabela, orient="horizontal")
@@ -565,7 +549,7 @@ class Interface_Paciente:
 
         colunas = ("id","nome", "idade", "morada", "sexo", "gravidez", "sangue", "doença", "risco")
         self.tabela = ttk.Treeview(frame_tabela, columns=colunas, show="headings", height=10, xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
-
+        self.tabela.bind("<Double-1>", self.ver_paciente)
         # Conectar scrollbars à tabela
         scroll_x.config(command=self.tabela.xview)
         scroll_y.config(command=self.tabela.yview)
@@ -687,7 +671,104 @@ class Interface_Paciente:
 
         tk.Button(janela_pacientes, text="Adicionar Paciente", command=adicionar_paciente).pack(pady=10)
    
-    def editar_paciente(self):
+    def ver_paciente(self, event=None):
+        selecionado = self.tabela.focus()
+        if not selecionado:
+            messagebox.showwarning("Aviso", "Por favor, selecione um paciente para editar.")
+            return
+
+        valores = self.tabela.item(selecionado, "values")
+        if not valores:
+            return
+
+        ID = valores[0]
+        paciente = PC.search(ID)
+
+        janela_ver_pacientes = tk.Toplevel()
+        janela_ver_pacientes.title("Visualizar Paciente")
+        janela_ver_pacientes.geometry("900x500")
+
+        # Frame principal horizontal
+        main_frame = tk.Frame(janela_ver_pacientes)
+        main_frame.pack(fill="both", expand=True, padx=10, pady=10)
+
+        # Frame da esquerda (dados principais)
+        left_frame = tk.Frame(main_frame)
+        left_frame.pack(side="left", fill="y", padx=10, pady=10)
+
+        # Frame da direita (históricos)
+        right_frame = tk.Frame(main_frame)
+        right_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
+
+        # --- Dados principais ---
+        tk.Label(left_frame, text="Nome:").pack(anchor="w", pady=4)
+        entry_nome = tk.Entry(left_frame, width=50, state="normal")
+        entry_nome.insert(0, valores[1])
+        entry_nome.pack(anchor="w", pady=4)
+        entry_nome.config(state="readonly")
+
+        tk.Label(left_frame, text="Idade:").pack(anchor="w", pady=4)
+        entry_idade = tk.Entry(left_frame, width=50)
+        entry_idade.insert(0, str(valores[2]))
+        entry_idade.pack(anchor="w", pady=4)
+        entry_idade.config(state="readonly")
+
+        tk.Label(left_frame, text="Morada:").pack(anchor="w", pady=4)
+        entry_concelho = tk.Entry(left_frame, width=50)
+        entry_concelho.insert(0, valores[3])
+        entry_concelho.pack(anchor="w", pady=4)
+        entry_concelho.config(state="readonly")
+
+        tk.Label(left_frame, text="Sexo:").pack(anchor="w", pady=4)
+        entry_sexo = tk.Entry(left_frame, width=50)
+        entry_sexo.insert(0, valores[4])
+        entry_sexo.pack(anchor="w", pady=4)
+        entry_sexo.config(state="readonly")
+
+        tk.Label(left_frame, text="Gravidez:").pack(anchor="w", pady=4)
+        entry_gravidez = tk.Entry(left_frame, width=50)
+        entry_gravidez.insert(0, valores[5])
+        entry_gravidez.pack(anchor="w", pady=4)
+        entry_gravidez.config(state="readonly")
+
+        tk.Label(left_frame, text="Tipo Sanguíneo:").pack(anchor="w", pady=4)
+        entry_sangue = tk.Entry(left_frame, width=50)
+        entry_sangue.insert(0, valores[6])
+        entry_sangue.pack(anchor="w", pady=4)
+        entry_sangue.config(state="readonly")
+
+        tk.Label(left_frame, text="Doenças Crónicas:").pack(anchor="w", pady=4)
+        entry_doenca = tk.Entry(left_frame, width=50)
+        entry_doenca.insert(0, valores[7])
+        entry_doenca.pack(anchor="w", pady=4)
+        entry_doenca.config(state="readonly")
+
+        def history_consultas():
+            text = ""
+            for i in paciente.historico_consultas:
+                text += f'Consulta de {i["tipo"]} em {i["data"]} com o médico {i["médico"]}.\n'
+            return text
+        
+        def history_vacinas():
+            text = ""
+            for i in paciente.historico_vacinas:
+                text += f'Vacina {i["nome"]} administrada em {i["data"]}.\n'
+            return text
+        # --- Históricos (lado direito) ---
+        tk.Label(right_frame, text="Histórico de Consultas:").pack(anchor="nw", pady=4)
+        text_consultas = tk.Text(right_frame, width=45, height=8)
+        text_consultas.insert("1.0", history_consultas())
+        text_consultas.pack(anchor="nw", pady=4, fill="x")
+        text_consultas.config(state="disabled")
+
+        tk.Label(right_frame, text="Histórico de Vacinas:").pack(anchor="nw", pady=4)
+        text_vacinas = tk.Text(right_frame, width=45, height=8)
+        text_vacinas.insert("1.0", history_vacinas())
+        text_vacinas.pack(anchor="nw", pady=4, fill="x")
+        text_vacinas.config(state="disabled")
+
+
+    def editar_paciente(self, event=None):
         selecionado = self.tabela.focus()
         if not selecionado:
             messagebox.showwarning("Aviso", "Por favor, selecione um paciente para editar.")
@@ -811,6 +892,7 @@ class Interface_Paciente:
         confirmar = messagebox.askyesno("Confirmar", f"Tem a certeza que quer remover o paciente com ID {paciente_id}?")
         if confirmar:
             PC.delete(paciente_id)
+            AC.cascadeDelete(paciente_id)
             self.atualizar_tabela()
 
     
@@ -838,11 +920,309 @@ class Interface_Paciente:
     def get_frame(self):
         return self.frame  # ou self.main_frame, dependendo do nom
 
+class Consultas:
+
+    def __init__(self, parent):
+        self.frame = tk.Frame(parent, bg="#f5f5f5")
+        self.consultas = AC.getAll()  # Lista de consultas (paciente, medico, especialidade, data)
+        self.criar_interface()
+        self.on_load()
+
+    def criar_interface(self):
+        # Título
+        titulo = tk.Label(self.frame, text="Gestão de Consultas",font=("Segoe UI", 16, "bold"), fg="#2c3e50", bg="#f5f5f5")
+        titulo.pack(pady=10)
+
+        conteudo = tk.Frame(self.frame, bg="#f5f5f5")
+        conteudo.pack(fill="both", expand=True, padx=20)
+
+        # ------------------ LADO ESQUERDO - TABELA + BOTÕES ------------------
+        esquerda = tk.Frame(conteudo, bg="#f5f5f5")
+        esquerda.pack(side="left", fill="both", expand=True)
+
+        # Botões no topo da tabela
+        botoes_frame = tk.Frame(esquerda, bg="#f5f5f5")
+        botoes_frame.pack(pady=5)
+
+        btn_nova_consulta = tk.Button(botoes_frame, text="+ Marcar Consulta", bg="#2c3e50", fg="white",font=("Segoe UI", 10), command=self.abrir_formulario_consulta)
+        btn_nova_consulta.pack(side=tk.LEFT, padx=5)
+
+        btn_editar_consulta = tk.Button(botoes_frame, text="Editar Consulta", bg="#2c3e50", fg="white",font=("Segoe UI", 10), command=self.editar_consulta)
+        btn_editar_consulta.pack(side=tk.LEFT, padx=5)
+
+        btn_eliminar_consulta = tk.Button(botoes_frame, text="Eliminar Consulta", bg="#2c3e50", fg="white",font=("Segoe UI", 10), command=self.eliminar_consulta)
+        btn_eliminar_consulta.pack(side=tk.LEFT, padx=5)
+
+        # Estilo da Tabela
+        style = ttk.Style()
+        style.configure("Treeview.Heading", background="#2c3e50", foreground="white", font=("Segoe UI", 10, "bold"))
+        style.configure("Treeview", font=("Segoe UI", 10), rowheight=25)
+
+        # Tabela de consultas
+        colunas = ("id", "paciente", "medico", "especialidade", "data")
+        self.tabela = ttk.Treeview(esquerda, columns=colunas, show="headings", height=12)
+
+        for col in colunas:
+            self.tabela.heading(col, text=col.capitalize())
+            self.tabela.column(col, anchor=tk.CENTER, width=130)
+
+        self.tabela.pack(fill="both", expand=True, pady=5)
+
+        # ------------------ LADO DIREITO - CALENDÁRIO + LISTA ------------------
+        direita = tk.Frame(conteudo, bg="#f5f5f5")
+        direita.pack(side="right", fill="both", expand=True, padx=(20, 0))
+
+        frame_calendario = tk.Frame(direita, bg="#f5f5f5")
+        frame_calendario.pack(fill="both", expand=True)
+
+        self.calendario = Calendar(frame_calendario, selectmode='day', date_pattern='yyyy-mm-dd')
+        self.calendario.pack(expand=True, pady=5)
+
+        frame_lista = tk.Frame(direita, bg="#f5f5f5")
+        frame_lista.pack(fill="both", expand=True)
+
+        self.lista_eventos = tk.Listbox(frame_lista, font=("Segoe UI", 10))
+        self.lista_eventos.pack(fill="both", expand=True, padx=10, pady=5)
+
+        self.calendario.bind("<<CalendarSelected>>", self.on_load)
+
+    def abrir_formulario_consulta(self):
+        janela = tk.Toplevel()
+        janela.title("Nova Consulta")
+        janela.geometry("600x700")
+
+        # Combobox de pacientes
+        tk.Label(janela, text="Paciente:").pack(pady=4)
+        pacientes_dict = {f"{p.id} - {p.nome}": p.id for p in PC.getAll()}
+        combo_paciente = ttk.Combobox(janela, values=list(pacientes_dict.keys()), width=35, state="readonly")
+        combo_paciente.pack(pady=4)
+
+        # Combobox de especialidades
+        tk.Label(janela, text="Especialidade:").pack(pady=4)
+        especialidades = sorted(list(set(m.specialty for m in DC.getAll())))
+        combo_esp = ttk.Combobox(janela, values=especialidades, width=35, state="readonly")
+        combo_esp.pack(pady=4)
+
+        # Combobox de médicos
+        tk.Label(janela, text="Médico:").pack(pady=4)
+        combo_medico = ttk.Combobox(janela, width=35, state="readonly")
+        combo_medico.pack(pady=4)
+
+        # Função para atualizar médicos ao selecionar especialidade
+        def atualizar_medicos(event):
+            esp_selecionada = combo_esp.get()
+            medicos_filtrados = [f"{m.id} - {m.nome}" for m in DC.searchType(esp_selecionada)]
+            combo_medico["values"] = medicos_filtrados
+            combo_medico.set("")  # limpa seleção anterior
+        combo_esp.bind("<<ComboboxSelected>>", atualizar_medicos)
+
+
+        # Calendário para seleção da data
+        tk.Label(janela, text="Data:").pack(pady=4)
+        calendario = Calendar(janela, date_pattern="yyyy-mm-dd", mindate=datetime.today().date())
+        calendario.pack(pady=4)
+
+        # Combobox de hora
+        tk.Label(janela, text="Hora:").pack(pady=4)
+        combo_hora = ttk.Combobox(janela, width=15, state="readonly")
+        combo_hora.pack(pady=4)
+
+        # Atualizar horas disponíveis quando médico ou data são selecionados
+        def atualizar_horas_disponiveis(event=None):
+            if not combo_medico.get():
+                combo_hora["values"] = []
+                combo_hora.set("")
+                return
+
+            id_medico = combo_medico.get().split(" - ")[0]
+            medico = DC.search(id_medico)
+            if not medico:
+                combo_hora["values"] = []
+                combo_hora.set("")
+                return
+
+            data_str = calendario.get_date()
+            data_obj = datetime.strptime(data_str, "%Y-%m-%d")
+            dia_semana = data_obj.weekday()  # 0 = segunda, 6 = domingo
+
+            blocos = [
+        ("08:00", "10:00"),
+        ("10:00", "12:00"),
+        ("12:00", "14:00"),
+        ("14:00", "16:00"),
+        ("16:00", "18:00"),
+        ("18:00", "20:00")
+    ]
+            # Slots base do médico (disponibilidade semanal)
+            matriz = medico.servico  # matriz 6x7: horários x dias da semana
+            horarios_disponiveis = []
+
+            for i in range(6):  # para cada bloco
+                if matriz[i][dia_semana]:
+                    horarios_disponiveis.extend(AC.intervalo30(*blocos[i]))
+            print(horarios_disponiveis)
+
+            # Horários já ocupados
+            horas_ocupadas = [consulta.hora for consulta in AC.getAll() if consulta.data == data_str]
+
+            # Filtrar horários livres
+            horas_livres = [h for h in horarios_disponiveis if h not in horas_ocupadas]
+
+            combo_hora["values"] = horas_livres
+            combo_hora.set("")
+
+
+        combo_medico.bind("<<ComboboxSelected>>", atualizar_horas_disponiveis)
+        calendario.bind("<<CalendarSelected>>", atualizar_horas_disponiveis)
+
+        # Botão de marcação
+        def guardar():
+            if not (combo_paciente.get() and combo_medico.get() and combo_esp.get() and combo_hora.get()):
+                messagebox.showwarning("Aviso", "Preencha todos os campos.")
+                return
+
+            id_paciente = pacientes_dict[combo_paciente.get()]
+            paciente_nome = combo_paciente.get().split(" - ")[1]
+            medico_id = combo_medico.get().split(" - ")[0]
+            especialidade = combo_esp.get()
+            data_str = calendario.get_date()
+            hora_str = combo_hora.get()
+
+            """try:"""
+            mensagem = AC.addConsulta(id_paciente, data_str, hora_str, medico_id, especialidade)
+            self.carregar_consultas_na_tabela()
+
+            # Adicionar à tabela (criar novamente o texto do médico e paciente)
+            
+
+            self.atualizar_lista_eventos(None)
+            messagebox.showinfo("Sucesso", mensagem)
+            janela.destroy()
+
+            """except Exception as e:
+                messagebox.showerror("Erro", f"Não foi possível marcar a consulta.\n{e}")
+                print(e)"""
+
+
+        tk.Button(janela, text="Marcar", bg="#2c3e50", fg="white", command=guardar).pack(pady=12)
+
+    
+
+    def editar_consulta(self):
+        selecionado = self.tabela.focus()
+        if not selecionado:
+            messagebox.showwarning("Aviso", "Selecione uma consulta para editar.")
+            return
+
+        valores = self.tabela.item(selecionado, "values")
+        if not valores:
+            return
+
+        idx = self.tabela.index(selecionado)
+
+        janela_editarconsulta = tk.Toplevel()
+        janela_editarconsulta.title("Editar Consulta")
+        janela_editarconsulta.geometry("400x350")
+
+        tk.Label(janela_editarconsulta, text="Paciente:").pack(pady=4)
+        entry_paciente = tk.Entry(janela_editarconsulta, width=30)
+        entry_paciente.insert(0, valores[0])
+        entry_paciente.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Médico:").pack(pady=4)
+        entry_medico = tk.Entry(janela_editarconsulta, width=30)
+        entry_medico.insert(0, valores[1])
+        entry_medico.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Especialidade:").pack(pady=4)
+        entry_esp = tk.Entry(janela_editarconsulta, width=30)
+        entry_esp.insert(0, valores[2])
+        entry_esp.pack(pady=4)
+
+        tk.Label(janela_editarconsulta, text="Data e Hora (AAAA-MM-DD HH:MM):").pack(pady=4)
+        entry_data = tk.Entry(janela_editarconsulta, width=30)
+        entry_data.insert(0, valores[3])
+        entry_data.pack(pady=4)
+
+        def guardar():
+            paciente = entry_paciente.get()
+            medico = entry_medico.get()
+            esp = entry_esp.get()
+            data = entry_data.get()
+
+            if not (paciente and medico and esp and data):
+                messagebox.showwarning("Aviso", "Preencha todos os campos.")
+                return
+
+            try:
+                datetime.datetime.strptime(data, "%Y-%m-%d %H:%M")
+            except ValueError:
+                messagebox.showerror("Erro", "Formato de data inválido.")
+                return
+
+            AC.consultas[idx] = (paciente, medico, esp, data)
+            self.tabela.item(selecionado, values=(paciente, medico, esp, data))
+            self.atualizar_lista_eventos(None)
+            janela_editarconsulta.destroy()
+
+        tk.Button(janela_editarconsulta, text="Salvar Alterações", bg="#2c3e50", fg="white", command=guardar).pack(pady=10)
+
+    def eliminar_consulta(self):
+        selecionado = self.tabela.focus()
+        if not selecionado:
+            messagebox.showwarning("Aviso", "Selecione uma consulta para eliminar.")
+            return
+
+        valores = self.tabela.item(selecionado, "values")
+        resposta = messagebox.askyesno("Confirmar", "Tem a certeza que quer eliminar esta consulta?")
+        if resposta:
+            self.tabela.delete(selecionado)
+            print(valores[0])
+            AC.delete(valores[0])
+            self.carregar_consultas_na_tabela()
+            self.atualizar_lista_eventos(None)
+
+    def atualizar_lista_eventos(self, event=None):
+        data_selecionada = self.calendario.get_date()
+        self.lista_eventos.delete(0, tk.END)
+
+        for c in AC.getAll():
+            if c.data.startswith(data_selecionada):
+                self.lista_eventos.insert(tk.END, f"{PC.search(c.id_paciente).nome} - {DC.search(c.id_medico).nome} ({c.tipo}) - {c.data} - {c.hora}")
+
+    def carregar_consultas_na_tabela(self): 
+        self.tabela.delete(*self.tabela.get_children())
+
+        for consulta in AC.getAll():
+            paciente = PC.search(consulta.id_paciente)
+            medico = DC.search(consulta.id_medico)
+
+            paciente_nome = f"{paciente.nome} ({paciente.id})" if paciente else "Desconhecido"
+            medico_nome = f"{medico.nome} ({medico.id})" if medico else "Desconhecido"
+
+            especialidade = consulta.tipo
+            data_hora = f"{consulta.data} {consulta.hora}"
+
+            self.tabela.insert("", "end", values=(consulta.id, paciente_nome, medico_nome, especialidade, data_hora))
+
+    def on_load(self):
+        self.carregar_consultas_na_tabela()
+        self.atualizar_lista_eventos(None)
+
+
+
+    def get_frame(self):
+        return self.frame
+
+
 class CampanhasFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-
+        
         self.configure(padding=20, style="Custom.TFrame")  # Define o estilo do frame
+        self.availableitems = MC.getAll()
+        self.currentitems = []
+        self.expiry_date= None
 
         # Define o estilo personalizado para os widgets
         style = ttk.Style()
@@ -866,28 +1246,7 @@ class CampanhasFrame(ttk.Frame):
         }
 
         # Lista para armazenar os dados das campanhas
-        self.campanhas = [
-            {"Nome": "Campanha de Vacinação Gripe 2025", "Início": "2025-04-01", "Fim": "2025-04-15", "Grupo-Alvo": "Idosos", "Estado": "Ativa", "Número de Participantes": 150},
-            {"Nome": "Rastreio Diabetes", "Início": "2025-01-10", "Fim": "2025-02-10", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 85},
-            {"Nome": "Vacinação Infantil", "Início": "2025-03-01", "Fim": "2025-03-30", "Grupo-Alvo": "Bebês (0-3 anos)", "Estado": "Ativa", "Número de Participantes": 220},
-            {"Nome": "Saúde Mental Jovens", "Início": "2025-02-15", "Fim": "2025-03-15", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 120},
-            {"Nome": "Prevenção Cardíaca", "Início": "2024-11-01", "Fim": "2024-12-31", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 300},
-            {"Nome": "Campanha de Higiene Oral", "Início": "2025-05-01", "Fim": "2025-05-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Ativa", "Número de Participantes": 180},
-            {"Nome": "Rastreio Visual", "Início": "2024-10-01", "Fim": "2024-10-31", "Grupo-Alvo": "Idosos", "Estado": "Encerrada", "Número de Participantes": 95},
-            {"Nome": "Vacinação COVID-19", "Início": "2025-01-01", "Fim": "2025-01-31", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 450},
-            {"Nome": "Saúde da Mulher", "Início": "2025-06-01", "Fim": "2025-06-30", "Grupo-Alvo": "Adultos", "Estado": "Ativa", "Número de Participantes": 280},
-            {"Nome": "Nutrição Infantil", "Início": "2025-02-01", "Fim": "2025-02-28", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Encerrada", "Número de Participantes": 110},
-            {"Nome": "Prevenção de Acidentes", "Início": "2025-07-01", "Fim": "2025-07-31", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 70},
-            {"Nome": "Saúde Bucal", "Início": "2024-12-01", "Fim": "2024-12-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Encerrada", "Número de Participantes": 160},
-            {"Nome": "Rastreio de Pressão", "Início": "2025-03-15", "Fim": "2025-04-15", "Grupo-Alvo": "Idosos", "Estado": "Ativa", "Número de Participantes": 135},
-            {"Nome": "Saúde Mental Adultos", "Início": "2025-05-15", "Fim": "2025-06-15", "Grupo-Alvo": "Adultos", "Estado": "Ativa", "Número de Participantes": 200},
-            {"Nome": "Vacinação Hepatite B", "Início": "2024-09-01", "Fim": "2024-09-30", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 350},
-            {"Nome": "Desenvolvimento Infantil", "Início": "2025-04-15", "Fim": "2025-05-15", "Grupo-Alvo": "Bebês (0-3 anos)", "Estado": "Ativa", "Número de Participantes": 190},
-            {"Nome": "Saúde do Adolescente", "Início": "2025-06-15", "Fim": "2025-07-15", "Grupo-Alvo": "Jovens (12-18 anos)", "Estado": "Ativa", "Número de Participantes": 105},
-            {"Nome": "Prevenção de Quedas", "Início": "2024-11-15", "Fim": "2024-12-15", "Grupo-Alvo": "Idosos", "Estado": "Encerrada", "Número de Participantes": 75},
-            {"Nome": "Saúde Ocupacional", "Início": "2025-01-15", "Fim": "2025-02-15", "Grupo-Alvo": "Adultos", "Estado": "Encerrada", "Número de Participantes": 260},
-            {"Nome": "Alimentação Saudável", "Início": "2025-08-01", "Fim": "2025-08-31", "Grupo-Alvo": "Crianças (4-12 anos)", "Estado": "Ativa", "Número de Participantes": 140}
-        ]
+        self.campanhas = CC.getAll()
 
         # Título com estilo personalizado
         ttk.Label(self, text="Gestão de Campanhas de Saúde", style="Custom.TLabel").pack(pady=(0, 10))
@@ -922,7 +1281,7 @@ class CampanhasFrame(ttk.Frame):
         ttk.Button(filtro_frame, text="Importar Dados", command=self.importar_dados, style="Blue.TButton").pack(side="right", padx=5)
         
         # Tabela de campanhas
-        colunas = ("Nome", "Início", "Fim", "Grupo-Alvo", "Estado")
+        colunas = ("ID", "Nome", "Início", "Fim", "Grupo-Alvo", "Grupo Etário", "Gravidez", "Inscrições Atuais", "Inscrições-Alvo", "Estado")
         
         # Frame para a tabela e scrollbar
         tabela_frame = ttk.Frame(self)
@@ -934,6 +1293,7 @@ class CampanhasFrame(ttk.Frame):
         
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=10, style="Custom.Treeview", yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.tabela.yview)
+        #self.tabela.bind("<Double-1>", self.ver_fila_campanha)
         
         for col in colunas:
             self.tabela.heading(col, text=col, anchor="center")
@@ -946,6 +1306,19 @@ class CampanhasFrame(ttk.Frame):
         # Preenche a tabela com os dados iniciais
         self.atualizar_tabela(self.campanhas)
 
+    def datechecker(self, datas):
+        """Verifica se a data atual está dentro do intervalo de datas da campanha."""
+        today = datetime.today().date()
+        compare_date1 = datetime.strptime(datas[0], "%Y-%m-%d").date()
+        compare_date2 = datetime.strptime(datas[1], "%Y-%m-%d").date()
+        if compare_date1 <= today:
+            if compare_date2 >= today:
+                return "Ativa"
+            else:
+                return "Encerrada"
+        else:
+            return "Agendada"
+
     def atualizar_tabela(self, campanhas):
         """Atualiza a tabela com os dados fornecidos."""
         # Limpa a tabela
@@ -953,9 +1326,9 @@ class CampanhasFrame(ttk.Frame):
             self.tabela.delete(item)
 
         # Insere os novos dados
-        for campanha in campanhas:
+        for campanha in CC.getAll():
             self.tabela.insert('', 'end', values=(
-                campanha["Nome"], campanha["Início"], campanha["Fim"], campanha["Grupo-Alvo"], campanha["Estado"]
+                campanha.id, campanha.nome, campanha.datas[0], campanha.datas[1], campanha.gruporisco, campanha.grupoidade, campanha.gravidas, len(campanha.pacientes), campanha.maximo, self.datechecker(campanha.datas)
             ))
 
     def filtrar_campanhas(self, event=None):
@@ -1042,14 +1415,13 @@ class CampanhasFrame(ttk.Frame):
         # Campos do formulário
         campos = [
             ("Nome", "entry"),
+            ("Recurso", "combobox"),
+            ("Item", "combobox"),
             ("Data Início", "date"),
             ("Data Fim", "date"),
             ("Grupo Risco", "combobox"),
             ("Grupo-Alvo", "combobox"),
-            ("Sexo", "combobox"),
             ("Grávidas", "combobox"),
-            ("Recurso", "combobox"),
-            ("Item", "combobox"),
             ("Número de Participantes", "entry")
         ]
 
@@ -1065,21 +1437,13 @@ class CampanhasFrame(ttk.Frame):
                 entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
-                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                                foreground="white", borderwidth=2, style="Custom.TCombobox", maxdate=self.expiry_date)
                 entry.pack(fill="x", expand=True)
             elif tipo == "combobox":
                 if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
-                    entry = ttk.Combobox(frame, values=[
-                        "Bebês (0-3 anos)",
-                        "Crianças (4-12 anos)",
-                        "Jovens (12-18 anos)",
-                        "Adultos (18-65 anos)",
-                        "Idosos (+65 anos)"
-                    ], state="readonly", style="Custom.TCombobox")
-                elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grávidas":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Recurso":
@@ -1087,9 +1451,7 @@ class CampanhasFrame(ttk.Frame):
                     entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
                 elif campo == "Item":
                     entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
-                elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
-                entry.pack(fill="x", expand=True)
+                    entry.bind("<<ComboboxSelected>>", self.on_item_select)
             elif tipo == "text":
                 entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
 
@@ -1106,20 +1468,44 @@ class CampanhasFrame(ttk.Frame):
     def atualizar_itens(self, event=None):
         """Atualiza os itens disponíveis com base no recurso selecionado."""
         recurso = self.entries["Recurso"].get()
-        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
-        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        itens = []
+        for i in self.availableitems:
+            if i.tipo == recurso:
+                itens.append(i) # Obtém os itens do dataset
+        self.entries["Item"]["values"] = [i.nome for i in itens]
+        self.currentitems = itens  
         if itens:
             self.entries["Item"].current(0)  # Define o primeiro item como padrão
+            self.on_item_select()  # Atualiza os campos com o primeiro item
 
-    def atualizar_gravidas(self, event=None):
+    def datelimit(self, event=None):
+        """Atualiza a data limite com base no item selecionado."""
+        item = self.entries["Item"].get()
+        for i in MC.getAll():
+            if i.nome == item:
+                self.expiry_date = datetime.strptime(i.validade, "%Y-%m-%d").date()
+                print(self.expiry_date)
+                self.entries["Data Início"].configure(maxdate=self.expiry_date)
+                self.entries["Data Fim"].configure(maxdate=self.expiry_date)
+                break
+
+    def atualizar_campos(self, event=None):
         """Atualiza as opções de grávidas com base no sexo selecionado."""
-        sexo = self.entries["Sexo"].get()
-        if sexo == "Masculino":
-            self.entries["Grávidas"].set("Não")
-            self.entries["Grávidas"]["state"] = "disabled"
-        else:
-            self.entries["Grávidas"]["state"] = "readonly"
-            self.entries["Grávidas"].set("Sim")
+        item = self.entries["Item"].get()
+        for i in MC.getAll():
+            if i.nome == item:
+                self.medicamento = i
+                print("Sucesso")
+                self.entries["Grávidas"]["values"] = i.gravidez
+                self.entries["Grupo Risco"]["values"] = i.eficacia
+                self.entries["Grupo-Alvo"]["values"] = i.idade
+                self.entries["Grávidas"].current(0)
+                self.entries["Grupo Risco"].current(0)
+                self.entries["Grupo-Alvo"].current(0)
+
+    def on_item_select(self, event=None):
+        self.atualizar_campos()
+        self.datelimit()
 
     def guardar_campanha(self):
         """Guarda os dados da nova campanha e atualiza a tabela."""
@@ -1130,34 +1516,18 @@ class CampanhasFrame(ttk.Frame):
         grupo_risco = self.entries["Grupo Risco"].get().strip()
         grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
         gravidas = self.entries["Grávidas"].get().strip()
-        sexo = self.entries["Sexo"].get().strip()
         recurso = self.entries["Recurso"].get().strip()
         item = self.entries["Item"].get().strip()
         participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
         
 
         # Validação: verifica se todos os campos obrigatórios estão preenchidos
-        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, recurso, item]):
             messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
             return
 
         # Adiciona a nova campanha
-        nova_campanha = {
-            "Nome": nome,
-            "Início": data_inicio,
-            "Fim": data_fim,
-            "Grupo-Alvo": grupo_alvo,
-            "Estado": "Ativa",
-            "Grupo Risco": grupo_risco,
-            "Grávidas": gravidas,
-            "Sexo": sexo,
-            "Recurso": recurso,
-            "Item": item,
-           
-            "Número de Participantes": participantes,  # Novo campo
-           
-        }
-        self.campanhas.append(nova_campanha)
+        CC.addCampaign(nome, data_inicio, data_fim, gravidas, grupo_alvo, grupo_risco, self.medicamento.id, participantes)
         self.atualizar_tabela(self.campanhas)
 
         # Fecha a janela e exibe mensagem de sucesso
@@ -1266,7 +1636,7 @@ class CampanhasFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
-                        "Bebês (0-3 anos)",
+                        "Bebés (0-3 anos)",
                         "Crianças (4-12 anos)",
                         "Jovens (12-18 anos)",
                         "Adultos (18-65 anos)",
@@ -1346,7 +1716,7 @@ class CampanhasFrame(ttk.Frame):
         resposta = messagebox.askyesno("Confirmar", f"Tem certeza de que deseja eliminar a campanha '{valores[0]}'?")
         if resposta:
             # Remove a campanha da lista
-            self.campanhas = [c for c in self.campanhas if c["Nome"] != valores[0]]
+            CC.delete(valores[0])
 
             # Atualiza a tabela
             self.atualizar_tabela(self.campanhas)
@@ -1382,10 +1752,10 @@ class RecursosFrame(ttk.Frame):
         )
 
         # Botões com o novo estilo
-        ttk.Button(botoes_frame, text="+ Novo Recurso", command=self.novo_medicamento, style="App.TButton").pack(side="left", padx=5)
-        ttk.Button(botoes_frame, text="Filtrar", command=self.filtrar_recursos, style="App.TButton").pack(side="left", padx=5)
-        ttk.Button(botoes_frame, text="Exportar", command=self.exportar_dados, style="App.TButton").pack(side="left", padx=5)
-        ttk.Button(botoes_frame, text="Importar", command=self.importar_dados, style="App.TButton").pack(side="left", padx=5)
+        ttk.Button(botoes_frame, text="Filtrar", command=self.filtrar_recursos, style="App.TButton").pack(side="right", padx=5)
+        ttk.Button(botoes_frame, text="+ Adicionar Recurso", command=self.novo_medicamento, style="App.TButton").pack(side="right", padx=5)        
+        #ttk.Button(botoes_frame, text="Exportar", command=self.exportar_dados, style="App.TButton").pack(side="left", padx=5)
+        #ttk.Button(botoes_frame, text="Importar", command=self.importar_dados, style="App.TButton").pack(side="left", padx=5)
 
         # Frame para a tabela e scrollbars
         tabela_frame = ttk.Frame(self)
@@ -1397,7 +1767,7 @@ class RecursosFrame(ttk.Frame):
 
         # Tabela de recursos
 
-        colunas = ("Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
+        colunas = ("ID", "Tipo", "Nome", "Grupo-Alvo", "Grupo Risco", "Gravidez", "Data de Validade")
         self.tabela = ttk.Treeview(tabela_frame, columns=colunas, show="headings", height=15, style="Custom.Treeview", yscrollcommand=scrollbar_vertical.set)
         
         # Configura a scrollbar para controlar a tabela
@@ -1405,13 +1775,13 @@ class RecursosFrame(ttk.Frame):
 
         
         # Ajusta o tamanho das colunas
+        self.tabela.column("ID", width=80, anchor="center")
         self.tabela.column("Tipo", width=100, anchor="center")
         self.tabela.column("Nome", width=150, anchor="center")
         self.tabela.column("Grupo-Alvo", width=150, anchor="center")
         self.tabela.column("Grupo Risco", width=100, anchor="center")
         self.tabela.column("Gravidez", width=100, anchor="center")
         self.tabela.column("Data de Validade", width=120, anchor="center")
-        self.tabela.column("ID", width=80, anchor="center")
 
         
         # Configura os cabeçalhos
@@ -1422,7 +1792,7 @@ class RecursosFrame(ttk.Frame):
         self.tabela.pack(fill="both", expand=True)
 
         # Adiciona o evento de clique na tabela
-        self.tabela.bind("<Double-1>", self.abrir_detalhes_recurso)
+        #self.tabela.bind("<Double-1>", self.abrir_detalhes_recurso)
 
         # Barra de rolagem horizontal
         scrollbar_horizontal = ttk.Scrollbar(tabela_frame, orient="horizontal", command=self.tabela.xview)
@@ -1430,27 +1800,27 @@ class RecursosFrame(ttk.Frame):
         self.tabela.configure(xscrollcommand=scrollbar_horizontal.set)
 
         # Dados iniciais (exemplo)
-        self.dados = MC.getAll()
+        #self.dados = MC.getAll()
 
         # Preenche a tabela com os dados iniciais
-        self.atualizar_tabela(self.dados)
+        self.atualizar_tabela()
 
-    def atualizar_tabela(self, dados):
+    def atualizar_tabela(self):
         """Atualiza a tabela com os dados fornecidos."""
         # Limpa a tabela
         for item in self.tabela.get_children():
             self.tabela.delete(item)
 
         # Insere os novos dados
-        for recurso in dados:
+        for recurso in MC.getAll():
             self.tabela.insert('', 'end', values=(
-
+                recurso.id, 
                 recurso.nome,
-                f"{recurso.idade[0]}-{recurso.idade[1]}",
-                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.idade,
+                recurso.eficacia,
                 recurso.gravidez,
                 recurso.validade,
-                recurso.id
+                
 
             ))
 
@@ -1497,7 +1867,6 @@ class RecursosFrame(ttk.Frame):
             except (AttributeError, KeyError):
                 return []
 
-        campanhas_disponiveis = obter_campanhas_disponiveis()
 
         # Campos do formulário
         campos = [
@@ -1505,7 +1874,6 @@ class RecursosFrame(ttk.Frame):
             ("Nome", "entry"),
             ("Grupo-Alvo", "combobox"),
             ("Gravidez", "combobox"),
-            ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
             ("Data de Validade", "date")
         ]
@@ -1533,16 +1901,14 @@ class RecursosFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
-                        "Bebês (0-3 anos)",
-                        "Crianças (4-12 anos)",
-                        "Jovens (12-18 anos)",
-                        "Adultos (18-65 anos)",
-                        "Idosos (+65 anos)"
+                        "Bebés",
+                        "Crianças",
+                        "Jovens",
+                        "Adultos",
+                        "Idosos"
                     ], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Gravidez":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox", width=50)
-                elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox", width=50)
                 elif campo == "Grupo Risco":
                     entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox", width=50)
                 entry.pack(fill="x", expand=True)
@@ -1598,19 +1964,29 @@ class RecursosFrame(ttk.Frame):
             estado = "Fora de stock"
 
         # Adiciona os dados à tabela
-        novo_recurso = {
-            "Tipo": dados.get("Tipo", ""),
-            "Nome": dados.get("Nome", ""),
-            "Grupo-Alvo": dados.get("Grupo-Alvo", ""),
-            "Grupo Risco": dados.get("Grupo Risco", ""),
-            "Gravidez": dados.get("Gravidez", ""),
-            "Data de Validade": dados.get("Data de Validade", ""),
-            "Quantidade em Stock": dados.get("Quantidade em Stock", "0"),
-            "Campanha": dados.get("Campanha", ""),
-            "Estado": estado
-        }
-        self.dados.append(novo_recurso)  # Adiciona aos dados existentes
-        self.atualizar_tabela(self.dados)  # Atualiza a tabela com os novos dados
+        newname = dados.get("Nome", "")
+        newtype = dados.get("Tipo", "")
+        newage = dados.get("Grupo-Alvo", "")
+        if newage == "Bebés":
+            age1 = 0
+            age2 = 3
+        elif newage == "Crianças":
+            age1 = 4
+            age2 = 12
+        elif newage == "Jovens":
+            age1 = 13
+            age2 = 18
+        elif newage == "Adultos":
+            age1 = 19
+            age2 = 65
+        elif newage == "Idosos":
+            age1 = 66
+            age2 = 999
+        newrisk = dados.get("Grupo Risco", "")
+        newpreg = dados.get("Gravidez", "")
+        newvalid = dados.get("Data de Validade", "")
+        MC.addMedicine(newname,newage,newpreg,newrisk,newvalid,newtype)  # Adiciona aos dados existentes
+        self.atualizar_tabela()  # Atualiza a tabela com os novos dados
 
         # Fecha a janela e exibe mensagem de sucesso
         messagebox.showinfo("Sucesso", "Medicamento/Vacina guardado com sucesso!")
@@ -1662,7 +2038,7 @@ class RecursosFrame(ttk.Frame):
         filtros = [
             ("Tipo", ["Medicamento", "Vacina"]),
             ("Grupo-Alvo", [
-                "Bebês (0-3 anos)", "Crianças (4-12 anos)", "Jovens (12-18 anos)",
+                "Bebés (0-3 anos)", "Crianças (4-12 anos)", "Jovens (12-18 anos)",
                 "Adultos (18-65 anos)", "Idosos (+65 anos)"
             ]),
             
@@ -1753,8 +2129,8 @@ class RecursosFrame(ttk.Frame):
         except (AttributeError, KeyError):
             return []
 
-    def abrir_detalhes_recurso(self, event):
-        """Abre uma janela com os detalhes do recurso selecionado."""
+    """def abrir_detalhes_recurso(self, event):
+        #Abre uma janela com os detalhes do recurso selecionado.
         # Obtém o item selecionado na tabela
         item_id = self.tabela.focus()
         if not item_id:
@@ -1779,18 +2155,15 @@ class RecursosFrame(ttk.Frame):
 
         # Cria um dicionário com os valores da tabela
         recurso = {
-            "Tipo": valores[0],
-            "Nome": valores[1],
-            "Grupo-Alvo": valores[2],
-            "Grupo Risco": valores[3],
-            "Gravidez": valores[4],
+            "Tipo": valores[1],
+            "Nome": valores[2],
+            "Grupo-Alvo": valores[3],
+            "Grupo Risco": valores[4],
+            "Gravidez": valores[5],
             "Data de Validade": data_validade,
-            
-         
-            "Sexo": ""
-        
         }
 
+        ID = valores[0]
         print("Recurso criado:", recurso)  # Debug
 
         # Cria a janela de detalhes
@@ -1853,7 +2226,6 @@ class RecursosFrame(ttk.Frame):
             ("Nome", "entry"),
             ("Grupo-Alvo", "combobox"),
             ("Gravidez", "combobox"),
-            ("Sexo", "combobox"),
             ("Grupo Risco", "combobox"),
             ("Data de Validade", "date")
         ]
@@ -1875,18 +2247,16 @@ class RecursosFrame(ttk.Frame):
                     entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
-                        "Bebês (0-3 anos)",
-                        "Crianças (4-12 anos)",
-                        "Jovens (12-18 anos)",
-                        "Adultos (18-65 anos)",
-                        "Idosos (+65 anos)"
+                        "Bebés",
+                        "Crianças",
+                        "Jovens",
+                        "Adultos",
+                        "Idosos"
                     ], state="readonly", style="Custom.TCombobox")
                 elif campo == "Gravidez":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Elevado", "Muito Elevado"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
                     entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
                 entry.set(valor)
@@ -1907,11 +2277,11 @@ class RecursosFrame(ttk.Frame):
         botoes_frame = ttk.Frame(frame_principal, style="Custom.TFrame", padding=20)
         botoes_frame.pack(fill="x", pady=20)
 
-        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_recurso(recurso, janela), style="App.TButton").pack(side="left", padx=10)
+        ttk.Button(botoes_frame, text="Guardar", command=lambda: self.guardar_alteracoes_recurso(ID, recurso, janela), style="App.TButton").pack(side="left", padx=10)
         ttk.Button(botoes_frame, text="Cancelar", command=janela.destroy, style="App.TButton").pack(side="right", padx=10)
-
-    def guardar_alteracoes_recurso(self, recurso, janela):
-        """Guarda as alterações feitas no recurso."""
+"""
+    """def guardar_alteracoes_recurso(self, ID, recurso, janela):
+        #Guarda as alterações feitas no recurso.
         # Atualiza os valores do recurso com os novos dados
         for campo, entry in self.entries.items():
             if isinstance(entry, tk.Text):
@@ -1928,7 +2298,7 @@ class RecursosFrame(ttk.Frame):
                     except ValueError:
                         pass
                 recurso[campo] = valor
-
+        MC.edit
         # Define o estado com base na quantidade em stock
         try:
             quantidade = int(recurso.get("Quantidade em Stock", "0"))
@@ -1943,29 +2313,27 @@ class RecursosFrame(ttk.Frame):
                 break
 
         # Atualiza a tabela
-        self.atualizar_tabela(self.dados)
+        self.atualizar_tabela()
 
         messagebox.showinfo("Sucesso", "Alterações guardadas com sucesso!")
         janela.destroy()
-
-    def atualizar_tabela(self, dados):
+"""
+    def atualizar_tabela(self):
         """Atualiza a tabela com os dados fornecidos."""
         # Limpa a tabela
         for item in self.tabela.get_children():
             self.tabela.delete(item)
 
         # Insere os novos dados
-        for recurso in dados:
+        for recurso in MC.getAll():
             self.tabela.insert('', 'end', values=(
-
-                "Medicamento",
+                recurso.id,
+                recurso.tipo,
                 recurso.nome,
-                f"{recurso.idade[0]}-{recurso.idade[1]}",
-                f"{recurso.eficacia[0]}-{recurso.eficacia[1]}",
+                recurso.idade,
+                recurso.eficacia,
                 recurso.gravidez,
                 recurso.validade,
-                recurso.id
-
             ))
 
 class RelatoriosFrame(ttk.Frame):
@@ -2481,6 +2849,14 @@ class DashboardApp:
         self.selected_tab = None
         self.create_widgets()
 
+    def on_tab_change(self, event):
+        selected_tab = event.widget.select()
+        selected_frame = event.widget.nametowidget(selected_tab)
+
+        if hasattr(self, 'consultas_interface') and selected_frame == self.consultas_interface.get_frame():
+            self.consultas_interface.carregar_consultas_na_tabela()
+            self.consultas_interface.atualizar_lista_eventos()
+                    
     def create_widgets(self):
         # Cabeçalho
         header = tk.Frame(self.root, bg="#2c3e50", height=50)  # Fundo cinza escuro para o cabeçalho
@@ -2497,7 +2873,8 @@ class DashboardApp:
                   background=[("selected", "#2c3e50")],
                   foreground=[("selected", "white")])
 
-        self.tabs = ttk.Notebook(self.root)
+        self.tabs = ttk.Notebook(self.root)    
+        self.tabs.bind("<<NotebookTabChanged>>", self.on_tab_change)
         self.tabs.pack(expand=1, fill="both", padx=20, pady=10)
 
         categorias = [
@@ -2520,6 +2897,12 @@ class DashboardApp:
                 frame = RelatoriosFrame(self.tabs)
                 self.frames[cat] = frame
                 self.tabs.add(frame, text=f"{emoji}  {cat}")
+            elif cat == "Consultas":
+                self.consultas_interface = Consultas(self.tabs)
+                frame = self.consultas_interface.get_frame()
+                self.frames[cat] = self.consultas_interface
+                self.tabs.add(frame, text=f"{emoji}  {cat}")
+                #self.consultas_interface.on_load()
             elif cat == "Campanhas":
                 frame = CampanhasFrame(self.tabs)
                 self.frames[cat] = frame

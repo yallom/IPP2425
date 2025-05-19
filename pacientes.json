@@ -3,13 +3,13 @@
         "id": "P0062",
         "nome": "Ana Sousa",
         "idade": 51,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -26,14 +26,14 @@
         "id": "P0063",
         "nome": "Bruno Matos",
         "idade": 84,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
-            "artrite",
-            "hipertensão"
+            "Artrite",
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -56,11 +56,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-03-04"
+                    "data": "2024-03-04"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-01-18"
+                    "data": "2024-01-18"
                 }
             ]
         }
@@ -69,15 +69,15 @@
         "id": "P0064",
         "nome": "Carla Dias",
         "idade": 54,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
-            "artrite",
-            "doença cardíaca",
+            "Artrite",
+            "Doença Cardíaca",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -90,11 +90,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-10-19"
+                    "data": "2024-10-19"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-11-24"
+                    "data": "2022-11-24"
                 }
             ]
         }
@@ -103,11 +103,11 @@
         "id": "P0065",
         "nome": "Daniel Pinto",
         "idade": 72,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "O+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": "Nenhuma",
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -130,11 +130,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-01-18"
+                    "data": "2024-01-18"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-05-14"
+                    "data": "2022-05-14"
                 }
             ]
         }
@@ -143,13 +143,13 @@
         "id": "P0066",
         "nome": "Eduarda Lopes",
         "idade": 64,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -167,7 +167,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-05-10"
+                    "data": "2021-05-10"
                 }
             ]
         }
@@ -176,13 +176,13 @@
         "id": "P0067",
         "nome": "Fábio Marques",
         "idade": 64,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -199,13 +199,13 @@
         "id": "P0068",
         "nome": "Gabriela Cunha",
         "idade": 57,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -218,7 +218,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-10-27"
+                    "data": "2021-10-27"
                 }
             ]
         }
@@ -227,15 +227,15 @@
         "id": "P0069",
         "nome": "Henrique Nogueira",
         "idade": 30,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "diabetes",
-            "doença cardíaca",
-            "artrite"
+            "Doença Cardíaca",
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -258,11 +258,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2023-02-10"
+                    "data": "2023-02-10"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2023-11-14"
+                    "data": "2023-11-14"
                 }
             ]
         }
@@ -271,13 +271,13 @@
         "id": "P0070",
         "nome": "Isabel Faria",
         "idade": 43,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -295,7 +295,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-12-09"
+                    "data": "2024-12-09"
                 }
             ]
         }
@@ -304,13 +304,13 @@
         "id": "P0071",
         "nome": "Jorge Batista",
         "idade": 27,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua do Mar 14, Cascais",
         "doenças crónicas": [
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -337,13 +337,13 @@
         "id": "P0072",
         "nome": "Kátia Ramos",
         "idade": 76,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -361,11 +361,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-01-18"
+                    "data": "2024-01-18"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2025-04-04"
+                    "data": "2025-04-04"
                 }
             ]
         }
@@ -374,14 +374,14 @@
         "id": "P0073",
         "nome": "Luís Carvalho",
         "idade": 81,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
-            "hipertensão",
-            "doença cardíaca"
+            "Hipertensão",
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -398,15 +398,15 @@
         "id": "P0074",
         "nome": "Marta Neves",
         "idade": 88,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
-            "doença cardíaca",
+            "Doença Cardíaca",
             "diabetes",
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -428,14 +428,14 @@
         "id": "P0075",
         "nome": "Nuno Almeida",
         "idade": 58,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -448,7 +448,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-11-04"
+                    "data": "2024-11-04"
                 }
             ]
         }
@@ -457,14 +457,14 @@
         "id": "P0076",
         "nome": "Olga Ferreira",
         "idade": 69,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "doença cardíaca",
-            "artrite"
+            "Doença Cardíaca",
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -477,7 +477,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-02-07"
+                    "data": "2024-02-07"
                 }
             ]
         }
@@ -486,13 +486,13 @@
         "id": "P0077",
         "nome": "Paulo Rocha",
         "idade": 74,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -515,7 +515,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2023-06-10"
+                    "data": "2023-06-10"
                 }
             ]
         }
@@ -524,15 +524,15 @@
         "id": "P0078",
         "nome": "Quésia Martins",
         "idade": 67,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "diabetes",
             "asma",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -555,7 +555,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-10-27"
+                    "data": "2024-10-27"
                 }
             ]
         }
@@ -564,14 +564,14 @@
         "id": "P0079",
         "nome": "Rui Costa",
         "idade": 22,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
             "asma",
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -593,13 +593,13 @@
         "id": "P0080",
         "nome": "Sofia Cardoso",
         "idade": 89,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Travessa do Sol 944, São Pedro, Lisboa",
         "doenças crónicas": [
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -622,11 +622,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-09-23"
+                    "data": "2022-09-23"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-05-21"
+                    "data": "2024-05-21"
                 }
             ]
         }
@@ -635,13 +635,13 @@
         "id": "P0081",
         "nome": "Tiago Tavares",
         "idade": 25,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -654,7 +654,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2021-09-21"
+                    "data": "2021-09-21"
                 }
             ]
         }
@@ -663,14 +663,14 @@
         "id": "P0082",
         "nome": "Úrsula Mendes",
         "idade": 49,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Travessa do Sol 944, São Pedro, Lisboa",
         "doenças crónicas": [
-            "doença cardíaca",
-            "hipertensão"
+            "Doença Cardíaca",
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -697,15 +697,15 @@
         "id": "P0083",
         "nome": "Vasco Correia",
         "idade": 37,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "diabetes",
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -723,11 +723,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2023-11-28"
+                    "data": "2023-11-28"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2023-11-16"
+                    "data": "2023-11-16"
                 }
             ]
         }
@@ -736,13 +736,13 @@
         "id": "P0084",
         "nome": "Wanda Lima",
         "idade": 50,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -755,11 +755,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-09-07"
+                    "data": "2021-09-07"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2021-12-06"
+                    "data": "2021-12-06"
                 }
             ]
         }
@@ -768,14 +768,14 @@
         "id": "P0085",
         "nome": "Xavier Dias",
         "idade": 88,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
             "diabetes",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -788,7 +788,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-05-17"
+                    "data": "2021-05-17"
                 }
             ]
         }
@@ -797,14 +797,14 @@
         "id": "P0086",
         "nome": "Yara Monteiro",
         "idade": 87,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "asma",
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -822,7 +822,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2022-01-10"
+                    "data": "2022-01-10"
                 }
             ]
         }
@@ -831,13 +831,13 @@
         "id": "P0087",
         "nome": "Zé Pedro",
         "idade": 44,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -850,7 +850,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-11-10"
+                    "data": "2022-11-10"
                 }
             ]
         }
@@ -859,14 +859,14 @@
         "id": "P0088",
         "nome": "Alice Gomes",
         "idade": 47,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
-            "doença cardíaca",
+            "Doença Cardíaca",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -888,14 +888,14 @@
         "id": "P0089",
         "nome": "Bernardo Silva",
         "idade": 56,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
-            "doença cardíaca",
-            "hipertensão"
+            "Doença Cardíaca",
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -917,14 +917,14 @@
         "id": "P0090",
         "nome": "Cláudia Reis",
         "idade": 68,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
-            "doença cardíaca",
+            "Doença Cardíaca",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -947,11 +947,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2024-05-11"
+                    "data": "2024-05-11"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2025-02-11"
+                    "data": "2025-02-11"
                 }
             ]
         }
@@ -960,15 +960,15 @@
         "id": "P0091",
         "nome": "Diogo Teixeira",
         "idade": 18,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "doença cardíaca",
+            "Doença Cardíaca",
             "asma",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -986,7 +986,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2022-12-22"
+                    "data": "2022-12-22"
                 }
             ]
         }
@@ -995,15 +995,15 @@
         "id": "P0092",
         "nome": "Elisa Martins",
         "idade": 78,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "asma",
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1025,14 +1025,14 @@
         "id": "P0093",
         "nome": "Francisco Louro",
         "idade": 80,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1050,7 +1050,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-10-22"
+                    "data": "2024-10-22"
                 }
             ]
         }
@@ -1081,7 +1081,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2021-05-18"
+                    "data": "2021-05-18"
                 }
             ]
         }
@@ -1090,13 +1090,13 @@
         "id": "P0095",
         "nome": "Helena Soares",
         "idade": 35,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1119,11 +1119,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2022-05-05"
+                    "data": "2022-05-05"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2023-11-07"
+                    "data": "2023-11-07"
                 }
             ]
         }
@@ -1132,14 +1132,14 @@
         "id": "P0096",
         "nome": "Igor Peixoto",
         "idade": 81,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
             "asma",
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1166,13 +1166,13 @@
         "id": "P0097",
         "nome": "Joana Campos",
         "idade": 87,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1199,14 +1199,14 @@
         "id": "P0098",
         "nome": "Kevin Andrade",
         "idade": 25,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
             "asma",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1229,11 +1229,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-09-13"
+                    "data": "2024-09-13"
                 },
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-10-16"
+                    "data": "2022-10-16"
                 }
             ]
         }
@@ -1242,14 +1242,14 @@
         "id": "P0099",
         "nome": "Laura Viana",
         "idade": 27,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
             "diabetes",
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1262,11 +1262,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-07-21"
+                    "data": "2022-07-21"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-11-10"
+                    "data": "2021-11-10"
                 }
             ]
         }
@@ -1275,15 +1275,15 @@
         "id": "P0100",
         "nome": "Mariana Salgado",
         "idade": 73,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Azul 98, Viseu",
         "doenças crónicas": [
-            "hipertensão",
+            "Hipertensão",
             "diabetes",
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1306,11 +1306,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2023-11-15"
+                    "data": "2023-11-15"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2022-01-13"
+                    "data": "2022-01-13"
                 }
             ]
         }
@@ -1319,13 +1319,13 @@
         "id": "P0101",
         "nome": "Nelson Ribeiro",
         "idade": 74,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1352,13 +1352,13 @@
         "id": "P0102",
         "nome": "Otávio Cruz",
         "idade": 27,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua das Flores 652, Santo António, Faro",
         "doenças crónicas": [
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1381,11 +1381,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2024-05-01"
+                    "data": "2024-05-01"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2022-07-14"
+                    "data": "2022-07-14"
                 }
             ]
         }
@@ -1394,13 +1394,13 @@
         "id": "P0103",
         "nome": "Patrícia Franco",
         "idade": 84,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1422,14 +1422,14 @@
         "id": "P0104",
         "nome": "Raquel Torres",
         "idade": 55,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
-            "hipertensão",
-            "doença cardíaca"
+            "Hipertensão",
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -1452,7 +1452,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2025-04-16"
+                    "data": "2025-04-16"
                 }
             ]
         }
@@ -1461,13 +1461,13 @@
         "id": "P0105",
         "nome": "Samuel Lopes",
         "idade": 33,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
             "diabetes"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1485,11 +1485,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-12-17"
+                    "data": "2022-12-17"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-10-01"
+                    "data": "2024-10-01"
                 }
             ]
         }
@@ -1498,14 +1498,14 @@
         "id": "P0106",
         "nome": "Tatiana Borges",
         "idade": 24,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "asma",
             "diabetes"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1518,11 +1518,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2022-03-17"
+                    "data": "2022-03-17"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2021-11-20"
+                    "data": "2021-11-20"
                 }
             ]
         }
@@ -1531,14 +1531,14 @@
         "id": "P0107",
         "nome": "Urbano Matias",
         "idade": 17,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Travessa do Sol 944, São Pedro, Lisboa",
         "doenças crónicas": [
-            "hipertensão",
-            "doença cardíaca"
+            "Hipertensão",
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1561,11 +1561,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-04-29"
+                    "data": "2021-04-29"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2022-05-07"
+                    "data": "2022-05-07"
                 }
             ]
         }
@@ -1574,13 +1574,13 @@
         "id": "P0108",
         "nome": "Vanessa Sousa",
         "idade": 16,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "asma"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1597,15 +1597,15 @@
         "id": "P0109",
         "nome": "Walter Pinheiro",
         "idade": 46,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
             "asma",
             "diabetes",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -1622,14 +1622,14 @@
         "id": "P0110",
         "nome": "Ximena Rocha",
         "idade": 18,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
             "asma",
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1651,13 +1651,13 @@
         "id": "P0111",
         "nome": "Yuri Matos",
         "idade": 34,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão"
+            "Hipertensão"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1675,11 +1675,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2022-06-28"
+                    "data": "2022-06-28"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-12-01"
+                    "data": "2024-12-01"
                 }
             ]
         }
@@ -1688,13 +1688,13 @@
         "id": "P0112",
         "nome": "Zélia Duarte",
         "idade": 63,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Travessa do Sol 944, São Pedro, Lisboa",
         "doenças crónicas": [
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -1716,13 +1716,13 @@
         "id": "P0113",
         "nome": "Brígida Teles",
         "idade": 82,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua do Mar 14, Cascais",
         "doenças crónicas": [
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1745,7 +1745,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2024-01-01"
+                    "data": "2024-01-01"
                 }
             ]
         }
@@ -1754,15 +1754,15 @@
         "id": "P0114",
         "nome": "César Moura",
         "idade": 58,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
-            "hipertensão",
+            "Hipertensão",
             "asma",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Elevado",
         "histórico": {
             "consultas": [
@@ -1775,7 +1775,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2024-06-01"
+                    "data": "2024-06-01"
                 }
             ]
         }
@@ -1784,15 +1784,15 @@
         "id": "P0115",
         "nome": "Diana Leal",
         "idade": 80,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "diabetes",
             "asma"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1819,15 +1819,15 @@
         "id": "P0116",
         "nome": "Eduardo Gomes",
         "idade": 41,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua da Liberdade 661, São Pedro, Coimbra",
         "doenças crónicas": [
-            "doença cardíaca",
+            "Doença Cardíaca",
             "diabetes",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1840,7 +1840,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2023-05-06"
+                    "data": "2023-05-06"
                 }
             ]
         }
@@ -1849,15 +1849,15 @@
         "id": "P0117",
         "nome": "Filipa Rocha",
         "idade": 43,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
             "diabetes",
             "asma",
-            "artrite"
+            "Artrite"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1884,14 +1884,14 @@
         "id": "P0118",
         "nome": "Gilberto Almeida",
         "idade": 77,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Nova 301, Porto",
         "doenças crónicas": [
             "diabetes",
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1904,11 +1904,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2023-06-13"
+                    "data": "2023-06-13"
                 },
                 {
                     "nome": "Vacina da gripe",
-                    "data administração": "2025-01-11"
+                    "data": "2025-01-11"
                 }
             ]
         }
@@ -1917,13 +1917,13 @@
         "id": "P0119",
         "nome": "Helder Ramos",
         "idade": 35,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Avenida Central 714, Santo António, Faro",
         "doenças crónicas": [
             "diabetes"
         ],
-        "gravidez": true,
+        "gravidez": "Sim",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -1936,11 +1936,11 @@
             "vacinas": [
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-05-11"
+                    "data": "2021-05-11"
                 },
                 {
                     "nome": "Vacina do tétano",
-                    "data administração": "2021-12-21"
+                    "data": "2021-12-21"
                 }
             ]
         }
@@ -1949,15 +1949,15 @@
         "id": "P0120",
         "nome": "Irene Dias",
         "idade": 86,
-        "sexo": "f",
+        "sexo": "F",
         "grupo sanguíneo": "AB+",
         "morada": "Rua Verde 120, Braga",
         "doenças crónicas": [
-            "artrite",
+            "Artrite",
             "asma",
-            "doença cardíaca"
+            "Doença Cardíaca"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Muito Elevado",
         "histórico": {
             "consultas": [
@@ -1984,15 +1984,15 @@
         "id": "P0121",
         "nome": "Jaime Costa",
         "idade": 23,
-        "sexo": "m",
+        "sexo": "M",
         "grupo sanguíneo": "AB+",
         "morada": "Rua do Mar 14, Cascais",
         "doenças crónicas": [
             "diabetes",
-            "artrite",
-            "hipertensão"
+            "Artrite",
+            "Hipertensão"
         ],
-        "gravidez": false,
+        "gravidez": "Não",
         "risco": "Médio",
         "histórico": {
             "consultas": [
@@ -2005,7 +2005,7 @@
             "vacinas": [
                 {
                     "nome": "Vacina COVID-19",
-                    "data administração": "2024-12-04"
+                    "data": "2024-12-04"
                 }
             ]
         }
