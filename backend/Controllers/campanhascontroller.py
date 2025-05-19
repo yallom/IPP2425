@@ -17,7 +17,7 @@ def addCampaign(name:str, date1:str, date2:str, gravidez:int, age, risk, id, max
 
     return X
 
-def deleteCampaign(obj):    #Apaga uma pessoa da classe "Pessoa" atual
+def delete(obj):    #Apaga uma pessoa da classe "Pessoa" atual
     return Campanha.delete_instance(obj)
 
 #def searchCampaign(obj):    #Meio inútil, mantém-se por agora

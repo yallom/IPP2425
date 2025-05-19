@@ -30,11 +30,15 @@ class Campanha: #Classe para campanhas de vacinação, referentes a um medicamen
         return([obj for obj in cls.instances if obj.id == id])
     
     @classmethod
-    def search_id(cls, id):
-        return([obj for obj in cls.instances if obj.idmedicamento == id])
+    def show_by_id(cls, uuid):
+        for item in cls.get_all_instances():
+            if item.id == uuid:
+                return item
+        return f"Medicamento {uuid} não encontrado!"
     
     @classmethod
-    def delete_instance(cls,obj):
+    def delete_instance(cls,id):
+        obj = cls.show_by_id(id)
         if obj in cls.instances:
             try:
                 cls.instances.remove(obj)

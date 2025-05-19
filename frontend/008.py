@@ -977,8 +977,11 @@ class Interface_Paciente:
 class CampanhasFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        today = datetime.today().date()
+        
         self.configure(padding=20, style="Custom.TFrame")  # Define o estilo do frame
+        self.availableitems = MC.getAll()
+        self.currentitems = []
+        self.expiry_date= None
 
         # Define o estilo personalizado para os widgets
         style = ttk.Style()
@@ -1037,7 +1040,7 @@ class CampanhasFrame(ttk.Frame):
         ttk.Button(filtro_frame, text="Importar Dados", command=self.importar_dados, style="Blue.TButton").pack(side="right", padx=5)
         
         # Tabela de campanhas
-        colunas = ("ID", "Nome", "Início", "Fim", "Grupo-Alvo", "Inscrições Atuais", "Inscrições-Alvo", "Estado")
+        colunas = ("ID", "Nome", "Início", "Fim", "Grupo-Alvo", "Grupo Etário", "Gravidez", "Inscrições Atuais", "Inscrições-Alvo", "Estado")
         
         # Frame para a tabela e scrollbar
         tabela_frame = ttk.Frame(self)
@@ -1084,7 +1087,7 @@ class CampanhasFrame(ttk.Frame):
         # Insere os novos dados
         for campanha in CC.getAll():
             self.tabela.insert('', 'end', values=(
-                campanha.id, campanha.nome, campanha.datas[0], campanha.datas[1], campanha.gruporisco, len(campanha.pacientes), campanha.maximo, self.datechecker(campanha.datas)
+                campanha.id, campanha.nome, campanha.datas[0], campanha.datas[1], campanha.gruporisco, campanha.grupoidade, campanha.gravidas, len(campanha.pacientes), campanha.maximo, self.datechecker(campanha.datas)
             ))
 
     def filtrar_campanhas(self, event=None):
@@ -1177,7 +1180,6 @@ class CampanhasFrame(ttk.Frame):
             ("Data Fim", "date"),
             ("Grupo Risco", "combobox"),
             ("Grupo-Alvo", "combobox"),
-            ("Sexo", "combobox"),
             ("Grávidas", "combobox"),
             ("Número de Participantes", "entry")
         ]
@@ -1194,21 +1196,13 @@ class CampanhasFrame(ttk.Frame):
                 entry.pack(fill="x", expand=True)
             elif tipo == "date":
                 entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
-                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                                foreground="white", borderwidth=2, style="Custom.TCombobox", maxdate=self.expiry_date)
                 entry.pack(fill="x", expand=True)
             elif tipo == "combobox":
                 if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Elevado", "Muito Elevado"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
-                    entry = ttk.Combobox(frame, values=[
-                        "Bebés",
-                        "Crianças",
-                        "Jovens",
-                        "Adultos",
-                        "Idosos"
-                    ], state="readonly", style="Custom.TCombobox")
-                elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grávidas":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Recurso":
@@ -1216,9 +1210,7 @@ class CampanhasFrame(ttk.Frame):
                     entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
                 elif campo == "Item":
                     entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
-                elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
-                entry.pack(fill="x", expand=True)
+                    entry.bind("<<ComboboxSelected>>", self.on_item_select)
             elif tipo == "text":
                 entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
 
@@ -1235,20 +1227,44 @@ class CampanhasFrame(ttk.Frame):
     def atualizar_itens(self, event=None):
         """Atualiza os itens disponíveis com base no recurso selecionado."""
         recurso = self.entries["Recurso"].get()
-        itens = self.dataset.get(recurso, [])  # Obtém os itens do dataset
-        self.entries["Item"]["values"] = itens  # Atualiza os valores do combobox de itens
+        itens = []
+        for i in self.availableitems:
+            if i.tipo == recurso:
+                itens.append(i) # Obtém os itens do dataset
+        self.entries["Item"]["values"] = [i.nome for i in itens]
+        self.currentitems = itens  
         if itens:
             self.entries["Item"].current(0)  # Define o primeiro item como padrão
+            self.on_item_select()  # Atualiza os campos com o primeiro item
 
-    def atualizar_gravidas(self, event=None):
+    def datelimit(self, event=None):
+        """Atualiza a data limite com base no item selecionado."""
+        item = self.entries["Item"].get()
+        for i in MC.getAll():
+            if i.nome == item:
+                self.expiry_date = datetime.strptime(i.validade, "%Y-%m-%d").date()
+                print(self.expiry_date)
+                self.entries["Data Início"].configure(maxdate=self.expiry_date)
+                self.entries["Data Fim"].configure(maxdate=self.expiry_date)
+                break
+
+    def atualizar_campos(self, event=None):
         """Atualiza as opções de grávidas com base no sexo selecionado."""
-        sexo = self.entries["Sexo"].get()
-        if sexo == "Masculino":
-            self.entries["Grávidas"].set("Não")
-            self.entries["Grávidas"]["state"] = "disabled"
-        else:
-            self.entries["Grávidas"]["state"] = "readonly"
-            self.entries["Grávidas"].set("Sim")
+        item = self.entries["Item"].get()
+        for i in MC.getAll():
+            if i.nome == item:
+                self.medicamento = i
+                print("Sucesso")
+                self.entries["Grávidas"]["values"] = i.gravidez
+                self.entries["Grupo Risco"]["values"] = i.eficacia
+                self.entries["Grupo-Alvo"]["values"] = i.idade
+                self.entries["Grávidas"].current(0)
+                self.entries["Grupo Risco"].current(0)
+                self.entries["Grupo-Alvo"].current(0)
+
+    def on_item_select(self, event=None):
+        self.atualizar_campos()
+        self.datelimit()
 
     def guardar_campanha(self):
         """Guarda os dados da nova campanha e atualiza a tabela."""
@@ -1259,34 +1275,18 @@ class CampanhasFrame(ttk.Frame):
         grupo_risco = self.entries["Grupo Risco"].get().strip()
         grupo_alvo = self.entries["Grupo-Alvo"].get().strip()
         gravidas = self.entries["Grávidas"].get().strip()
-        sexo = self.entries["Sexo"].get().strip()
         recurso = self.entries["Recurso"].get().strip()
         item = self.entries["Item"].get().strip()
         participantes = self.entries["Número de Participantes"].get().strip()  # Novo campo
         
 
         # Validação: verifica se todos os campos obrigatórios estão preenchidos
-        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, sexo, recurso, item]):
+        if not all([nome, data_inicio, data_fim, grupo_risco, grupo_alvo, gravidas, recurso, item]):
             messagebox.showerror("Erro", "Todos os campos obrigatórios devem ser preenchidos!")
             return
 
         # Adiciona a nova campanha
-        nova_campanha = {
-            "Nome": nome,
-            "Início": data_inicio,
-            "Fim": data_fim,
-            "Grupo-Alvo": grupo_alvo,
-            "Estado": "Ativa",
-            "Grupo Risco": grupo_risco,
-            "Grávidas": gravidas,
-            "Sexo": sexo,
-            "Recurso": recurso,
-            "Item": item,
-           
-            "Número de Participantes": participantes,  # Novo campo
-           
-        }
-        self.campanhas.append(nova_campanha)
+        CC.addCampaign(nome, data_inicio, data_fim, gravidas, grupo_alvo, grupo_risco, self.medicamento.id, participantes)
         self.atualizar_tabela(self.campanhas)
 
         # Fecha a janela e exibe mensagem de sucesso
@@ -1475,7 +1475,7 @@ class CampanhasFrame(ttk.Frame):
         resposta = messagebox.askyesno("Confirmar", f"Tem certeza de que deseja eliminar a campanha '{valores[0]}'?")
         if resposta:
             # Remove a campanha da lista
-            self.campanhas = [c for c in self.campanhas if c["Nome"] != valores[0]]
+            CC.delete(valores[0])
 
             # Atualiza a tabela
             self.atualizar_tabela(self.campanhas)
