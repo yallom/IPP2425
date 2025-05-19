@@ -50,7 +50,13 @@ class Paciente:
         self.historico_consultas = []
         self.historico_vacinas = []
         return self.get_self()
-
+        
+    def add_history(self, consulta = None, vacina = None):
+        if consulta:
+            self.historico_consultas.append(consulta)
+        if vacina:
+            self.historico_vacinas.append(vacina)
+        return self.get_self()
 
     @classmethod
     def get_all_instances(cls):

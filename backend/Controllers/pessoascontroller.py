@@ -2,7 +2,9 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from datetime import datetime
 from Models.pacientes import Paciente
+from Controllers import medicoscontroller as DC
 
 def addPacient(name: str, age: str, sex: str, gravidez: bool, doenca: str, tipo_sanguineo: str, morada):     #Cria uma nova Pessoa no sistema
     X = Paciente(name,age,sex,tipo_sanguineo,morada,doenca,gravidez)
@@ -36,6 +38,23 @@ def getAll():
 
 def getAllPacients():
     return Paciente.show_all()
+
+def add(paciente, consulta = None, vacina = None):
+    obj1 = None
+    obj2 = None 
+    if consulta:
+        obj1 = {
+            "tipo": consulta.tipo,
+            "data": consulta.data,
+            "médico": DC.search(consulta.id_medico).nome,
+        }
+    if vacina:
+        obj2 = {
+            "vacina": vacina.nome,
+            "data": datetime.today().date()
+        }
+    return paciente.add_history(obj1, obj2)
+
 
 def write(obj):
     paciente = {
