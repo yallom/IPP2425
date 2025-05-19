@@ -1222,7 +1222,7 @@ class Consultas:
             self.atualizar_lista_eventos(None)
             janela_editarconsulta.destroy()
 
-        tk.Button(janela_editarconsulta, text="Salvar Alterações", bg="#2c3e50", fg="white", command=guardar).pack(pady=10)
+        tk.Button(janela_editarconsulta, text="Salvar Alterações", command=guardar).pack(pady=10)
 
     def eliminar_consulta(self):
         selecionado = self.tabela.focus()
@@ -1636,7 +1636,7 @@ class CampanhasFrame(ttk.Frame):
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
-            # Atualiza a largura do frame principal quando a janela é redimensionada
+            # Atualiza a largura do frame interno quando a janela é redimensionada
             canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_principal.bind("<Configure>", atualizar_scrollregion)
@@ -1655,18 +1655,18 @@ class CampanhasFrame(ttk.Frame):
         # Separador para os campos principais
         ttk.Label(frame_principal, text="Informações Básicas", style="Custom.TLabel", font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=15, pady=10)
 
+        # Obtém as campanhas disponíveis e adiciona "Sem campanha"
+        campanhas_disponiveis = self.obter_campanhas_disponiveis()
+        campanhas_disponiveis = ["Sem campanha"] + campanhas_disponiveis
+
         # Campos do formulário
         campos = [
+            ("Tipo", "combobox"),
             ("Nome", "entry"),
-            ("Data Início", "date"),
-            ("Data Fim", "date"),
-            ("Grupo Risco", "combobox"),
             ("Grupo-Alvo", "combobox"),
-            ("Sexo", "combobox"),
-            ("Grávidas", "combobox"),
-            ("Recurso", "combobox"),
-            ("Item", "combobox"),
-            ("Número de Participantes", "entry")
+            ("Gravidez", "combobox"),
+            ("Grupo Risco", "combobox"),
+            ("Data de Validade", "date")
         ]
 
         self.entries = {}
@@ -1676,38 +1676,38 @@ class CampanhasFrame(ttk.Frame):
             frame.pack(fill="x", padx=20, pady=8)
             ttk.Label(frame, text=campo, style="Custom.TLabel").pack(anchor="w", pady=2)
 
+            valor = recurso.get(campo, "")
+
             if tipo == "entry":
                 entry = ttk.Entry(frame, style="Custom.TEntry")
-                entry.pack(fill="x", expand=True)
-            elif tipo == "date":
-                entry = DateEntry(frame, date_pattern="yyyy-mm-dd", width=12, background="#2c3e50",
-                                foreground="white", borderwidth=2, style="Custom.TCombobox")
-                entry.pack(fill="x", expand=True)
+                entry.insert(0, valor)
             elif tipo == "combobox":
-                if campo == "Grupo Risco":
-                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Alto"], state="readonly", style="Custom.TCombobox")
+                if campo == "Tipo":
+                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Grupo-Alvo":
                     entry = ttk.Combobox(frame, values=[
-                        "Bebés (0-3 anos)",
-                        "Crianças (4-12 anos)",
-                        "Jovens (12-18 anos)",
-                        "Adultos (18-65 anos)",
-                        "Idosos (+65 anos)"
+                        "Bebés",
+                        "Crianças",
+                        "Jovens",
+                        "Adultos",
+                        "Idosos"
                     ], state="readonly", style="Custom.TCombobox")
-                elif campo == "Sexo":
-                    entry = ttk.Combobox(frame, values=["Masculino", "Feminino", "Ambos"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Grávidas":
+                elif campo == "Gravidez":
                     entry = ttk.Combobox(frame, values=["Sim", "Não", "Apenas"], state="readonly", style="Custom.TCombobox")
-                elif campo == "Recurso":
-                    entry = ttk.Combobox(frame, values=["Medicamento", "Vacina"], state="readonly", style="Custom.TCombobox")
-                    entry.bind("<<ComboboxSelected>>", self.atualizar_itens)
-                elif campo == "Item":
-                    entry = ttk.Combobox(frame, values=[], state="readonly", style="Custom.TCombobox")
+                elif campo == "Grupo Risco":
+                    entry = ttk.Combobox(frame, values=["Baixo", "Médio", "Elevado", "Muito Elevado"], state="readonly", style="Custom.TCombobox")
                 elif campo == "Estado":
-                    entry = ttk.Combobox(frame, values=["Ativa", "Encerrada"], state="readonly", style="Custom.TCombobox")
+                    entry = ttk.Combobox(frame, values=["Disponível", "Fora de stock", "Expirado"], state="readonly", style="Custom.TCombobox")
+                entry.set(valor)
                 entry.pack(fill="x", expand=True)
-            elif tipo == "text":
-                entry = tk.Text(frame, height=5, wrap="word", bg="white", font=("Segoe UI", 11), relief="solid", borderwidth=1)
+            elif tipo == "date":
+                entry = DateEntry(frame, date_pattern="dd/mm/yyyy", width=12, background="#2c3e50",
+                                foreground="white", borderwidth=2, style="Custom.TCombobox")
+                if valor:
+                    try:
+                        entry.set_date(valor)
+                    except ValueError:
+                        pass  # Ignora erros de data inválida
 
             entry.pack(fill="x")
             self.entries[campo] = entry
@@ -2249,11 +2249,8 @@ class RecursosFrame(ttk.Frame):
         # Atualiza o scrollregion sempre que o frame interno for redimensionado
         def atualizar_scrollregion(event):
             canvas.configure(scrollregion=canvas.bbox("all"))
-            # Atualiza a largura do frame principal quando a janela é redimensionada
-            canvas.itemconfig(canvas.find_withtag("all")[0], width=canvas.winfo_width())
 
         frame_principal.bind("<Configure>", atualizar_scrollregion)
-        canvas.bind("<Configure>", atualizar_scrollregion)
 
         # Define estilos para os widgets
         style = ttk.Style()
@@ -2491,7 +2488,8 @@ class RelatoriosFrame(ttk.Frame):
             consultas_filtradas = []
             for consulta in todas_consultas:
                 try:
-                    data_consulta = datetime.strptime(consulta["Data"], "%Y-%m-%d").date()
+        # Se consulta for objeto, use consulta.data
+                    data_consulta = datetime.strptime(getattr(consulta, "data", ""), "%Y-%m-%d").date()
                     if data_inicio <= data_consulta <= data_fim:
                         consultas_filtradas.append(consulta)
                 except ValueError:
@@ -2659,162 +2657,140 @@ class RelatoriosFrame(ttk.Frame):
         elif relatorio == "Consultas":
             self.mostrar_relatorio_consultas()
 
-    def mostrar_relatorio_consultas(self):
-        """Exibe o relatório de consultas com visualizações e estatísticas."""
+    def mostrar_relatorio_consultas(self, consultas_objs=None):
+       
         # Limpa o frame de conteúdo
         for widget in self.conteudo_frame.winfo_children():
             widget.destroy()
-
-        # Dados de exemplo para demonstração
-        consultas = [
-            {"Data": "2025-01-15", "Médico": "Dr. Silva", "Paciente": "Maria Santos", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
-            {"Data": "2025-01-16", "Médico": "Dra. Oliveira", "Paciente": "João Pereira", "Tipo": "Urgência", "Duração": 45, "Estado": "Concluída"},
-            {"Data": "2025-01-17", "Médico": "Dr. Santos", "Paciente": "Ana Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Concluída"},
-            {"Data": "2025-01-18", "Médico": "Dra. Oliveira", "Paciente": "Pedro Lima", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Concluída"},
-            {"Data": "2025-01-19", "Médico": "Dr. Silva", "Paciente": "Carla Mendes", "Tipo": "Urgência", "Duração": 60, "Estado": "Concluída"},
-            {"Data": "2025-01-20", "Médico": "Dr. Santos", "Paciente": "Ricardo Alves", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"},
-            {"Data": "2025-01-21", "Médico": "Dra. Oliveira", "Paciente": "Sofia Martins", "Tipo": "Acompanhamento", "Duração": 20, "Estado": "Agendada"},
-            {"Data": "2025-01-22", "Médico": "Dr. Silva", "Paciente": "Miguel Costa", "Tipo": "Consulta Regular", "Duração": 30, "Estado": "Agendada"}
-        ]
-
+    
+        # Usa as consultas filtradas se fornecidas, senão busca todas
+        if consultas_objs is None:
+            consultas_objs = AC.getAll()
+    
+        # Constrói a lista de dicionários para o relatório
+        consultas = []
+        for c in consultas_objs:
+            paciente = PC.search(getattr(c, "id_paciente", None))
+            medico = DC.search(getattr(c, "id_medico", None))
+            consultas.append({
+                "Data": getattr(c, "data", ""),
+                "Médico": medico.nome if medico else "Desconhecido",
+                "Paciente": paciente.nome if paciente else "Desconhecido",
+                "Tipo": getattr(c, "tipo", "Consulta"),
+                "Duração": getattr(c, "duracao", 30),
+                "Estado": getattr(c, "estado", "Concluída")
+            })
+    
         # Frame principal para estatísticas e gráficos
         main_frame = ttk.Frame(self.conteudo_frame, style="Custom.TFrame")
         main_frame.pack(fill="both", expand=True, padx=20, pady=10)
-
+    
         # Frame para estatísticas rápidas
         stats_frame = ttk.Frame(main_frame, style="Custom.TFrame")
         stats_frame.pack(fill="x", pady=(0, 20))
-
+    
         # Estatísticas rápidas
         total_consultas = len(consultas)
         consultas_concluidas = sum(1 for c in consultas if c["Estado"] == "Concluída")
         consultas_agendadas = sum(1 for c in consultas if c["Estado"] == "Agendada")
-        media_duracao = sum(c["Duração"] for c in consultas) / len(consultas)
-
+    
         # Cards de estatísticas
         stats = [
-            ("Total de Consultas", total_consultas, "#2c3e50"),  # Azul escuro do tema
-            ("Consultas Concluídas", consultas_concluidas, "#34495e"),  # Azul mais claro
-            ("Consultas Agendadas", consultas_agendadas, "#3498db"),  # Azul médio
-            ("Duração Média", f"{media_duracao:.1f} min", "#2980b9")  # Azul mais escuro
+            ("Total de Consultas", total_consultas, "#2c3e50"),
+            ("Consultas Concluídas", consultas_concluidas, "#34495e"),
+            ("Consultas Agendadas", consultas_agendadas, "#3498db"),
         ]
-
+    
         for i, (label, value, color) in enumerate(stats):
             card = ttk.Frame(stats_frame, style="Custom.TFrame")
             card.pack(side="left", expand=True, fill="x", padx=5)
-            
-            # Estilo moderno para os cards
             card.configure(style="Card.TFrame")
             style = ttk.Style()
             style.configure("Card.TFrame", background=color, relief="solid", borderwidth=1)
-            
-            # Ajusta a largura dos cards
-            card.configure(width=150)  # Largura fixa para os cards
-            
-            ttk.Label(card, text=label, 
-                     font=("Segoe UI", 10),
-                     foreground="white",
-                     background=color,
-                     wraplength=140).pack(pady=(10, 5))
-            
+            card.configure(width=150)
+            ttk.Label(card, text=label,
+                      font=("Segoe UI", 10),
+                      foreground="white",
+                      background=color,
+                      wraplength=140).pack(pady=(10, 5))
             ttk.Label(card, text=str(value),
-                     font=("Segoe UI", 16, "bold"),
-                     foreground="white",
-                     background=color).pack(pady=(0, 10))
-
+                      font=("Segoe UI", 16, "bold"),
+                      foreground="white",
+                      background=color).pack(pady=(0, 10))
+    
         # Frame para gráficos
         graphs_frame = ttk.Frame(main_frame, style="Custom.TFrame")
         graphs_frame.pack(fill="both", expand=True)
-
-        # Gráfico 1: Consultas por Médico (Barras) - Agora à esquerda e maior
+    
+        # Gráfico 1: Consultas por Médico (Barras)
         consultas_medico = {}
         for consulta in consultas:
             medico = consulta["Médico"]
             consultas_medico[medico] = consultas_medico.get(medico, 0) + 1
-
-        fig1 = Figure(figsize=(8, 4), dpi=100)  # Aumentado o tamanho
+    
+        fig1 = Figure(figsize=(8, 4), dpi=100)
         ax1 = fig1.add_subplot(111)
-        
-        # Ajusta a largura das barras
-        bar_width = 0.35  # Barras mais finas
+        bar_width = 0.35
         x = range(len(consultas_medico))
-        bars = ax1.bar(x, consultas_medico.values(), 
-                      width=bar_width,
-                      color=['#2c3e50', '#34495e', '#3498db'])  # Cores do tema
-        
-        # Configura os labels do eixo x
+        bars = ax1.bar(x, consultas_medico.values(),
+                       width=bar_width,
+                       color=['#2c3e50', '#34495e', '#3498db'])
         ax1.set_xticks(x)
         ax1.set_xticklabels(consultas_medico.keys(), rotation=45)
-        
         ax1.set_title('Consultas por Médico', fontsize=12, color='#2c3e50')
         ax1.set_ylabel('Número de Consultas', fontsize=10, color='#2c3e50')
         ax1.tick_params(axis='x', rotation=45, labelsize=9)
         ax1.tick_params(axis='y', labelsize=9)
-        
-        # Adiciona os valores no topo das barras
         for bar in bars:
             height = bar.get_height()
-            ax1.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{int(height)}',
-                    ha='center', va='bottom', fontsize=9)
-        
+            ax1.text(bar.get_x() + bar.get_width()/2.0, height,
+                     f'{int(height)}',
+                     ha='center', va='bottom', fontsize=9)
         ax1.grid(True, linestyle='--', alpha=0.7)
         fig1.tight_layout()
-        
         canvas1 = FigureCanvasTkAgg(fig1, graphs_frame)
         canvas1.draw()
         canvas1.get_tk_widget().pack(side="left", fill="both", expand=True, padx=5)
-
-        # Gráfico 2: Distribuição por Tipo de Consulta (Pizza) - Agora à direita e maior
+    
+        # Gráfico 2: Distribuição por Tipo de Consulta (Pizza)
         tipos_consulta = {}
         for consulta in consultas:
             tipo = consulta["Tipo"]
             tipos_consulta[tipo] = tipos_consulta.get(tipo, 0) + 1
-
-        fig2 = Figure(figsize=(5, 5), dpi=100)  # Aumentado o tamanho do gráfico de pizza
+    
+        fig2 = Figure(figsize=(5, 5), dpi=100)
         ax2 = fig2.add_subplot(111)
         ax2.pie(tipos_consulta.values(), labels=tipos_consulta.keys(), autopct='%1.1f%%',
-                colors=['#2c3e50', '#34495e', '#3498db'],  # Cores do tema
+                colors=['#2c3e50', '#34495e', '#3498db'],
                 wedgeprops={'edgecolor': 'white', 'linewidth': 1.5})
         ax2.set_title('Distribuição por Tipo de Consulta', fontsize=12, color='#2c3e50')
-        
         canvas2 = FigureCanvasTkAgg(fig2, graphs_frame)
         canvas2.draw()
         canvas2.get_tk_widget().pack(side="right", fill="both", expand=True, padx=5)
-
+    
         # Frame para a tabela de consultas
         table_frame = ttk.Frame(main_frame, style="Custom.TFrame")
         table_frame.pack(fill="both", expand=True, pady=20)
-
-        # Título da tabela
         ttk.Label(table_frame, text="Detalhes das Consultas",
-                 font=("Segoe UI", 12, "bold"),
-                 foreground="#2c3e50",
-                 background="#f5f5f5").pack(pady=(0, 10))
-
+                  font=("Segoe UI", 12, "bold"),
+                  foreground="#2c3e50",
+                  background="#f5f5f5").pack(pady=(0, 10))
+    
         # Tabela de consultas
         colunas = ("Data", "Médico", "Paciente", "Tipo", "Duração", "Estado")
-        
-        # Frame para a tabela e scrollbar
         table_scroll_frame = ttk.Frame(table_frame)
         table_scroll_frame.pack(fill="both", expand=True)
-        
-        # Scrollbar vertical
         scrollbar = ttk.Scrollbar(table_scroll_frame, orient="vertical")
         scrollbar.pack(side="right", fill="y")
-        
         self.tabela_consultas = ttk.Treeview(table_scroll_frame, columns=colunas, show="headings",
-                                           height=8, style="Custom.Treeview",
-                                           yscrollcommand=scrollbar.set)
+                                             height=8, style="Custom.Treeview",
+                                             yscrollcommand=scrollbar.set)
         scrollbar.configure(command=self.tabela_consultas.yview)
-        
-        # Configura as colunas
         for col in colunas:
             self.tabela_consultas.heading(col, text=col, anchor="center")
             self.tabela_consultas.column(col, width=100, anchor="center")
-
         self.tabela_consultas.pack(side="left", fill="both", expand=True)
-
+    
         # Preenche a tabela com os dados
         for consulta in consultas:
             self.tabela_consultas.insert('', 'end', values=(
@@ -2825,23 +2801,20 @@ class RelatoriosFrame(ttk.Frame):
                 f"{consulta['Duração']} min",
                 consulta["Estado"]
             ))
-
+    
         # Botões de ação
         action_frame = ttk.Frame(main_frame, style="Custom.TFrame")
         action_frame.pack(fill="x", pady=10)
-
-        # Configura o estilo dos botões
         style = ttk.Style()
         style.configure("App.TButton",
                        background="#2c3e50",
                        foreground="white",
                        font=("Segoe UI", 11),
                        padding=6,
-                       width=15)  # Largura fixa para os botões
+                       width=15)
         style.map("App.TButton",
                  background=[("active", "#1a252f")],
                  foreground=[("active", "white")])
-
         ttk.Button(action_frame, text="Exportar Relatório",
                   command=self.exportar_relatorio_consultas,
                   style="App.TButton").pack(side="right", padx=5)

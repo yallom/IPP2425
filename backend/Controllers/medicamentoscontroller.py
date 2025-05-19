@@ -22,16 +22,16 @@ def search(id):    #Procura uma pessoa específica pelo seu ID
 def getAll():
     return Medicamento.instances
 
-def read(list):
+def read(lista):
     try:
-        for m in list:
-            nome = m["nome"]
-            tipo = m["tipo"]
-            idade = m["idade"]
-            eficacia = m["eficacia"]
-            gravidez = m["gravidez"]
-            validade = m["validade"]
-            addMedicine(nome, idade[0], idade[1], tipo, gravidez, eficacia[0], eficacia[1], validade)
+        for m in lista:
+            nome = m.get("nome")
+            idade = m.get("idade")
+            gravidez = m.get("gravidez")
+            risco = m.get("risco")
+            validade = m.get("validade")
+            tipo = m.get("tipo")
+            addMedicine(nome, idade, gravidez, risco, validade, tipo)
     except Exception as e:
         print(f"Erro ao ler medicamentos: {e}")
 
